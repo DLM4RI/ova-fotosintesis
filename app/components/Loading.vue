@@ -1,19 +1,21 @@
 <template>
   <div class="text-center">
     <v-img
-      src="/loading/girasol.png"
+      :src="useAsset('girasol.png')"
       width="200"
       height="200"
       class="girasol mx-auto mb-6"
     />
-    <p class="font-weight-black mt-2">{{ titulo }}</p>
+    <p class="font-weight-black mt-2 text-title-large">{{ titulo }}</p>
     <p class="font-weight-bold text-grey">{{ mensaje }}</p>
+    <b> {{ tiempo }}</b>
   </div>
 </template>
 <script lang="js" setup>
 defineProps({
   titulo: String,
   mensaje: String,
+  tiempo : String,
 });
 </script>
 

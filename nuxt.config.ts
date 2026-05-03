@@ -4,8 +4,6 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  ssr: false,
-
   build: {
     transpile: ['vuetify'],
   },
@@ -17,7 +15,11 @@ export default defineNuxtConfig({
     },
   },
 
+  routeRules: {
+    '/**': { prerender: true },
+  },
+
   app: {
-    baseURL: import.meta.env.PROD ? '/ova-fotosintesis/' : '/',
+    baseURL: '/ova-fotosintesis/',
   },
 })

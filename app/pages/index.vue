@@ -5,10 +5,10 @@
   >
     <v-card width="500" class="pa-6 text-center">
       <v-img
-        :src="useAsset('home/logo.png')"
+        :src="useAsset('logo.png')"
         width="250"
         height="250"
-        class="mx-auto mb-6"
+        class="mx-auto"
       />
       <v-card-title class="text-h5 mb-2 font-weight-black">
         Fotosíntesis en las plantas
@@ -53,7 +53,7 @@
         <v-list-item title="Mario Castro" subtitle="Desarrollador/Programador">
           <template #prepend>
             <v-avatar size="60">
-              <v-img :src="useAsset('home/personal/mario.png')" />
+              <v-img :src="useAsset('mario.png')" />
             </v-avatar>
           </template>
         </v-list-item>
@@ -63,7 +63,7 @@
         >
           <template #prepend>
             <v-avatar size="60">
-              <v-img :src="useAsset('home/personal/rosendo.jpeg')" />
+              <v-img :src="useAsset('rosendo.jpeg')" />
             </v-avatar>
           </template>
         </v-list-item>
