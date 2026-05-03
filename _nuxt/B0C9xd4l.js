@@ -1,1 +1,0 @@
-import{_ as n,K as t,E as o,z as r,B as a}from"./D8Ae84Uh.js";import{V as s}from"./D_MxcAGT.js";const i={};function c(f,e){return r(),t(s,null,{default:o(()=>[...e[0]||(e[0]=[a("h1",null,"Bienvenido",-1)])]),_:1})}const d=n(i,[["render",c]]);export{d as default};
