@@ -1,0 +1,39 @@
+<template>
+  <div class="text-center">
+    <v-img
+      src="/loading/girasol.png"
+      width="200"
+      height="200"
+      class="girasol mx-auto"
+    />
+    <p class="font-weight-black mt-2">{{ mensaje }}</p>
+    <p class="font-weight-bold text-grey">{{ titulo }}</p>
+  </div>
+</template>
+<script lang="js" setup>
+defineProps({
+  titulo: String,
+  mensaje: String,
+});
+</script>
+
+<style>
+@keyframes grow {
+  0% {
+    transform: scale(1);
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1);
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: scale(1);
+    transform: rotate(360deg);
+  }
+}
+
+.girasol {
+  animation: grow 5s linear infinite;
+}
+</style>
