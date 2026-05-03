@@ -4,10 +4,10 @@
       src="/loading/girasol.png"
       width="200"
       height="200"
-      class="girasol mx-auto"
+      class="girasol mx-auto mb-6"
     />
-    <p class="font-weight-black mt-2">{{ mensaje }}</p>
-    <p class="font-weight-bold text-grey">{{ titulo }}</p>
+    <p class="font-weight-black mt-2">{{ titulo }}</p>
+    <p class="font-weight-bold text-grey">{{ mensaje }}</p>
   </div>
 </template>
 <script lang="js" setup>

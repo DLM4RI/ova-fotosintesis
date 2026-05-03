@@ -11,6 +11,7 @@
     "deploy": "nuxt generate && gh-pages -d .output/public"
   },
   "dependencies": {
+    "@boxicons/vue": "^1.0.1",
     "@mdi/font": "^7.4.47",
     "nuxt": "^4.4.4",
     "vue": "^3.5.33",
