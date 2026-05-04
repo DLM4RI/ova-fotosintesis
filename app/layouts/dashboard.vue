@@ -1,10 +1,15 @@
 <template>
   <v-app>
-    <v-btn
-      icon="mdi-menu"
-      class="fixed-hamburger"
-      @click.stop="drawerOpen = !drawerOpen"
-    ></v-btn>
+    <div class="fixed-controls">
+      <v-btn
+        icon="mdi-menu"
+        class="fixed-hamburger"
+        @click.stop="drawerOpen = !drawerOpen"
+      ></v-btn>
+      <v-icon size="40" color="warning" class="animated-icon">
+        mdi-wrench-clock
+      </v-icon>
+    </div>
 
     <v-navigation-drawer v-model="drawerOpen" temporary>
       <v-list nav>
@@ -42,29 +47,49 @@
 </template>
 
 <script lang="js" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 
-const showWelcomeModal = ref(false)
-const drawerOpen = ref(false)
+const showWelcomeModal = ref(false);
+const drawerOpen = ref(false);
 
 onMounted(() => {
-  const shouldShowModal = sessionStorage.getItem('showMaintenance')
-  if (shouldShowModal === 'true') {
-    showWelcomeModal.value = true
-    sessionStorage.removeItem('showMaintenance')
+  const shouldShowModal = sessionStorage.getItem("showMaintenance");
+  if (shouldShowModal === "true") {
+    showWelcomeModal.value = true;
+    sessionStorage.removeItem("showMaintenance");
   }
-})
+});
 </script>
 
 <style scoped>
-.fixed-hamburger {
-  position: fixed !important;
+.fixed-controls {
+  position: fixed;
   top: 20px;
   left: 20px;
   z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-</style>
 
-<style>
+.fixed-hamburger {
+  position: relative;
+  z-index: 101;
+}
+
+@keyframes pulse-icon {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+.animated-icon {
+  animation: pulse-icon 2s infinite ease-in-out;
+}
 
 </style>
