@@ -114,7 +114,7 @@
 
       <v-divider class="mb-4 mt-4" />
 
-      <v-btn color="green" rounded="pill" size="large" to="/mantenimiento">
+      <v-btn color="green" rounded="pill" size="large" @click="irAlDashboard">
         Comenzar
       </v-btn>
 
@@ -124,9 +124,19 @@
 </template>
 
 <script setup>
-import { LeafAlt, CodeAlt, ListUlSquare,Briefcase } from "@boxicons/vue";
+import { LeafAlt, CodeAlt, ListUlSquare, Briefcase } from "@boxicons/vue";
+import { useRouter } from '#imports'
 
 definePageMeta({
   layout: "default",
 });
+
+const router = useRouter()
+
+function irAlDashboard() {
+  sessionStorage.setItem('showMaintenance', 'true')
+  router.push('/dashboard')
+}
+
+
 </script>
