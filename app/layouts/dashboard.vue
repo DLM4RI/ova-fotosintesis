@@ -1,33 +1,12 @@
 <template>
   <v-app>
     <div class="fixed-controls">
-      <v-btn
-        icon="mdi-menu"
-        class="fixed-hamburger"
-        @click.stop="drawerOpen = !drawerOpen"
-      ></v-btn>
-      <v-icon size="40" color="warning" class="animated-icon">
-        mdi-wrench-clock
-      </v-icon>
+      <v-btn @click="drawerOpen = true" icon>
+        <i class="bx bx-menu" />
+      </v-btn>
     </div>
 
-    <v-navigation-drawer v-model="drawerOpen" temporary>
-      <v-list nav>
-        <v-list-item
-          title="Home"
-          prepend-icon="mdi-home"
-          to="/dashboard"
-          class="mb-2"
-          @click="drawerOpen = false"
-        />
-        <v-list-item
-          title="Sopa de letras"
-          prepend-icon="mdi-tools"
-          to="/sopadeletras"
-          @click="drawerOpen = false"
-        />
-      </v-list>
-    </v-navigation-drawer>
+    <NavDrawer v-model="drawerOpen" />
 
     <Alerta v-model="showWelcomeModal" />
 
@@ -51,6 +30,7 @@ import { ref, onMounted } from "vue";
 
 const showWelcomeModal = ref(false);
 const drawerOpen = ref(false);
+import NavDrawer from "@/components/barranav.vue";
 
 onMounted(() => {
   const shouldShowModal = sessionStorage.getItem("showMaintenance");
@@ -78,7 +58,8 @@ onMounted(() => {
 }
 
 @keyframes pulse-icon {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.9);
     opacity: 1;
   }
@@ -91,5 +72,4 @@ onMounted(() => {
 .animated-icon {
   animation: pulse-icon 2s infinite ease-in-out;
 }
-
 </style>
