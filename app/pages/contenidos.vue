@@ -30,7 +30,7 @@
                 La reacción general se puede resumir así:
                 <br /><br />
                 <v-img
-                  src="/modal-1-fotosintesis.jpeg"
+                  :src="useAsset('modal-1-fotosintesis.jpeg')"
                   rounded="lg"
                   class="mt-3"
                 />
@@ -54,7 +54,7 @@
               class="card-img"
             />
 
-            <template #modal>
+            <template #modal >
               <h3>El cloroplasto</h3>
               <p class="modal-texto text-justify">
                 El cloroplasto es el orgánulo clave responsable de fotosíntesis.

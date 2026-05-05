@@ -12,6 +12,10 @@
             Lo sentimos, el recurso que buscas no está disponible o se encuentra en 
             <span class="accent-text font-weight-bold">mantenimiento</span>.
           </p>
+          <p>
+            <b>Fin de mantenimiento</b> <br> 
+            <i>05/05/26 <cite>14:00</cite> </i>
+          </p>
 
           <!-- Botones -->
           <div class="d-flex flex-column flex-sm-row justify-center gap-4">
@@ -50,7 +54,7 @@ definePageMeta({
 
 <style scoped>
 .error-page {
-  min-height: 100vh;
+  min-height: 10vh;
   color: rgb(0, 0, 0);
 }
 

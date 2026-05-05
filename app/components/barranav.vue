@@ -8,7 +8,7 @@
       >
         FOTOSÍNTESIS
       </p>
-      <p class="text-caption" style="color: #9ca3af">Version 0.0.9 PreAlpha</p>
+      <p class="text-caption" style="color: #9ca3af">Version 0.1.0 PreAlpha</p>
     </div>
 
     <v-divider class="mb-2" />
