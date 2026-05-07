@@ -2,21 +2,29 @@
   <v-dialog
     v-model="visible"
     max-width="550"
-    persistent
     transition="dialog-bottom-transition"
+    scrollable
   >
     <v-card class="update-modal glass-card" rounded="xl">
       <!-- HEADER CON GRADIENTE -->
       <div class="modal-hero">
+        <v-btn
+          icon="mdi-close"
+          variant="text"
+          color="white"
+          class="close-btn"
+          @click="closeModal"
+          density="comfortable"
+        ></v-btn>
         <div class="hero-overlay"></div>
         <div class="hero-content">
           <v-icon icon="mdi-tools" size="48" color="white" class="mb-2" />
           <h2 class="hero-title">Bajo Optimización</h2>
-          <span class="version-tag">Versión v1.2.0 - Beta</span>
+          <span class="version-tag">Versión v1.2.1 - Beta</span>
         </div>
       </div>
 
-      <v-card-text class="pa-8">
+      <v-card-text class="pa-8 custom-scroll">
         <div class="maintenance-msg mb-6">
           <p>
             ¡Hola! Estamos trabajando para que el
@@ -79,6 +87,11 @@ const visible = ref(false);
 // TEMPLATE DE NOTAS DE ACTUALIZACIÓN
 const updates = [
   {
+    title: "Optimización",
+    desc: "Mejora drástica de rendimiento en celulares y tablets.",
+    color: "#10b981",
+  },
+  {
     title: "Recursos",
     desc: "Nueva biblioteca de documentos y videos externos.",
     color: "#80a124",
@@ -92,11 +105,6 @@ const updates = [
     title: "Mobile Fix",
     desc: "Optimización de navegación y menú para dispositivos móviles.",
     color: "#3b82f6",
-  },
-  {
-    title: "Visuales",
-    desc: "Nuevos fondos bio-dinámicos con burbujas y rayos de luz.",
-    color: "#10b981",
   },
 ];
 
@@ -114,16 +122,32 @@ onMounted(() => {
     }, 1500);
   }
 });
+
+defineExpose({
+  open: () => (visible.value = true),
+});
 </script>
 
 <style scoped>
 .update-modal {
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
 }
 
 .modal-hero {
   height: 180px;
+  flex-shrink: 0;
   background: url("https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop");
   background-size: cover;
   background-position: center;
@@ -165,6 +189,11 @@ onMounted(() => {
   font-size: 0.75rem;
   font-weight: 800;
   backdrop-filter: blur(5px);
+}
+
+.custom-scroll {
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .maintenance-msg p {
@@ -226,5 +255,20 @@ onMounted(() => {
   font-weight: 900 !important;
   text-transform: none !important;
   letter-spacing: 0.5px !important;
+}
+
+@media (max-width: 600px) {
+  .modal-hero {
+    height: 140px;
+  }
+  .hero-title {
+    font-size: 1.5rem;
+  }
+  .pa-8 {
+    padding: 24px !important;
+  }
+  .custom-scroll {
+    max-height: 60vh;
+  }
 }
 </style>

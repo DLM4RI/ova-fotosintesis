@@ -7,7 +7,7 @@
         </div>
         <div class="ml-3">
           <h3 class="box-title">Novedades y Versión</h3>
-          <span class="box-version">v1.2 - Beta</span>
+          <span class="box-version">v1.9.2 - Beta</span>
         </div>
       </div>
       <div class="status-badge">Activo</div>
@@ -30,7 +30,7 @@
     <v-divider />
 
     <v-card-actions class="pa-4 justify-center">
-      <span class="footer-msg">Próxima gran actualización: 7 Mayo</span>
+      <span class="footer-msg">Próxima gran actualización: 8 Mayo</span>
     </v-card-actions>
   </v-card>
 </template>
@@ -40,21 +40,21 @@
 const notes = [
   {
     date: "07 Mayo, 2026",
-    title: "Optimización de Experiencia",
+    title: "Actualización de Actividades",
     items: [
-      "Módulo de Evaluación Saber Pro activado.",
-      "Biblioteca de Recursos (PDF/Video) disponible.",
-      "Corrección de menú en dispositivos móviles.",
-      "Mejora en animaciones de fondo bio-dinámicas.",
+      "Se agregaron 3 nuevas actividades.",
+      "Se modificaron y mejoraron las actividades existentes.",
+      "Se optimizó el diseño del apartado de actividades.",
+      "Se potenció la optimización de la página de contenidos y recursos.",
     ],
   },
   {
     date: "04 Mayo, 2026",
-    title: "Lanzamiento Inicial",
+    title: "En Desarrollo",
     items: [
-      "Dashboard principal y gestión de perfil.",
-      "Contenidos base sobre Cloroplastos y Fotosíntesis.",
-      "Integración de Footer global y créditos.",
+      "Actualmente se trabaja en una mejora visual del módulo de actividades.",
+      "Próximamente se añadirá compatibilidad por grados.",
+      "El contenido se adaptará automáticamente según el grado del estudiante.",
     ],
   },
 ];

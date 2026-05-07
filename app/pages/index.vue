@@ -102,6 +102,20 @@ import { LeafAlt } from "@boxicons/vue";
 import { useRouter, navigateTo } from "#imports";
 
 const router = useRouter();
+const isMobile = ref(false);
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
+
+onMounted(() => {
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", checkMobile);
+});
 
 // ✅ FIX: datos aleatorios calculados UNA VEZ en el script (no en el template)
 // Esto evita el hydration mismatch de SSR y el conflicto de transform con @keyframes
@@ -634,6 +648,33 @@ function irAlDashboard() {
 
   .duration-tag {
     font-size: 0.82rem;
+  }
+
+  /* OPTIMIZACIONES DE RENDIMIENTO */
+  .hide-mobile {
+    display: none !important;
+  }
+  
+  .orb {
+    filter: blur(40px) !important;
+    animation: none !important;
+  }
+
+  .orb--gold {
+    width: 250px;
+    height: 250px;
+  }
+
+  .leaf {
+    animation-duration: 20s !important;
+  }
+
+  .ring, .glow-circle {
+    animation: none !important;
+  }
+  
+  .glow-circle {
+    filter: blur(15px);
   }
 }
 </style>

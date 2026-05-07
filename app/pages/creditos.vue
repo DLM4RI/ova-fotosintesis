@@ -9,34 +9,34 @@
     <!-- DECORACIONES CINÉTICAS (BIO-DYNAMICS) -->
     <div class="grain-overlay" aria-hidden="true" />
     <div class="floating-elements" aria-hidden="true">
-      <!-- Rayos de Luz Sutiles -->
-      <div class="sun-ray r-1"></div>
-      <div class="sun-ray r-2"></div>
+      <!-- Rayos de Luz Sutiles (Ocultos en móvil) -->
+      <div class="sun-ray r-1 hide-mobile"></div>
+      <div class="sun-ray r-2 hide-mobile"></div>
 
-      <!-- Hojas y Partículas (Densidad Suavizada) -->
+      <!-- Hojas y Partículas (Reducidas en móvil) -->
       <LeafAlt
-        v-for="i in 12"
+        v-for="i in (isMobile ? 4 : 12)"
         :key="i"
         class="bg-leaf"
         :style="leafStyles(i)"
       />
       <div
-        v-for="n in 10"
+        v-for="n in (isMobile ? 4 : 10)"
         :key="'p' + n"
         class="bio-dot"
         :style="dotStyles(n)"
       ></div>
       <div
-        v-for="n in 6"
+        v-for="n in (isMobile ? 2 : 6)"
         :key="'b' + n"
         class="oxygen-bubble"
         :style="bubbleStyles(n)"
       ></div>
 
-      <!-- Orbes de Energía -->
+      <!-- Orbes de Energía (Solo 1 en móvil) -->
       <div class="nature-orb n-1"></div>
-      <div class="nature-orb n-2"></div>
-      <div class="nature-orb n-3"></div>
+      <div class="nature-orb n-2 hide-mobile"></div>
+      <div class="nature-orb n-3 hide-mobile"></div>
     </div>
 
     <v-container class="credits-container">
@@ -169,18 +169,29 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { LeafAlt } from "@boxicons/vue";
 import { useStudentProfile } from "@/composables/useStudentProfile";
 
 const { state, loadProfile } = useStudentProfile();
 const isLoading = ref(true);
+const isMobile = ref(false);
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
 
 onMounted(() => {
   loadProfile();
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
   setTimeout(() => {
     isLoading.value = false;
   }, 1000);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", checkMobile);
 });
 
 const team = [
@@ -689,18 +700,49 @@ definePageMeta({
 }
 
 @media (max-width: 900px) {
-  .uni-card-inner {
-    grid-template-columns: 1fr;
-    text-align: center;
+  .uni-card {
+    padding: 2rem 1.5rem !important;
   }
-  .uni-header-row {
-    justify-content: center;
+  .credits-container {
+    padding: 2rem 1.25rem !important;
   }
-  .uni-divider {
-    margin: 0 auto 2rem;
+  .credits-title {
+    font-size: 2.5rem;
+    letter-spacing: -1.5px;
   }
-  .uni-logo-area {
-    margin-bottom: 2rem;
+  .member-card:hover {
+    transform: none !important; /* Desactivar hover pesado en touch */
+  }
+  
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .credits-shell::before {
+    animation-duration: 40s !important;
+    opacity: 0.1;
+  }
+
+  .nature-orb {
+    filter: blur(70px) !important;
+    animation: none !important;
+    opacity: 0.15;
+  }
+
+  .n-1 {
+    width: 300px;
+    height: 300px;
+    top: 5%;
+    left: -5%;
+  }
+
+  .bg-leaf, .bio-dot, .oxygen-bubble {
+    animation-duration: 25s !important;
+    filter: none !important;
+  }
+
+  .oxygen-bubble {
+    backdrop-filter: none !important;
   }
 }
 </style>

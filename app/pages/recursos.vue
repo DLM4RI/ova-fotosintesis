@@ -6,16 +6,18 @@
     <div class="grain-overlay" aria-hidden="true" />
     <div class="parallax-bg">
       <div class="glass-blob blob-1"></div>
-      <div class="glass-blob blob-2"></div>
-      <div class="glass-blob blob-3"></div>
+      <div class="glass-blob blob-2 hide-mobile"></div>
+      <div class="glass-blob blob-3 hide-mobile"></div>
       
-      <!-- Rayos de Luz -->
-      <div class="sun-ray r-1"></div>
-      <div class="sun-ray r-2"></div>
+      <!-- Rayos de Luz (Ocultos en móvil) -->
+      <div class="sun-ray r-1 hide-mobile"></div>
+      <div class="sun-ray r-2 hide-mobile"></div>
 
-      <!-- Partículas y Burbujas -->
-      <div v-for="n in 15" :key="'p'+n" class="bio-particle" :style="particleStyles(n)"></div>
-      <div v-for="n in 10" :key="'b'+n" class="oxygen-bubble" :style="bubbleStyles(n)"></div>
+      <!-- Partículas y Burbujas (Ocultas en móvil para máxima optimización) -->
+      <div v-if="!isMobile" class="particles-container">
+        <div v-for="n in 15" :key="'p'+n" class="bio-particle" :style="particleStyles(n)"></div>
+        <div v-for="n in 10" :key="'b'+n" class="oxygen-bubble" :style="bubbleStyles(n)"></div>
+      </div>
     </div>
 
     <v-container class="recursos-container">
@@ -160,6 +162,11 @@ import { useStudentProfile } from '@/composables/useStudentProfile';
 const { state, loadProfile } = useStudentProfile();
 const isLoading = ref(true);
 const activeTab = ref('pdf');
+const isMobile = ref(false);
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
 
 const categories = [
   { id: 'pdf', name: 'Documentos PDF', icon: 'mdi-file-document-outline' },
@@ -240,9 +247,15 @@ const bubbleStyles = (n) => ({
 
 onMounted(() => {
   loadProfile();
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
   setTimeout(() => {
     isLoading.value = false;
   }, 1200);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile);
 });
 
 definePageMeta({
@@ -354,6 +367,53 @@ definePageMeta({
   10% { opacity: 0.4; }
   90% { opacity: 0.4; }
   100% { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* OPTIMIZACIÓN MÓVIL */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .parallax-bg::before {
+    animation-duration: 40s !important;
+    opacity: 0.08;
+  }
+
+  .glass-blob {
+    filter: blur(80px) !important;
+    animation: none !important;
+    opacity: 0.2;
+  }
+
+  .blob-1 {
+    width: 300px;
+    height: 300px;
+    top: 5%;
+    left: -5%;
+  }
+
+  .bio-particle, .oxygen-bubble {
+    animation-duration: 25s !important;
+    filter: none !important;
+  }
+
+  .oxygen-bubble {
+    backdrop-filter: none !important;
+  }
+
+  .resource-card {
+    backdrop-filter: none !important;
+    transform: none !important;
+  }
+
+  .recursos-container {
+    padding: 2rem 1.25rem !important;
+  }
+
+  .recursos-title {
+    font-size: 2.2rem;
+  }
 }
 
 /* HEADER */

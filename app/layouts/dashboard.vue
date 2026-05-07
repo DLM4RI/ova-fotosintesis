@@ -4,10 +4,10 @@
     <div class="app-bg-gradient"></div>
 
     <!-- Barra de navegación (Control Center) -->
-    <NavDrawer v-model="drawerOpen" />
+    <NavDrawer v-model="drawerOpen" @open-updates="openUpdates" />
 
     <!-- Modales Globales -->
-    <AppUpdateModal />
+    <AppUpdateModal ref="updateModal" />
 
     <!-- Main Content Area -->
     <v-main class="main-viewport">
@@ -31,6 +31,13 @@ import NavDrawer from "@/components/barranav.vue";
 
 const drawerOpen = ref(false);
 const showWelcomeModal = ref(false);
+const updateModal = ref(null);
+
+const openUpdates = () => {
+  if (updateModal.value) {
+    updateModal.value.open();
+  }
+};
 </script>
 
 <style>

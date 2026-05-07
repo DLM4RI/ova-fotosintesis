@@ -10,6 +10,17 @@
         <i :class="modelValue ? 'bx bx-x' : 'bx bx-menu-alt-left'"></i>
       </button>
 
+      <!-- CAMPANITA DE NOTIFICACIONES -->
+      <button
+        v-if="!modelValue"
+        class="notif-bell-btn"
+        @click="$emit('open-updates')"
+        aria-label="Ver actualizaciones"
+      >
+        <i class="bx bx-bell"></i>
+        <span class="bell-dot"></span>
+      </button>
+
       <div v-if="modelValue" class="sidebar-content">
         <div class="sidebar-profile">
           <div class="avatar-ring">
@@ -45,7 +56,6 @@
             <i class="bx bxs-group"></i> <span>Créditos</span>
           </nuxt-link>
         </nav>
-
 
         <div class="sidebar-footer">
           <button class="s-link logout-btn" @click="showLogoutModal = true">
@@ -167,7 +177,7 @@
     <transition name="fade">
       <div v-if="modelValue" class="global-overlay" @click="close">
         <!-- Fondo Visual para que no se vea vacío -->
-        <div class="overlay-visual-container">
+        <div class="overlay-visual-container" @click.stop>
           <v-img
             src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop"
             cover
@@ -257,7 +267,7 @@ import { useAppSettings } from "@/composables/useAppSettings";
 const props = defineProps({
   modelValue: Boolean,
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "open-updates"]);
 
 const { state, loadProfile, logout } = useStudentProfile();
 const { state: settings, setFontSize, setTheme } = useAppSettings();
@@ -286,33 +296,41 @@ const confirmLogout = () => {
 <style scoped>
 @import url("https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css");
 
+/* =============================================
+   CONTENEDOR PRINCIPAL
+   ============================================= */
 .nav-system-container {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   pointer-events: none;
-  z-index: 1000;
+  z-index: 2100;
   display: flex;
-  align-items: center;
-  padding: clamp(20px, 4vw, 50px);
+  align-items: flex-start;
+  padding: 15px;
+  gap: 15px;
 }
 
 .nav-system-container > * {
   pointer-events: auto;
 }
 
-/* --- SIDEBAR PANEL --- */
+/* =============================================
+   SIDEBAR PANEL
+   ============================================= */
 .sidebar-panel {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   background: white;
-  border-radius: 35px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   position: relative;
   overflow: hidden;
   z-index: 1002;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 
 .sidebar-panel.sidebar-open {
@@ -321,14 +339,50 @@ const confirmLogout = () => {
   max-height: 90vh;
   border-radius: 30px;
   padding: 25px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.notif-bell-btn {
+  width: 50px;
+  height: 50px;
+  background: white;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--primary-color);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  margin-left: 15px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.notif-bell-btn:hover {
+  transform: scale(1.1);
+  color: #ddae38;
+}
+
+.bell-dot {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid white;
 }
 
 .sidebar-toggle {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border: none;
   background: transparent;
-  font-size: 30px;
+  font-size: 28px;
   color: var(--primary-color);
   cursor: pointer;
   display: flex;
@@ -346,6 +400,16 @@ const confirmLogout = () => {
   padding: 0 25px;
   opacity: 0;
   animation: fadeIn 0.5s 0.3s forwards;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.sidebar-content::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
 }
 
 .sidebar-profile {
@@ -367,6 +431,7 @@ const confirmLogout = () => {
   font-size: 24px;
   color: var(--primary-color);
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .profile-text {
@@ -449,11 +514,12 @@ const confirmLogout = () => {
   color: #ef4444;
 }
 
-/* --- CONTROL CENTER CARD --- */
+/* =============================================
+   CONTROL CENTER CARD
+   ============================================= */
 .control-center-card {
   width: 400px;
   background: white;
-  margin-left: 25px;
   border-radius: 32px;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
   padding: 30px;
@@ -461,6 +527,9 @@ const confirmLogout = () => {
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .card-header {
@@ -479,6 +548,7 @@ const confirmLogout = () => {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
 }
 
 .card-header h3 {
@@ -615,6 +685,7 @@ const confirmLogout = () => {
 
 .neuro-tip i {
   font-size: 24px;
+  flex-shrink: 0;
 }
 .neuro-tip p {
   font-size: 0.85rem;
@@ -624,29 +695,30 @@ const confirmLogout = () => {
   margin: 0;
 }
 
-/* --- OVERLAY VISUAL --- */
+/* =============================================
+   OVERLAY GLOBAL
+   ============================================= */
 .global-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
   z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  pointer-events: auto;
 }
 
+/* La imagen se muestra en el fondo del overlay, a la derecha */
 .overlay-visual-container {
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
-  width: 55%;
-  height: 100%;
-  overflow: hidden;
+  width: 45%;
+  max-width: 600px;
   display: flex;
   align-items: center;
-  padding-left: 100px;
+  padding: 40px;
+  overflow: hidden;
 }
 
 .visual-bg {
@@ -664,7 +736,6 @@ const confirmLogout = () => {
 .visual-content {
   position: relative;
   z-index: 2;
-  max-width: 500px;
   animation: slideInRight 0.8s ease-out;
 }
 
@@ -677,10 +748,10 @@ const confirmLogout = () => {
 }
 
 .visual-quote {
-  font-size: 2.8rem;
+  font-size: 2.4rem;
   font-weight: 950;
   color: white;
-  line-height: 1;
+  line-height: 1.1;
   letter-spacing: -2px;
   margin-bottom: 30px;
 }
@@ -701,6 +772,7 @@ const confirmLogout = () => {
   border-radius: 50%;
   filter: blur(100px);
   opacity: 0.4;
+  pointer-events: none;
 }
 
 .b-1 {
@@ -717,7 +789,9 @@ const confirmLogout = () => {
   left: 10%;
 }
 
-/* --- PREMIUM LOGOUT MODAL --- */
+/* =============================================
+   PREMIUM LOGOUT MODAL
+   ============================================= */
 .premium-logout-card {
   overflow: hidden;
   border: none !important;
@@ -778,7 +852,9 @@ const confirmLogout = () => {
   text-transform: none !important;
 }
 
-/* --- TRANSITIONS --- */
+/* =============================================
+   TRANSITIONS
+   ============================================= */
 .card-slide-enter-active,
 .card-slide-leave-active {
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -809,49 +885,104 @@ const confirmLogout = () => {
   }
 }
 
-@media (max-width: 1024px) {
+/* =============================================
+   RESPONSIVE — TABLET (≤ 1200px)
+   ============================================= */
+@media (max-width: 1200px) {
+  .overlay-visual-container {
+    width: 38%;
+    padding: 30px;
+  }
+
+  .visual-quote {
+    font-size: 1.9rem;
+  }
+
+  .control-center-card {
+    width: 340px;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — TABLET PEQUEÑA (≤ 900px)
+   La imagen se oculta, la card de control
+   se posiciona debajo del sidebar en el overlay
+   ============================================= */
+@media (max-width: 900px) {
+  /* El nav-container se convierte en columna */
+  .nav-system-container {
+    flex-direction: column;
+    gap: 10px;
+    /* Limitar al ancho para no ocupar toda la pantalla */
+    max-width: calc(100vw - 30px);
+  }
+
+  /* La imagen decorativa desaparece en tablet pequeña */
   .overlay-visual-container {
     display: none;
   }
+
+  .blur-blob {
+    display: none;
+  }
+
+  /* La card de control se adapta al ancho del sidebar */
   .control-center-card {
-    width: 350px;
+    width: 290px;
+    max-height: calc(100vh - 200px);
+    padding: 24px;
+  }
+
+  /* Animación ahora desde abajo (viene debajo del sidebar) */
+  .card-slide-enter-from,
+  .card-slide-leave-to {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+
+  /* El overlay solo es backdrop, sin flex centering */
+  .global-overlay {
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.4);
   }
 }
 
-@media (max-width: 800px) {
+/* =============================================
+   RESPONSIVE — MÓVIL (≤ 600px)
+   ============================================= */
+@media (max-width: 600px) {
+  .nav-system-container {
+    top: 10px;
+    left: 10px;
+    padding: 0;
+    gap: 10px;
+    max-width: calc(100vw - 20px);
+  }
+
+  /* Sidebar ocupa casi todo el ancho en móvil */
+  .sidebar-panel.sidebar-open {
+    width: calc(100vw - 20px);
+    max-height: 80vh;
+    border-radius: 24px;
+  }
+
+  /* La card de control se oculta en móvil:
+     el sidebar ya tiene toda la info necesaria */
   .control-center-card {
     display: none;
   }
-  
-  /* Contenedor del panel en móvil */
-  .sidebar-panel {
-    position: fixed;
-    top: 20px;
-    left: -35px; /* Escondido a medias */
-    z-index: 1100;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Notif bell se mantiene visible */
+  .notif-bell-btn {
+    width: 52px;
+    height: 52px;
+    margin-left: 12px;
   }
 
-  /* Cuando el mouse se acerca o se activa (peek) */
-  .sidebar-panel:hover,
-  .sidebar-panel.sidebar-open {
-    left: 20px;
-  }
-
-  .sidebar-panel.sidebar-open {
-    width: 280px;
-    left: 20px;
-  }
-  
-  /* Limpiar estilos de toggle duplicados */
-  .sidebar-toggle {
-    background: transparent !important;
-    box-shadow: none !important;
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
+  /* Overlay más sutil en móvil */
+  .global-overlay {
+    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.3);
   }
 }
-
-
 </style>

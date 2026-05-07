@@ -6,7 +6,7 @@
     <div class="grain-overlay" aria-hidden="true" />
     <div class="parallax-bg">
       <div class="glass-blob b-1"></div>
-      <div class="glass-blob b-2"></div>
+      <div class="glass-blob b-2 hide-mobile"></div>
     </div>
 
     <v-container class="eval-container">
@@ -176,6 +176,11 @@ const wrongAttempt = ref(null);
 const isCorrect = ref(false);
 const score = ref(0);
 const totalMistakes = ref(0);
+const isMobile = ref(false);
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
 
 // Timer
 const timer = ref(0);
@@ -379,12 +384,15 @@ const scoreClass = computed(() => {
 
 onMounted(() => {
   loadProfile();
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
   setTimeout(() => {
     isLoading.value = false;
   }, 1000);
 });
 
 onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile);
   clearInterval(timerInterval);
 });
 
@@ -438,6 +446,44 @@ definePageMeta({
 @keyframes float {
   from { transform: translate(0,0) scale(1); }
   to { transform: translate(50px, 50px) scale(1.1); }
+}
+
+/* OPTIMIZACIÓN MÓVIL */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .glass-blob {
+    filter: blur(80px) !important;
+    animation: none !important;
+    opacity: 0.15;
+  }
+
+  .b-1 {
+    width: 300px;
+    height: 300px;
+  }
+
+  .eval-container {
+    padding: 2rem 1rem !important;
+  }
+
+  .display-title {
+    font-size: 2.2rem;
+  }
+
+  .info-item {
+    padding: 15px;
+  }
+
+  .question-text {
+    font-size: 1.3rem;
+  }
+
+  .option-btn {
+    padding: 15px;
+  }
 }
 
 /* INTRO CARD */

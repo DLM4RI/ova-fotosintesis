@@ -1,32 +1,49 @@
 <template>
   <v-main class="contenidos-main">
-    <LoadingScreen :active="isLoading" :student-name="state.name" status-message="Cargando biblioteca de contenidos..." />
+    <LoadingScreen
+      :active="isLoading"
+      :student-name="state.name"
+      status-message="Cargando biblioteca de contenidos..."
+    />
 
     <!-- DECORACIONES VIVAS (BIO-ENERGY STYLE) -->
     <div class="grain-overlay" aria-hidden="true" />
     <div class="parallax-bg">
-      <!-- Orbes de Energía -->
+      <!-- Orbes de Energía (Solo 1 en móvil, estático) -->
       <div class="glass-blob blob-1"></div>
-      <div class="glass-blob blob-2"></div>
-      <div class="glass-blob blob-3"></div>
-      
-      <!-- Rayos de Luz (Sutiles) -->
-      <div class="sun-ray ray-1"></div>
-      <div class="sun-ray ray-2"></div>
+      <div class="glass-blob blob-2 hide-mobile"></div>
+      <div class="glass-blob blob-3 hide-mobile"></div>
 
-      <!-- Partículas de Clorofila y Burbujas de Oxígeno (Densidad Reducida) -->
-      <div v-for="n in 12" :key="'p'+n" class="bio-particle" :style="particleStyles(n)"></div>
-      <div v-for="n in 8" :key="'b'+n" class="oxygen-bubble" :style="bubbleStyles(n)"></div>
+      <!-- Rayos de Luz (Ocultos en móvil por rendimiento) -->
+      <div class="sun-ray ray-1 hide-mobile"></div>
+      <div class="sun-ray ray-2 hide-mobile"></div>
+
+      <!-- Partículas y Burbujas (Ocultas en móvil para máxima optimización) -->
+      <div v-if="!isMobile" class="particles-container">
+        <div
+          v-for="n in 12"
+          :key="'p' + n"
+          class="bio-particle"
+          :style="particleStyles(n)"
+        ></div>
+        <div
+          v-for="n in 8"
+          :key="'b' + n"
+          class="oxygen-bubble"
+          :style="bubbleStyles(n)"
+        ></div>
+      </div>
     </div>
-
-
-
 
     <v-container fluid class="contenidos-container">
       <!-- HEADER PREMIUM -->
       <header class="contenidos-header">
-        <div class="header-tag" style="animation-delay: 0.1s">Biblioteca de Conocimiento</div>
-        <h1 class="page-title" style="animation-delay: 0.2s">Explora los Conceptos <span class="accent-dot">.</span></h1>
+        <div class="header-tag" style="animation-delay: 0.1s">
+          Biblioteca de Conocimiento
+        </div>
+        <h1 class="page-title" style="animation-delay: 0.2s">
+          Explora los Conceptos <span class="accent-dot">.</span>
+        </h1>
         <p class="page-subtitle" style="animation-delay: 0.3s">
           Sumérgete en los elementos clave que hacen posible la vida vegetal.
         </p>
@@ -34,7 +51,14 @@
 
       <v-row class="content-grid">
         <!-- CARD 1 -->
-        <v-col cols="12" sm="12" md="6" lg="4" class="mb-6 card-col" style="animation-delay: 0.4s">
+        <v-col
+          cols="12"
+          sm="12"
+          md="6"
+          lg="4"
+          class="mb-6 card-col"
+          style="animation-delay: 0.4s"
+        >
           <ContCardcontenidos
             titulo="¿Qué es la fotosíntesis?"
             texto="Conoce el proceso químico que alimenta al planeta."
@@ -51,13 +75,19 @@
               <div class="modal-inner-content">
                 <section class="mb-8">
                   <p class="modal-body-text">
-                    La <strong>Fotosíntesis</strong> es el proceso maestro mediante el cual las plantas verdes, algas y algunas bacterias convierten la energía electromagnética de la luz solar en energía química estable.
+                    La <strong>Fotosíntesis</strong> es el proceso maestro
+                    mediante el cual las plantas verdes, algas y algunas
+                    bacterias convierten la energía electromagnética de la luz
+                    solar en energía química estable.
                   </p>
                   <p class="modal-body-text">
-                    Este fenómeno ocurre principalmente en los cloroplastos, donde la planta absorbe Dióxido de Carbono (CO₂) y Agua (H₂O) para producir Glucosa y liberar Oxígeno como subproducto vital para nuestra atmósfera.
+                    Este fenómeno ocurre principalmente en los cloroplastos,
+                    donde la planta absorbe Dióxido de Carbono (CO₂) y Agua
+                    (H₂O) para producir Glucosa y liberar Oxígeno como
+                    subproducto vital para nuestra atmósfera.
                   </p>
                 </section>
-                
+
                 <div class="infographic-box mb-8">
                   <v-img
                     :src="useAsset('modal-1-fotosintesis.jpeg')"
@@ -65,12 +95,21 @@
                     elevation="2"
                     class="main-infographic"
                   />
-                  <p class="infographic-caption">Ecuación fundamental de la fotosíntesis</p>
+                  <p class="infographic-caption">
+                    Ecuación fundamental de la fotosíntesis
+                  </p>
                 </div>
 
                 <div class="didactic-note">
-                  <v-icon icon="mdi-lightbulb-on-outline" color="amber-darken-2" class="mr-3" />
-                  <span>¿Sabías que casi todo el oxígeno que respiramos hoy fue producido por este proceso hace millones de años?</span>
+                  <v-icon
+                    icon="mdi-lightbulb-on-outline"
+                    color="amber-darken-2"
+                    class="mr-3"
+                  />
+                  <span
+                    >¿Sabías que casi todo el oxígeno que respiramos hoy fue
+                    producido por este proceso hace millones de años?</span
+                  >
                 </div>
               </div>
             </template>
@@ -78,7 +117,14 @@
         </v-col>
 
         <!-- CARD 2 -->
-        <v-col cols="12" sm="12" md="6" lg="4" class="mb-6 card-col" style="animation-delay: 0.5s">
+        <v-col
+          cols="12"
+          sm="12"
+          md="6"
+          lg="4"
+          class="mb-6 card-col"
+          style="animation-delay: 0.5s"
+        >
           <ContCardcontenidos
             titulo="Los cloroplastos"
             texto="La fábrica de energía de la célula vegetal."
@@ -94,18 +140,30 @@
             <template #modal>
               <div class="modal-inner-content">
                 <p class="modal-body-text">
-                  El <strong>cloroplasto</strong> es un orgánulo especializado de doble membrana. Su característica más distintiva es la presencia de clorofila, el pigmento que le otorga el color verde a las plantas y captura la luz.
+                  El <strong>cloroplasto</strong> es un orgánulo especializado
+                  de doble membrana. Su característica más distintiva es la
+                  presencia de clorofila, el pigmento que le otorga el color
+                  verde a las plantas y captura la luz.
                 </p>
-                
+
                 <v-row class="mb-8">
                   <v-col cols="12" md="7">
                     <v-img :src="useAsset('cloroplastos.png')" rounded="xl" />
                   </v-col>
                   <v-col cols="12" md="5" class="d-flex align-center">
                     <ul class="feature-list">
-                      <li><strong>Tilacoides:</strong> Donde ocurre la fase lumínica.</li>
-                      <li><strong>Estroma:</strong> Espacio donde ocurre el ciclo de Calvin.</li>
-                      <li><strong>ADN propio:</strong> Tienen su propio material genético.</li>
+                      <li>
+                        <strong>Tilacoides:</strong> Donde ocurre la fase
+                        lumínica.
+                      </li>
+                      <li>
+                        <strong>Estroma:</strong> Espacio donde ocurre el ciclo
+                        de Calvin.
+                      </li>
+                      <li>
+                        <strong>ADN propio:</strong> Tienen su propio material
+                        genético.
+                      </li>
                     </ul>
                   </v-col>
                 </v-row>
@@ -119,7 +177,15 @@
                       src="https://www.youtube.com/embed/Ql-OuxsOUuI?si=hqoQbtMXGPjTrBW4"
                       title="YouTube video player"
                       frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allow="
+                        accelerometer;
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        gyroscope;
+                        picture-in-picture;
+                        web-share;
+                      "
                       allowfullscreen
                     ></iframe>
                   </div>
@@ -130,7 +196,14 @@
         </v-col>
 
         <!-- CARD 3 -->
-        <v-col cols="12" sm="12" md="6" lg="4" class="mb-6 card-col" style="animation-delay: 0.6s">
+        <v-col
+          cols="12"
+          sm="12"
+          md="6"
+          lg="4"
+          class="mb-6 card-col"
+          style="animation-delay: 0.6s"
+        >
           <ContCardcontenidos
             titulo="Etapas del Proceso"
             texto="Fase lumínica y Fase oscura explicadas."
@@ -148,11 +221,16 @@
                 <div class="phases-comparison mb-8">
                   <div class="phase-card light">
                     <h4>Fase Lumínica</h4>
-                    <p>Depende directamente de la luz solar. Ocurre en la membrana del tilacoide.</p>
+                    <p>
+                      Depende directamente de la luz solar. Ocurre en la
+                      membrana del tilacoide.
+                    </p>
                   </div>
                   <div class="phase-card dark">
                     <h4>Fase Oscura</h4>
-                    <p>Ciclo de Calvin. Ocurre en el estroma y produce glucosa.</p>
+                    <p>
+                      Ciclo de Calvin. Ocurre en el estroma y produce glucosa.
+                    </p>
                   </div>
                 </div>
 
@@ -163,13 +241,21 @@
                 <div class="video-premium-section">
                   <h3 class="video-title">Explicación Paso a Paso</h3>
                   <div class="video-frame">
-                    <iframe 
-                      width="100%" 
-                      height="400" 
-                      src="https://www.youtube.com/embed/WExnW5uk0gg?si=tmUe5yC6pPdZkZvg" 
-                      title="YouTube video player" 
-                      frameborder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    <iframe
+                      width="100%"
+                      height="400"
+                      src="https://www.youtube.com/embed/WExnW5uk0gg?si=tmUe5yC6pPdZkZvg"
+                      title="YouTube video player"
+                      frameborder="0"
+                      allow="
+                        accelerometer;
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        gyroscope;
+                        picture-in-picture;
+                        web-share;
+                      "
                       allowfullscreen
                     ></iframe>
                   </div>
@@ -196,13 +282,17 @@
   </v-main>
 </template>
 
-
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useStudentProfile } from '@/composables/useStudentProfile';
+import { ref, onMounted, onUnmounted } from "vue";
+import { useStudentProfile } from "@/composables/useStudentProfile";
 
 const { state, loadProfile } = useStudentProfile();
 const isLoading = ref(true);
+const isMobile = ref(false);
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
 
 const particleStyles = (n) => ({
   top: `${Math.random() * 100}%`,
@@ -211,7 +301,7 @@ const particleStyles = (n) => ({
   height: `${5 + Math.random() * 10}px`,
   animationDuration: `${8 + Math.random() * 12}s`,
   animationDelay: `${Math.random() * 5}s`,
-  opacity: 0.05 + Math.random() * 0.15
+  opacity: 0.05 + Math.random() * 0.15,
 });
 
 const bubbleStyles = (n) => ({
@@ -221,17 +311,21 @@ const bubbleStyles = (n) => ({
   height: `${10 + Math.random() * 20}px`,
   animationDuration: `${12 + Math.random() * 15}s`,
   animationDelay: `${Math.random() * 10}s`,
-  opacity: 0.05 + Math.random() * 0.2
+  opacity: 0.05 + Math.random() * 0.2,
 });
-
 
 onMounted(() => {
   loadProfile();
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
   setTimeout(() => {
     isLoading.value = false;
   }, 1000);
 });
 
+onUnmounted(() => {
+  window.removeEventListener("resize", checkMobile);
+});
 
 definePageMeta({
   layout: "dashboard",
@@ -274,18 +368,26 @@ definePageMeta({
 }
 
 .parallax-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(128, 161, 36, 0.15) 0%, rgba(221, 174, 56, 0.15) 50%, rgba(45, 106, 79, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(128, 161, 36, 0.22) 0%,
+    rgba(221, 174, 56, 0.18) 50%,
+    rgba(45, 106, 79, 0.18) 100%
+  );
   background-size: 400% 400%;
-  animation: mesh-flow 20s ease infinite;
+  animation: mesh-flow 18s ease infinite;
 }
 
 @keyframes mesh-flow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Rayos de Sol */
@@ -295,31 +397,47 @@ definePageMeta({
   left: 20%;
   width: 30vw;
   height: 150vh;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
+  filter: blur(28px);
   transform: rotate(-25deg);
-  filter: blur(40px);
   animation: ray-move 10s infinite alternate ease-in-out;
 }
-.ray-2 { left: 60%; animation-delay: -5s; }
+.ray-2 {
+  left: 60%;
+  animation-delay: -5s;
+}
 
 @keyframes ray-move {
-  from { transform: translateX(-10%) rotate(-25deg); }
-  to { transform: translateX(10%) rotate(-25deg); }
+  from {
+    transform: translateX(-10%) rotate(-25deg);
+  }
+  to {
+    transform: translateX(10%) rotate(-25deg);
+  }
 }
 
 /* Orbes */
 .glass-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(140px);
-  opacity: 0.3; /* Saturación reducida */
+  opacity: 0.42;
+  filter: blur(110px);
   animation: float-blob 18s infinite ease-in-out alternate;
 }
 
 .blob-1 {
   width: 900px;
   height: 900px;
-  background: radial-gradient(circle, rgba(128, 161, 36, 0.5), transparent);
+  background: radial-gradient(
+    circle,
+    rgba(128, 161, 36, 0.58),
+    transparent 65%
+  );
   top: -25%;
   left: -20%;
 }
@@ -336,7 +454,7 @@ definePageMeta({
 .blob-3 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(45, 106, 79, 0.4), transparent);
+  background: radial-gradient(circle, rgba(45, 106, 79, 0.44), transparent 70%);
   top: 35%;
   right: 5%;
   animation-delay: -9s;
@@ -347,36 +465,101 @@ definePageMeta({
   position: absolute;
   background: #80a124;
   border-radius: 50%;
-  filter: blur(3px);
+  filter: blur(2px);
+  opacity: 0.16;
   animation: particle-wander 12s infinite ease-in-out;
 }
 
 @keyframes particle-wander {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(100px, 150px) scale(1.5); }
-  66% { transform: translate(-80px, 80px) scale(0.8); }
-  100% { transform: translate(0, 0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(100px, 150px) scale(1.5);
+  }
+  66% {
+    transform: translate(-80px, 80px) scale(0.8);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 /* Burbujas (Oxígeno) */
 .oxygen-bubble {
   position: absolute;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 50%;
   backdrop-filter: blur(2px);
   animation: bubble-up 15s infinite linear;
 }
 
 @keyframes bubble-up {
-  0% { transform: translateY(0) translateX(0); opacity: 0; }
-  10% { opacity: 0.4; }
-  90% { opacity: 0.4; }
-  100% { transform: translateY(-120vh) translateX(50px); opacity: 0; }
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-120vh) translateX(50px);
+    opacity: 0;
+  }
 }
 
+/* --- OPTIMIZACIÓN MÓVIL --- */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
 
+  .parallax-bg::before {
+    animation-duration: 40s; /* Más lento = menos estrés GPU */
+    opacity: 0.08;
+  }
 
+  .glass-blob {
+    filter: blur(80px); /* Reducción drástica de blur */
+    animation: none !important;
+    opacity: 0.2;
+  }
+
+  .blob-1 {
+    width: 300px;
+    height: 300px;
+    top: 10%;
+    left: -10%;
+  }
+
+  .bio-particle {
+    animation-duration: 20s !important;
+    filter: none !important; /* Sin blur en móvil */
+  }
+
+  .oxygen-bubble {
+    backdrop-filter: none !important; /* Sin backdrop-filter */
+    border-width: 1px;
+  }
+
+  .contenidos-container {
+    padding: 1.5rem !important;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+  }
+
+  .card-col {
+    animation: none !important; /* Quitar animaciones de entrada en móvil */
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
 
 /* --- HEADER --- */
 .contenidos-header {
@@ -445,7 +628,7 @@ definePageMeta({
   background: white;
   padding: 12px;
   border-radius: 32px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
 .infographic-caption {
@@ -500,7 +683,7 @@ definePageMeta({
 .video-frame {
   border-radius: 32px;
   overflow: hidden;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
   background: black;
 }
 
@@ -515,8 +698,14 @@ definePageMeta({
   border-radius: 24px;
 }
 
-.phase-card.light { background: #fffcea; border: 1px solid #fef3c7; }
-.phase-card.dark { background: #f0fdf4; border: 1px solid #dcfce7; }
+.phase-card.light {
+  background: #fffcea;
+  border: 1px solid #fef3c7;
+}
+.phase-card.dark {
+  background: #f0fdf4;
+  border: 1px solid #dcfce7;
+}
 
 .phase-card h4 {
   font-weight: 900;
@@ -525,8 +714,12 @@ definePageMeta({
   font-size: 0.9rem;
 }
 
-.phase-card.light h4 { color: #b45309; }
-.phase-card.dark h4 { color: #15803d; }
+.phase-card.light h4 {
+  color: #b45309;
+}
+.phase-card.dark h4 {
+  color: #15803d;
+}
 
 /* --- FOOTER --- */
 .actions-footer {
@@ -540,8 +733,8 @@ definePageMeta({
   color: #1a1a1a !important;
   font-weight: 800 !important;
   padding: 0 40px !important;
-  border: 1px solid rgba(0,0,0,0.1) !important;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
   transition: all 0.3s ease !important;
 }
 
@@ -549,12 +742,18 @@ definePageMeta({
   transform: translateY(-5px);
   background: #1a1a1a !important;
   color: white !important;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 960px) {
@@ -563,4 +762,3 @@ definePageMeta({
   }
 }
 </style>
-
