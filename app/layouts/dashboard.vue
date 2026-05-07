@@ -1,81 +1,61 @@
 <template>
-  <v-app class="steam-layout">
-    <!-- Fondo decorativo animado detrás de todo -->
-    <div class="bg-gradient-shapes"></div>
+  <v-app class="ova-app-root">
+    <!-- Fondo decorativo global -->
+    <div class="app-bg-gradient"></div>
 
-    <!-- Drawer expandible con efecto Liquid Glass -->
+    <!-- Barra de navegación (Control Center) -->
     <NavDrawer v-model="drawerOpen" />
 
-    <!-- Modal de Alerta -->
-    <Alerta v-model="showWelcomeModal" />
+    <!-- Modales Globales -->
+    <AppUpdateModal />
 
-    <v-main class="main-content">
-      <v-container fluid class="content-wrapper">
-        <!-- Transición suave para el contenido de las páginas -->
-        <transition name="page-fade" mode="out-in" appear>
-          <v-sheet
-            rounded="xl"
-            width="100%"
-            class="content-surface elevation-1"
-          >
-            <!-- Contenedor interno sin scroll automático -->
-            <div class="scroll-container w-100">
-              <nuxt-page />
-            </div>
-          </v-sheet>
+    <!-- Main Content Area -->
+    <v-main class="main-viewport">
+      <div class="page-content-container">
+        <transition name="page-fade" mode="out-in">
+          <div :key="$route.fullPath">
+            <slot />
+          </div>
         </transition>
-      </v-container>
+      </div>
+
+      <!-- Footer Global integrado al flujo de scroll -->
+      <TheFooter />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import NavDrawer from "@/components/barranav.vue";
 
-const showWelcomeModal = ref(false);
 const drawerOpen = ref(false);
-
-onMounted(() => {
-  const shouldShowModal = sessionStorage.getItem("showMaintenance");
-  if (shouldShowModal === "true") {
-    // Pequeño delay para que la animación de entrada no choque con el modal
-    setTimeout(() => {
-      showWelcomeModal.value = true;
-      sessionStorage.removeItem("showMaintenance");
-    }, 500);
-  }
-});
+const showWelcomeModal = ref(false);
 </script>
 
-<style scoped>
-/* Estética General Steam (Limpio y Profundo) */
-.steam-layout {
-  background-color: #f0f4f8 !important;
-  overflow: hidden;
+<style>
+.ova-app-root {
+  background: #f8fafc !important;
+}
+
+.app-bg-gradient {
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(128, 161, 36, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(221, 174, 56, 0.05) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.main-viewport {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-/* Formas decorativas de fondo (Animación suave) */
-.bg-gradient-shapes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  background: 
-    radial-gradient(circle at 10% 20%, rgba(76, 175, 80, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(0, 106, 255, 0.05) 0%, transparent 40%);
-  pointer-events: none;
-}
-
-.main-content {
+.page-content-container {
   flex: 1;
-  display: flex;
-  overflow: hidden;
   position: relative;
   z-index: 1;
 }
@@ -127,8 +107,6 @@ onMounted(() => {
   opacity: 0;
   transform: translateY(-20px);
 }
-
-
 
 /* Scrollbar personalizado */
 .scroll-container::-webkit-scrollbar {

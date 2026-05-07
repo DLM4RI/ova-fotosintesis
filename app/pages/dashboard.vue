@@ -1,544 +1,512 @@
 <template>
-  <v-main class="ova-shell">
-    <!-- ═══ PANEL IZQUIERDO — Ilustración ═══ -->
-    <div class="panel panel-left">
-      <div class="left-bg-blob"></div>
-      <div class="left-content">
-        <v-img :src="useAsset('logo.png')" class="hero-logo" contain />
-        <div class="left-badge">
-          <i class="bx bxs-leaf"></i>
-          Aprende con las plantas
-        </div>
-      </div>
-    </div>
+  <div class="dashboard-page">
+    <LoadingScreen :active="isLoading" :student-name="state.name" />
 
-    <!-- ═══ PANEL DERECHO — Contenido ═══ -->
-    <div class="panel panel-right">
-      <div class="right-inner">
-        <!-- Chip materia -->
-        <div class="subject-chip">
-          <i class="bx bx-leaf"></i>
-          Ciencias Naturales
-        </div>
+    <v-container fluid class="pa-0">
+      <v-row no-gutters class="dashboard-shell">
+        <!-- PANEL IZQUIERDO (HERO) -->
+        <v-col cols="12" lg="5" class="hero-panel">
+          <div class="hero-sticky-content">
+            <div class="floating-leaves" aria-hidden="true">
+              <LeafAlt
+                v-for="leaf in leafData"
+                :key="leaf.id"
+                class="leaf"
+                :style="{
+                  left: leaf.left,
+                  animationDuration: leaf.duration,
+                  animationDelay: leaf.delay,
+                  opacity: leaf.opacity,
+                  fontSize: leaf.size,
+                }"
+              />
+            </div>
 
-        <!-- Título -->
-        <h1 class="main-title">
-          Fotosíntesis
-          <span class="title-accent">Vegetal</span>
-        </h1>
-
-        <!-- Subtítulo -->
-        <p class="main-subtitle">
-          Unidad Didáctica Integrada sobre el proceso de conversión energética
-          en las plantas.
-        </p>
-
-        <!-- Equipo -->
-        <div class="team-section">
-          <p class="team-label">
-            <i class="bx bx-group"></i>
-            EQUIPO DE DESARROLLO
-          </p>
-          <div class="team-grid">
-            <div v-for="member in team" :key="member.name" class="member-card">
-              <div class="member-avatar">
-                <v-avatar size="50" class="elevation-2">
-                  <v-img :src="useAsset(member.img)" />
-                </v-avatar>
+            <div class="hero-main">
+              <div class="logo-container">
+                <div class="logo-orbit"></div>
+                <v-img :src="logoSrc" class="hero-logo" />
               </div>
-              <div class="member-info">
-                <span class="member-name">{{ member.name }}</span>
-                <span class="member-role" :style="{ color: member.color }">
-                  <i :class="member.icon"></i>
-                  {{ member.role }}
-                </span>
+              
+              <div class="hero-text">
+                <div class="badge-mini">
+                  <v-icon icon="mdi-leaf" size="14" class="mr-1" />
+                  Ciencias Naturales
+                </div>
+                <h1 class="hero-title">Fotosíntesis <span class="gold">Vegetal</span></h1>
+                <p class="hero-subtitle">Descubre el motor energético de la vida en la Tierra.</p>
+              </div>
+
+              <div class="hero-stats">
+                <div class="stat-item">
+                  <i class="bx bx-time"></i>
+                  <span>20m</span>
+                </div>
+                <div class="stat-item">
+                  <i class="bx bx-book-open"></i>
+                  <span>6 Cap</span>
+                </div>
+                <div class="stat-item">
+                  <i class="bx bx-trophy"></i>
+                  <span>Nivel {{ state.grade }}°</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </v-col>
 
-        <!-- CTA -->
-        <div class="cta-row">
-          <button class="cta-btn mt-4" @click="$router.push('/contenidos')">
-            Iniciar Aprendizaje
-            <i class="bx bx-chevron-right"></i>
-          </button>
-          <div class="cta-meta mt-4">
-            <i class="bx bx-time-five"></i>
-            <span>20 minutos</span>
+        <!-- PANEL DERECHO (CONTENIDO) -->
+        <v-col cols="12" lg="7" class="content-panel">
+          <div class="content-scroll-area">
+            <header class="user-welcome">
+              <v-row align="center">
+                <v-col cols="12" md="8">
+                  <span class="welcome-tag">Hola de nuevo</span>
+                  <h2 class="welcome-name">{{ state.name || 'Estudiante' }}</h2>
+                  <p class="welcome-desc">{{ welcomeMessage }}</p>
+                  
+                  <!-- BOTÓN PARA OCULTAR/MOSTRAR NOTIFICACIONES -->
+                  <v-btn
+                    variant="tonal"
+                    size="small"
+                    rounded="lg"
+                    color="primary"
+                    class="mt-2"
+                    @click="showNotes = !showNotes"
+                  >
+                    <v-icon :icon="showNotes ? 'mdi-bell-off-outline' : 'mdi-bell-outline'" start />
+                    {{ showNotes ? 'Ocultar Novedades' : 'Ver Novedades' }}
+                  </v-btn>
+                </v-col>
+                <v-col cols="12" md="4">
+                  <transition name="fade-slide">
+                    <AppNotificationBox v-if="showNotes" />
+                  </transition>
+                </v-col>
+              </v-row>
+            </header>
+
+
+
+            <!-- SECCIÓN: OBJETIVOS -->
+            <section class="dashboard-section">
+              <div class="section-header">
+                <div class="header-icon"><i class="bx bx-target-lock"></i></div>
+                <h3>Objetivos de aprendizaje</h3>
+              </div>
+              <div class="goals-grid">
+                <div v-for="(goal, i) in competencies" :key="i" class="goal-card">
+                  <p class="goal-desc">{{ goal.descripcion }}</p>
+                  <div class="goal-tags">
+                    <span v-for="tag in goal.tags" :key="tag" class="tag">{{ tag }}</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECCIÓN: RUTA -->
+            <section class="dashboard-section">
+              <div class="section-header">
+                <div class="header-icon"><i class="bx bx-map-alt"></i></div>
+                <h3>Tu ruta de aprendizaje</h3>
+              </div>
+              <div class="track-list">
+                <div v-for="(track, idx) in tracklist" :key="idx" class="track-card" :class="track.class">
+                  <div class="track-num">{{ track.num }}</div>
+                  <div class="track-body">
+                    <h4>{{ track.title }}</h4>
+                    <span>{{ track.sub }}</span>
+                  </div>
+                  <div class="track-status">{{ track.tagText }}</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- SECCIÓN: VIDEO -->
+            <section class="dashboard-section">
+              <div class="section-header">
+                <div class="header-icon"><i class="bx bx-play-circle"></i></div>
+                <h3>Tutorial de navegación</h3>
+              </div>
+              <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/KNb2j_9gHy8" frameborder="0" allowfullscreen />
+              </div>
+            </section>
+
+            <!-- CTA FINAL -->
+            <div class="cta-container">
+              <v-btn to="/contenidos" height="64" rounded="xl" class="cta-primary-btn px-10">
+                Iniciar Exploración
+                <v-icon end icon="mdi-arrow-right" />
+              </v-btn>
+              <div class="cta-info">
+                <v-icon icon="mdi-information-outline" size="14" class="mr-1" />
+                Presiona para comenzar los contenidos
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </v-main>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script setup>
-definePageMeta({ layout: "dashboard" });
+import { ref, computed, onMounted } from 'vue';
+import { LeafAlt } from "@boxicons/vue";
+import { useStudentProfile } from '@/composables/useStudentProfile';
 
-const team = [
-  {
-    name: "Mario Castro",
-    initials: "MC",
-    role: "DESARROLLADOR",
-    icon: "bx bx-code-alt",
-    color: "#e65100",
-    img: "mario.png",
-  },
-  {
-    name: "Rosendo De Castro",
-    initials: "RC",
-    role: "DESARROLLADOR",
-    icon: "bx bx-code-alt",
-    color: "#e65100",
-    img: "rosendo.jpeg",
-  },
-  {
-    name: "Fabio Cantero",
-    initials: "FC",
-    role: "QA ENGINEER",
-    icon: "bx bx-list-check",
-    color: "#1565c0",
-    img: "fabio.png",
-  },
-  {
-    name: "Andrea Hernandez",
-    initials: "AH",
-    role: "PROJECT MANAGER",
-    icon: "bx bx-briefcase",
-    color: "#6a1b9a",
-    img: "andrea.png",
-  },
-];
+const { state, loadProfile } = useStudentProfile();
+const isLoading = ref(true);
+const showNotes = ref(true);
+
+onMounted(() => {
+  loadProfile();
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 1000);
+});
+
+const logoSrc = useAsset('logo.png');
+
+const leafData = Array.from({ length: 15 }, (_, i) => ({
+  id: i,
+  left: `${5 + (i * 7) % 90}%`,
+  duration: `${10 + (i * 2) % 15}s`,
+  delay: `${i * 0.5}s`,
+  opacity: 0.1 + (i % 3) * 0.1,
+  size: `${20 + (i % 5) * 5}px`,
+}));
+
+const welcomeMessage = computed(() => {
+  if (state.grade === 6) return "Comenzaremos con los conceptos fundamentales de cómo las plantas crean su propio alimento.";
+  if (state.grade === 7) return "Profundizaremos en los orgánulos celulares y las reacciones químicas básicas del proceso.";
+  if (state.grade === 8) return "Analizaremos detalladamente el Ciclo de Calvin y el impacto en los ecosistemas globales.";
+  return "Explora el proceso que sostiene la vida en la Tierra.";
+});
+
+const competencies = computed(() => {
+  const base = [{ descripcion: "Identificar los componentes esenciales", tags: ["Luz", "CO₂", "Agua"] }];
+  if (state.grade === 6) return [...base, { descripcion: "Importancia del oxígeno para nosotros", tags: ["Oxígeno", "Vida"] }];
+  if (state.grade === 7) return [...base, { descripcion: "Estructura del cloroplasto y tilacoides", tags: ["Cloroplasto"] }];
+  return [...base, { descripcion: "Mecanismo del Ciclo de Calvin", tags: ["Bioquímica"] }];
+});
+
+const tracklist = computed(() => [
+  { num: '01', title: '¿Qué es la fotosíntesis?', sub: 'Conceptos base', class: 'active', tagText: 'Disponible' },
+  { num: '02', title: 'La energía solar', sub: 'Pigmentos y luz', class: 'active', tagText: 'Disponible' },
+  { num: '03', title: 'Fase Luminosa', sub: 'Captura de energía', class: 'locked', tagText: 'Próximo' },
+]);
+
+definePageMeta({
+  layout: "dashboard",
+});
 </script>
 
 <style scoped>
-/* ─────────────────────────────────────────
-   SHELL: ocupa exactamente 100% sin overflow
-   ───────────────────────────────────────── */
-.ova-shell {
-  display: flex !important;
-  width: 100%;
-  height: 100%; /* hereda del layout padre */
+/* Transición para Notas */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
+
+.dashboard-page {
+  padding: 0;
   overflow: hidden;
+}
+
+
+.dashboard-shell {
+  min-height: 100vh;
+}
+
+/* PANEL IZQUIERDO */
+.hero-panel {
   background: #ffffff;
+  position: relative;
+  border-right: 1px solid rgba(0,0,0,0.03);
+  z-index: 2;
 }
 
-/* ─────────────────────────────────────────
-   PANELES
-   ───────────────────────────────────────── */
-.panel {
+.hero-sticky-content {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
   overflow: hidden;
-  height: 100%;
 }
 
-/* Panel izquierdo: fondo verde suave */
-.panel-left {
-  flex: 0 0 44%;
-  max-width: 44%;
-  background: #f1f8e9;
+.hero-main {
+  text-align: center;
   position: relative;
-  align-items: center;
-  justify-content: center;
+  z-index: 2;
 }
 
-.left-bg-blob {
+.logo-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 40px;
+}
+
+.logo-orbit {
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      ellipse at 30% 30%,
-      rgba(165, 214, 167, 0.45) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse at 75% 70%,
-      rgba(129, 199, 132, 0.3) 0%,
-      transparent 50%
-    );
-  pointer-events: none;
+  inset: -15px;
+  border: 1px solid rgba(128, 161, 36, 0.2);
+  border-radius: 50%;
+  animation: rotate 20s linear infinite;
 }
 
-.left-content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(1rem, 3vh, 2rem);
-  padding: clamp(1.5rem, 4vw, 3rem);
-  height: 100%;
+.logo-orbit::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 10px;
+  height: 10px;
+  background: #ddae38;
+  border-radius: 50%;
 }
 
 .hero-logo {
-  width: clamp(140px, 22vw, 280px) !important;
-  height: clamp(140px, 22vw, 280px) !important;
-  flex-shrink: 0;
-  animation: logoBob 4s ease-in-out infinite;
-}
-
-@keyframes logoBob {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.left-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 18px;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(129, 199, 132, 0.5);
-  border-radius: 999px;
-  font-size: clamp(0.72rem, 1.1vw, 0.85rem);
-  font-weight: 700;
-  color: #2e7d32;
-  letter-spacing: 0.2px;
-  animation: fadeSlide 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
-}
-
-.left-badge i {
-  font-size: 1rem;
-}
-
-/* Panel derecho */
-.panel-right {
-  flex: 1 1 0;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(1.5rem, 4vw, 3.5rem);
-  background: #ffffff;
-}
-
-.right-inner {
   width: 100%;
-  max-width: 520px;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(0.6rem, 1.5vh, 1.2rem);
-  animation: fadeSlide 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  height: 100%;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.05);
 }
 
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(22px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ─────────────────────────────────────────
-   CHIP MATERIA
-   ───────────────────────────────────────── */
-.subject-chip {
+.badge-mini {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 16px;
-  background: #1b5e20;
-  border-radius: 999px;
-  font-size: clamp(0.75rem, 1.1vw, 0.85rem);
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.3px;
-  width: fit-content;
-  animation: fadeSlide 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+  background: #f0fdf4;
+  color: #80a124;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 20px;
 }
 
-.subject-chip i {
-  font-size: 1rem;
+.hero-title {
+  font-size: 3rem;
+  font-weight: 950;
+  color: #1a1a1a;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 15px;
 }
 
-/* ─────────────────────────────────────────
-   TÍTULO
-   ───────────────────────────────────────── */
-.main-title {
-  font-size: clamp(1.9rem, 4.5vw, 3.2rem);
-  font-weight: 900;
-  line-height: 1.1;
-  color: #111;
-  margin: 0;
-  letter-spacing: -0.5px;
-  animation: fadeSlide 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+.gold { color: #ddae38; }
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: #64748b;
+  max-width: 320px;
+  margin: 0 auto 40px;
 }
 
-.title-accent {
-  color: #2e7d32;
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 
-/* ─────────────────────────────────────────
-   SUBTÍTULO
-   ───────────────────────────────────────── */
-.main-subtitle {
-  font-size: clamp(0.85rem, 1.4vw, 1rem);
-  line-height: 1.65;
-  color: #546e7a;
-  margin: 0;
-  animation: fadeSlide 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
-}
-
-/* ─────────────────────────────────────────
-   EQUIPO
-   ───────────────────────────────────────── */
-.team-section {
+.stat-item {
+  background: #f8fafc;
+  padding: 12px 20px;
+  border-radius: 18px;
   display: flex;
   flex-direction: column;
-  gap: clamp(0.5rem, 1vh, 0.85rem);
-  animation: fadeSlide 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  gap: 4px;
 }
 
-.team-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: clamp(0.65rem, 1vw, 0.75rem);
+.stat-item i { font-size: 20px; color: #80a124; }
+.stat-item span { font-size: 0.8rem; font-weight: 800; color: #1e293b; }
+
+/* PANEL DERECHO */
+.content-panel {
+  background: transparent;
+  padding: clamp(30px, 6vw, 80px);
+}
+
+.user-welcome {
+  margin-bottom: 60px;
+}
+
+.welcome-tag {
+  font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 1.5px;
-  color: #90a4ae;
-  margin: 0;
+  color: #80a124;
   text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.team-label i {
-  font-size: 1rem;
+.welcome-name {
+  font-size: 2.5rem;
+  font-weight: 950;
+  color: #1a1a1a;
+  letter-spacing: -1.5px;
+  margin-bottom: 10px;
 }
 
-.team-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(0.5rem, 1.2vw, 0.9rem);
+.welcome-desc {
+  font-size: 1.15rem;
+  color: #475569;
+  line-height: 1.6;
+  max-width: 550px;
 }
 
-.member-card {
+.dashboard-section {
+  margin-bottom: 50px;
+}
+
+.section-header {
   display: flex;
   align-items: center;
-  gap: clamp(8px, 1.2vw, 12px);
-  padding: clamp(8px, 1.5vw, 12px) clamp(10px, 1.5vw, 14px);
-  background: #fafafa;
-  border: 1px solid #eeeeee;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.header-icon {
+  width: 42px;
+  height: 42px;
+  background: white;
   border-radius: 14px;
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  cursor: default;
-  overflow: hidden; /* ← evita que el contenido interno desborde */
-}
-
-.member-card:hover {
-  border-color: #c8e6c9;
-  box-shadow: 0 4px 16px rgba(46, 125, 50, 0.1);
-  transform: translateY(-2px);
-}
-
-.member-avatar {
-  flex-shrink: 0;
-  width: clamp(34px, 4.5vw, 44px);
-  height: clamp(34px, 4.5vw, 44px);
-  border-radius: 50%;
-  background: #eceff1;
-  border: 1.5px solid #e0e0e0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(0.65rem, 1vw, 0.8rem);
-  font-weight: 800;
-  color: #607d8b;
-  letter-spacing: 0.5px;
+  font-size: 22px;
+  color: #80a124;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-.member-info {
+.section-header h3 { font-size: 1.25rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; }
+
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.goal-card {
+  background: white;
+  padding: 24px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.goal-desc { font-size: 0.95rem; font-weight: 700; color: #334155; margin-bottom: 15px; }
+
+.goal-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { background: #f1f5f9; padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 800; color: #64748b; }
+
+.track-list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 0; /* ← permite que el texto haga truncate sin romper */
-  overflow: hidden;
+  gap: 12px;
 }
 
-.member-name {
-  font-size: clamp(0.75rem, 1.1vw, 0.9rem);
-  font-weight: 700;
-  color: #212121;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.member-role {
+.track-card {
+  background: white;
+  padding: 20px 24px;
+  border-radius: 22px;
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: clamp(0.6rem, 0.85vw, 0.7rem);
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  gap: 20px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
 }
 
-.member-role i {
-  font-size: 0.85rem;
-  flex-shrink: 0;
-}
+.track-card.active { border-color: rgba(128, 161, 36, 0.2); }
+.track-card.locked { opacity: 0.6; background: #f8fafc; }
 
-/* ─────────────────────────────────────────
-   CTA
-   ───────────────────────────────────────── */
-.cta-row {
+.track-num {
+  width: 44px;
+  height: 44px;
+  background: #f1f5f9;
+  border-radius: 14px;
   display: flex;
   align-items: center;
-  gap: clamp(0.8rem, 2vw, 1.4rem);
-  flex-wrap: nowrap;
+  justify-content: center;
+  font-weight: 900;
+  color: #1e293b;
+}
+
+.track-card.active .track-num { background: #80a124; color: white; }
+
+.track-body { flex: 1; }
+.track-body h4 { font-size: 1rem; font-weight: 800; color: #1e293b; margin-bottom: 2px; }
+.track-body span { font-size: 0.8rem; color: #64748b; font-weight: 600; }
+
+.track-status { font-size: 0.75rem; font-weight: 900; color: #80a124; }
+
+.video-container {
+  aspect-ratio: 16/9;
+  border-radius: 28px;
   overflow: hidden;
-  animation: fadeSlide 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
 }
 
-.cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: clamp(10px, 1.5vh, 15px) clamp(18px, 3vw, 30px);
-  background: #1b5e20;
-  color: #fff;
-  font-size: clamp(0.85rem, 1.3vw, 1rem);
-  font-weight: 700;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition:
-    background 0.25s ease,
-    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.25s ease;
-  box-shadow: 0 4px 18px rgba(27, 94, 32, 0.35);
+.video-container iframe { width: 100%; height: 100%; }
+
+.cta-container {
+  margin-top: 60px;
+  text-align: center;
 }
 
-.cta-btn i {
-  font-size: 1.2rem;
+.cta-primary-btn {
+  background: linear-gradient(135deg, #ddae38 0%, #80a124 100%) !important;
+  color: white !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: none !important;
+  font-size: 1.1rem !important;
+  box-shadow: 0 20px 40px rgba(128, 161, 36, 0.3) !important;
+  transition: all 0.3s ease !important;
 }
 
-.cta-btn:hover {
-  background: #2e7d32;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 26px rgba(27, 94, 32, 0.4);
+.cta-primary-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(128, 161, 36, 0.4) !important;
 }
 
-.cta-btn:active {
-  transform: scale(0.97);
-}
-
-.cta-meta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: clamp(0.8rem, 1.1vw, 0.9rem);
+.cta-info {
+  margin-top: 15px;
+  font-size: 0.8rem;
+  color: #94a3b8;
   font-weight: 600;
-  color: #78909c;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 
-.cta-meta i {
-  font-size: 1.1rem;
+/* HOJAS */
+.floating-leaves { position: absolute; inset: 0; pointer-events: none; }
+.leaf { position: absolute; top: -50px; animation: fall linear infinite; color: #80a124; }
+
+@keyframes fall {
+  from { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
-/* ═══════════════════════════════════════════
-   MOBILE — columna única, sin overflow
-   ═══════════════════════════════════════════ */
-@media (max-width: 768px) {
-  .ova-shell {
-    flex-direction: column;
-  }
-
-  /* Panel izquierdo: franja superior compacta */
-  .panel-left {
-    flex: 0 0 auto;
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    padding: clamp(1.2rem, 4vw, 2rem) 1.5rem 1rem;
-  }
-
-  .left-content {
-    flex-direction: row;
-    justify-content: flex-start;
-    height: auto;
-    gap: 1rem;
-    padding: 0;
-  }
-
-  .hero-logo {
-    width: clamp(64px, 18vw, 90px) !important;
-    height: clamp(64px, 18vw, 90px) !important;
-  }
-
-  .left-badge {
-    font-size: 0.78rem;
-  }
-
-  /* Panel derecho: resto del espacio */
-  .panel-right {
-    flex: 1 1 0;
-    min-height: 0;
-    overflow: hidden;
-    padding: 1.2rem 1.5rem 1.5rem;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-
-  .right-inner {
-    max-width: 100%;
-    gap: 0.75rem;
-  }
-
-  .main-title {
-    font-size: clamp(1.6rem, 7vw, 2.2rem);
-  }
-
-  .main-subtitle {
-    font-size: 0.88rem;
-    line-height: 1.55;
-  }
-
-  .team-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.55rem;
-  }
-
-  .member-card {
-    padding: 8px 10px;
-    border-radius: 12px;
-  }
-
-  .cta-btn {
-    padding: 11px 20px;
-    font-size: 0.9rem;
-    border-radius: 10px;
-  }
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-/* Pantallas muy pequeñas (≤360px) */
-@media (max-width: 360px) {
-  .team-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .main-title {
-    font-size: 1.5rem;
-  }
+@media (max-width: 1264px) {
+  .hero-panel { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.03); }
+  .hero-sticky-content { height: auto; padding: 60px 40px; }
+  .content-panel { padding: 40px 20px; }
+  .hero-title { font-size: 2.5rem; }
 }
 </style>
