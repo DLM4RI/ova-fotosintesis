@@ -1,0 +1,379 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>@import url("https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css");.nav-system-container[data-v-aeeae000]{align-items:center;display:flex;inset:0;padding:clamp(20px,4vw,50px);pointer-events:none;position:fixed;z-index:1000}.nav-system-container[data-v-aeeae000]>*{pointer-events:auto}.sidebar-panel[data-v-aeeae000]{background:#fff;border-radius:35px;box-shadow:0 15px 40px rgba(0,0,0,.12);display:flex;flex-direction:column;height:70px;overflow:hidden;position:relative;transition:all .7s cubic-bezier(.19,1,.22,1);width:70px;z-index:1002}.sidebar-panel.sidebar-open[data-v-aeeae000]{border-radius:30px;height:auto;max-height:90vh;padding:25px 0;width:290px}.sidebar-toggle[data-v-aeeae000]{align-items:center;background:transparent;border:none;color:var(--primary-color);cursor:pointer;display:flex;flex-shrink:0;font-size:30px;height:70px;justify-content:center;transition:transform .3s ease;width:70px}.sidebar-toggle[data-v-aeeae000]:hover{transform:rotate(90deg)}.sidebar-content[data-v-aeeae000]{animation:fadeIn-aeeae000 .5s .3s forwards;opacity:0;padding:0 25px}.sidebar-profile[data-v-aeeae000]{gap:15px;margin-bottom:25px}.avatar-ring[data-v-aeeae000],.sidebar-profile[data-v-aeeae000]{align-items:center;display:flex}.avatar-ring[data-v-aeeae000]{background:#f8fafc;border:2px solid var(--primary-color);border-radius:50%;color:var(--primary-color);font-size:24px;height:50px;justify-content:center;transition:all .3s ease;width:50px}.profile-text[data-v-aeeae000]{display:flex;flex-direction:column}.p-name[data-v-aeeae000]{color:#1a1a1a;font-size:1.05rem;font-weight:900;letter-spacing:-.5px}.p-grade[data-v-aeeae000]{color:var(--primary-color);font-size:.8rem;font-weight:800;text-transform:uppercase}.sidebar-divider[data-v-aeeae000]{background:linear-gradient(90deg,transparent,rgba(0,0,0,.05),transparent);height:1px;margin:0 -25px 25px}.sidebar-links[data-v-aeeae000]{display:flex;flex-direction:column;gap:10px}.s-link[data-v-aeeae000]{align-items:center;background:transparent;border:none;border-radius:18px;color:#4b5563;cursor:pointer;display:flex;font-size:.95rem;font-weight:700;gap:15px;padding:14px 20px;text-decoration:none;transition:all .3s cubic-bezier(.4,0,.2,1);width:100%}.s-link[data-v-aeeae000]:hover{background:rgba(128,161,36,.05);color:var(--primary-color);transform:translateX(8px)}.s-link.router-link-active[data-v-aeeae000]{background:var(--primary-color);box-shadow:0 10px 20px rgba(128,161,36,.2);color:#fff}.s-link i[data-v-aeeae000]{font-size:22px}.sidebar-footer[data-v-aeeae000]{margin-top:50px}.logout-btn[data-v-aeeae000]{color:#f87171}.logout-btn[data-v-aeeae000]:hover{background:#fff1f2;color:#ef4444}.control-center-card[data-v-aeeae000]{background:#fff;border:1px solid rgba(0,0,0,.04);border-radius:32px;box-shadow:0 30px 80px rgba(0,0,0,.18);margin-left:25px;overflow:hidden;padding:30px;position:relative;width:400px;z-index:1001}.card-header[data-v-aeeae000]{gap:12px;margin-bottom:30px}.card-header[data-v-aeeae000],.header-icon[data-v-aeeae000]{align-items:center;display:flex}.header-icon[data-v-aeeae000]{background:#f8fafc;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.05);height:40px;justify-content:center;width:40px}.card-header h3[data-v-aeeae000]{color:#1a1a1a;font-size:1.1rem;font-weight:950;letter-spacing:-1px}.control-section[data-v-aeeae000]{margin-bottom:30px}.section-label[data-v-aeeae000]{color:#94a3b8;font-size:.75rem;font-weight:900;letter-spacing:1.5px;margin-bottom:15px;text-transform:uppercase}.progress-info[data-v-aeeae000]{display:flex;flex-direction:column;gap:10px}.progress-bar-container[data-v-aeeae000]{background:#f1f5f9;border-radius:12px;height:10px;overflow:hidden}.progress-fill[data-v-aeeae000]{border-radius:12px;height:100%;transition:width 1s ease-in-out}.stats-row[data-v-aeeae000]{align-items:center;display:flex;justify-content:space-between}.progress-percent[data-v-aeeae000]{color:#1e293b;font-size:.85rem;font-weight:800}.xp-count[data-v-aeeae000]{background:rgba(128,161,36,.1);border-radius:10px;color:var(--primary-color);font-size:.75rem;font-weight:900;padding:4px 10px}.settings-grid[data-v-aeeae000]{display:flex;flex-direction:column;gap:20px}.setting-item[data-v-aeeae000]{align-items:center;color:#334155;display:flex;font-size:.9rem;font-weight:700;justify-content:space-between}.color-options[data-v-aeeae000],.font-options[data-v-aeeae000]{display:flex;gap:12px}.c-opt[data-v-aeeae000]{border:2px solid transparent;border-radius:50%;cursor:pointer;height:24px;transition:transform .2s ease;width:24px}.c-opt[data-v-aeeae000]:hover{transform:scale(1.2)}.c-opt.active[data-v-aeeae000]{border-color:#1a1a1a;transform:scale(1.1)}.c-opt.nature[data-v-aeeae000]{background:#80a124}.c-opt.dark[data-v-aeeae000]{background:#1f2937}.c-opt.gold[data-v-aeeae000]{background:#ddae38}.f-btn[data-v-aeeae000]{background:#f1f5f9;border:none;border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:850;padding:6px 12px;transition:all .2s ease}.f-btn.active[data-v-aeeae000]{background:#1e293b;color:#fff}.neuro-tip[data-v-aeeae000]{background:#fdfcf6;border:2px solid #fef3c7;border-radius:20px;display:flex;gap:15px;padding:20px}.neuro-tip i[data-v-aeeae000]{font-size:24px}.neuro-tip p[data-v-aeeae000]{color:#475569;font-size:.85rem;font-weight:600;line-height:1.5;margin:0}.global-overlay[data-v-aeeae000]{align-items:center;backdrop-filter:blur(15px);background:rgba(0,0,0,.4);display:flex;inset:0;justify-content:flex-end;position:fixed;z-index:999}.overlay-visual-container[data-v-aeeae000]{align-items:center;bottom:0;display:flex;height:100%;overflow:hidden;padding-left:100px;position:absolute;right:0;top:0;width:55%}.visual-bg[data-v-aeeae000]{filter:brightness(.6) saturate(1.2);inset:0;position:absolute}.visual-overlay[data-v-aeeae000]{background:linear-gradient(90deg,rgba(0,0,0,.8),transparent);inset:0;position:absolute}.visual-content[data-v-aeeae000]{animation:slideInRight-aeeae000 .8s ease-out;max-width:500px;position:relative;z-index:2}.visual-tag[data-v-aeeae000]{color:var(--primary-color);font-size:.8rem;font-weight:900;letter-spacing:4px;margin-bottom:20px}.visual-quote[data-v-aeeae000]{color:#fff;font-size:2.8rem;font-weight:950;letter-spacing:-2px;line-height:1;margin-bottom:30px}@keyframes slideInRight-aeeae000{0%{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}.blur-blob[data-v-aeeae000]{border-radius:50%;filter:blur(100px);opacity:.4;position:absolute}.b-1[data-v-aeeae000]{height:500px;right:-5%;top:-10%;width:500px}.b-2[data-v-aeeae000]{background:#ddae38;bottom:-5%;height:400px;left:10%;width:400px}.premium-logout-card[data-v-aeeae000]{border:none!important;overflow:hidden}.logout-hero[data-v-aeeae000]{position:relative}.hero-overlay[data-v-aeeae000]{background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);inset:0;position:absolute}.hero-icon[data-v-aeeae000]{align-items:center;background:#ef4444;border:4px solid #fff;border-radius:50%;bottom:-25px;box-shadow:0 10px 25px rgba(239,68,68,.4);color:#fff;display:flex;font-size:30px;height:60px;justify-content:center;left:50%;position:absolute;transform:translateX(-50%);width:60px}.logout-title[data-v-aeeae000]{color:#1e293b;font-size:1.8rem;font-weight:950;letter-spacing:-1.5px;margin-top:20px}.logout-subtitle[data-v-aeeae000]{color:#64748b;font-size:1.1rem;font-weight:500;line-height:1.6;margin-bottom:30px}.confirm-logout-btn[data-v-aeeae000]{color:#fff!important;font-weight:900!important;letter-spacing:.5px!important;text-transform:none!important}.cancel-logout-btn[data-v-aeeae000]{color:#94a3b8!important;font-weight:800!important;text-transform:none!important}.card-slide-enter-active[data-v-aeeae000],.card-slide-leave-active[data-v-aeeae000]{transition:all .6s cubic-bezier(.16,1,.3,1)}.card-slide-enter-from[data-v-aeeae000],.card-slide-leave-to[data-v-aeeae000]{opacity:0;transform:translateX(60px) scale(.9)}.fade-enter-active[data-v-aeeae000],.fade-leave-active[data-v-aeeae000]{transition:opacity .5s}.fade-enter-from[data-v-aeeae000],.fade-leave-to[data-v-aeeae000]{opacity:0}@keyframes fadeIn-aeeae000{0%{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}@media (max-width:1024px){.overlay-visual-container[data-v-aeeae000]{display:none}.control-center-card[data-v-aeeae000]{width:350px}}@media (max-width:800px){.control-center-card[data-v-aeeae000]{display:none}.sidebar-panel[data-v-aeeae000]{left:-35px;position:fixed;top:20px;transition:all .5s cubic-bezier(.175,.885,.32,1.275);z-index:1100}.sidebar-panel.sidebar-open[data-v-aeeae000],.sidebar-panel[data-v-aeeae000]:hover{left:20px}.sidebar-panel.sidebar-open[data-v-aeeae000]{left:20px;width:280px}.sidebar-toggle[data-v-aeeae000]{background:transparent!important;box-shadow:none!important;left:auto!important;position:relative!important;top:auto!important}}</style><style>:root{--primary-color:#80a124}body{background:#fbfbfd;color:#1a1a1a;font-family:Inter,sans-serif}</style><style>.ova-app-root{background:#f8fafc!important}.app-bg-gradient{background:radial-gradient(circle at 0 0,rgba(128,161,36,.05) 0,transparent 40%),radial-gradient(circle at 100% 100%,rgba(221,174,56,.05) 0,transparent 40%);inset:0;pointer-events:none;position:fixed;z-index:0}.main-viewport{display:flex;flex-direction:column;min-height:100vh}.page-content-container{flex:1;position:relative;z-index:1}.content-wrapper{display:flex;height:100%!important;max-width:100%!important;padding:clamp(1rem,3vw,2rem)!important;width:100%!important}.content-surface{backdrop-filter:blur(12px);background:hsla(0,0%,100%,.7)!important;border:1px solid hsla(0,0%,100%,.8);box-shadow:0 20px 50px rgba(0,0,0,.04)!important;flex:1;flex-direction:column;overflow:hidden;position:relative}.content-surface,.scroll-container{display:flex;height:100%;width:100%}.scroll-container{flex-direction:column;overflow:auto;padding:clamp(1rem,2vw,1.5rem)}.page-fade-enter-active,.page-fade-leave-active{transition:all .6s ease}.page-fade-enter-from{opacity:0;transform:translateY(20px)}.page-fade-leave-to{opacity:0;transform:translateY(-20px)}.scroll-container::-webkit-scrollbar{width:8px}.scroll-container::-webkit-scrollbar-track{background:transparent}.scroll-container::-webkit-scrollbar-thumb{background:rgba(0,0,0,.08);border-radius:10px}.scroll-container::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.12)}@media (max-width:600px){.content-wrapper{padding:.75rem!important}}</style><style>.update-modal[data-v-b8e556e9]{border:1px solid hsla(0,0%,100%,.1)!important;overflow:hidden}.modal-hero[data-v-b8e556e9]{align-items:center;background:url(https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop);background-position:50%;background-size:cover;display:flex;height:180px;justify-content:center;position:relative;text-align:center}.hero-overlay[data-v-b8e556e9]{background:linear-gradient(0deg,hsla(0,0%,7%,.9),rgba(128,161,36,.4));inset:0;position:absolute}.hero-content[data-v-b8e556e9]{position:relative;z-index:1}.hero-title[data-v-b8e556e9]{color:#fff;font-size:2rem;font-weight:950;letter-spacing:-1.5px;margin-bottom:5px}.version-tag[data-v-b8e556e9]{backdrop-filter:blur(5px);background:hsla(0,0%,100%,.2);border-radius:99px;color:#fff;font-size:.75rem;font-weight:800;padding:4px 12px}.maintenance-msg p[data-v-b8e556e9]{color:#475569;font-size:1.05rem;line-height:1.6}.section-title[data-v-b8e556e9]{align-items:center;color:#64748b;display:flex;font-size:.9rem;font-weight:900;letter-spacing:1px;margin-bottom:15px;text-transform:uppercase}.updates-list[data-v-b8e556e9]{display:flex;flex-direction:column;gap:12px}.update-item[data-v-b8e556e9]{align-items:center;background:#f8fafc;border:1px solid rgba(0,0,0,.02);border-radius:14px;display:flex;gap:12px;padding:10px 14px}.dot[data-v-b8e556e9]{border-radius:50%;flex-shrink:0;height:8px;width:8px}.item-text[data-v-b8e556e9]{color:#334155;font-size:.9rem;line-height:1.4}.release-info[data-v-b8e556e9]{background:rgba(128,161,36,.05);border-radius:12px;color:#80a124;font-size:.9rem;padding:12px;text-align:center}.continue-btn[data-v-b8e556e9]{font-weight:900!important;letter-spacing:.5px!important;text-transform:none!important}</style><style>.recursos-shell[data-v-c044dd3c]{background:#fbfcf8;min-height:100vh;overflow-x:hidden;position:relative}.recursos-container[data-v-c044dd3c]{max-width:1440px!important;padding:clamp(2rem,5vw,6rem)!important;position:relative;z-index:25}.grain-overlay[data-v-c044dd3c]{background-image:url(https://grainy-gradients.vercel.app/noise.svg);opacity:.1;z-index:10}.grain-overlay[data-v-c044dd3c],.parallax-bg[data-v-c044dd3c]{inset:0;pointer-events:none;position:fixed}.parallax-bg[data-v-c044dd3c]{z-index:0}.parallax-bg[data-v-c044dd3c]:before{animation:mesh-flow-c044dd3c 18s ease infinite;background:linear-gradient(135deg,rgba(128,161,36,.12),rgba(221,174,56,.12) 50%,rgba(45,106,79,.12));background-size:400% 400%;content:"";inset:0;position:absolute}@keyframes mesh-flow-c044dd3c{0%{background-position:0 50%}50%{background-position:100% 50%}to{background-position:0 50%}}.glass-blob[data-v-c044dd3c]{animation:float-blob 20s ease-in-out infinite alternate;border-radius:50%;filter:blur(140px);opacity:.25;position:absolute}.blob-1[data-v-c044dd3c]{background:#80a124;height:800px;left:-10%;top:-10%;width:800px}.blob-2[data-v-c044dd3c]{animation-delay:-5s;background:#ddae38;bottom:-10%;height:700px;right:-10%;width:700px}.blob-3[data-v-c044dd3c]{animation-delay:-10s;background:#2d6a4f;height:500px;right:10%;top:40%;width:500px}.sun-ray[data-v-c044dd3c]{animation:ray-move-c044dd3c 12s ease-in-out infinite alternate;background:linear-gradient(90deg,transparent,hsla(0,0%,100%,.15),transparent);filter:blur(50px);height:120vh;position:absolute;top:-10%;transform:rotate(-25deg);width:35vw}.r-1[data-v-c044dd3c]{left:15%}.r-2[data-v-c044dd3c]{animation-delay:-6s;left:55%}@keyframes ray-move-c044dd3c{0%{transform:translateX(-15%) rotate(-25deg)}to{transform:translateX(15%) rotate(-25deg)}}.bio-particle[data-v-c044dd3c]{animation:particle-float-c044dd3c 12s ease-in-out infinite;background:#80a124;border-radius:50%;filter:blur(2px);position:absolute}@keyframes particle-float-c044dd3c{0%,to{transform:translate(0)}50%{transform:translate(60px,40px)}}.oxygen-bubble[data-v-c044dd3c]{animation:bubble-up-c044dd3c 15s linear infinite;backdrop-filter:blur(1px);background:hsla(0,0%,100%,.05);border:1.5px solid hsla(0,0%,100%,.6);border-radius:50%;position:absolute}@keyframes bubble-up-c044dd3c{0%{opacity:0;transform:translateY(0)}10%{opacity:.4}90%{opacity:.4}to{opacity:0;transform:translateY(-120vh)}}.recursos-header[data-v-c044dd3c]{margin:0 auto 4rem;max-width:900px;text-align:center}.header-badge[data-v-c044dd3c]{background:rgba(128,161,36,.1);border-radius:99px;color:#80a124;display:inline-block;font-size:.75rem;font-weight:800;letter-spacing:2px;margin-bottom:1.5rem;padding:8px 20px;text-transform:uppercase}.recursos-title[data-v-c044dd3c]{color:#1a1a1a;font-size:clamp(2.5rem,6vw,4rem);font-weight:950;letter-spacing:-2px;line-height:1.1;margin-bottom:1.5rem}.accent-dot[data-v-c044dd3c]{color:#80a124}.recursos-subtitle[data-v-c044dd3c]{color:#64748b;font-size:1.2rem;line-height:1.6}.tabs-container[data-v-c044dd3c]{display:flex;justify-content:center}.custom-tabs[data-v-c044dd3c]{background:#fff;border:1px solid rgba(0,0,0,.03);border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.05);display:flex;gap:8px;padding:8px}.tab-btn[data-v-c044dd3c]{align-items:center;border-radius:18px;color:#64748b;display:flex;font-weight:800;padding:12px 24px;transition:all .3s ease}.tab-btn[data-v-c044dd3c]:hover{background:#f8fafc;color:#1e293b}.tab-btn.active[data-v-c044dd3c]{background:#1a1a1a;box-shadow:0 10px 20px rgba(0,0,0,.2);color:#fff}.resource-card[data-v-c044dd3c]{backdrop-filter:blur(10px);background:hsla(0,0%,100%,.7)!important;border:1px solid rgba(0,0,0,.03)!important;display:flex;flex-direction:column;height:100%;transition:all .4s cubic-bezier(.165,.84,.44,1)}.resource-card[data-v-c044dd3c]:hover{box-shadow:0 30px 60px rgba(0,0,0,.1)!important;transform:translateY(-10px)}.card-icon-wrap[data-v-c044dd3c]{padding:2rem 2rem 1rem}.card-body[data-v-c044dd3c]{display:flex;flex-direction:column;flex-grow:1;padding:1.5rem 2rem 2rem}.res-title[data-v-c044dd3c]{color:#1e293b;font-size:1.4rem;font-weight:850;letter-spacing:-.5px;margin-bottom:.75rem}.res-desc[data-v-c044dd3c]{color:#64748b;flex-grow:1;font-size:1rem;line-height:1.6;margin-bottom:1.5rem}.video-preview[data-v-c044dd3c]{border-radius:24px 24px 0 0;overflow:hidden;position:relative}.play-overlay[data-v-c044dd3c]{align-items:center;background:rgba(0,0,0,.2);display:flex;inset:0;justify-content:center;position:absolute;transition:all .3s ease}.resource-card:hover .play-overlay[data-v-c044dd3c]{background:rgba(0,0,0,.4)}.action-btn[data-v-c044dd3c]{font-weight:800!important;letter-spacing:0!important;text-transform:none!important}.btn-back-premium[data-v-c044dd3c]{background:#fff!important;border:1px solid rgba(0,0,0,.1)!important;box-shadow:0 10px 25px rgba(0,0,0,.05)!important;color:#1a1a1a!important;font-weight:800!important;padding:0 40px!important;transition:all .3s ease!important}.btn-back-premium[data-v-c044dd3c]:hover{background:#1a1a1a!important;color:#fff!important;transform:translateY(-5px)}@media (max-width:600px){.custom-tabs[data-v-c044dd3c]{flex-direction:column;width:100%}.tab-btn[data-v-c044dd3c]{justify-content:center;width:100%}}</style><style>.loading-overlay[data-v-e4d4e841]{align-items:center;background:#fff;display:flex;flex-direction:column;inset:0;justify-content:center;position:fixed;z-index:9999}.wave-bg[data-v-e4d4e841]{background:#f6f4ec;inset:0;position:absolute;z-index:-1}.content-wrapper[data-v-e4d4e841]{align-items:center;display:flex;flex-direction:column;gap:24px;text-align:center;z-index:2}.logo-pulse[data-v-e4d4e841]{animation:pulse-e4d4e841 2s ease-in-out infinite}.loading-text[data-v-e4d4e841]{display:flex;flex-direction:column;gap:8px}.name-display[data-v-e4d4e841]{color:#2a2a1e;font-size:1.8rem;font-weight:800;letter-spacing:-.5px}.status-msg[data-v-e4d4e841]{color:#6b6a5a;font-size:1rem;font-weight:500}@keyframes pulse-e4d4e841{0%,to{opacity:.8;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}.wave-transition-leave-active[data-v-e4d4e841]{transition:transform 1.2s cubic-bezier(.645,.045,.355,1)}.wave-container[data-v-e4d4e841],.wave-transition-leave-to[data-v-e4d4e841]{transform:translateY(100%)}.wave-container[data-v-e4d4e841]{bottom:0;height:200px;left:0;pointer-events:none;position:absolute;width:100%}.wave-svg[data-v-e4d4e841]{height:100%;width:100%}</style><style>.main-footer[data-v-aa541e19]{background:#121212;color:#e5e7eb;font-family:Inter,sans-serif;margin-top:8rem;padding-top:4rem;position:relative;z-index:100}.footer-wave[data-v-aa541e19]{color:#121212;height:100px;left:0;position:absolute;top:-99px;width:100%}.footer-container[data-v-aa541e19]{max-width:1200px!important;padding-bottom:2rem!important}.footer-main-row[data-v-aa541e19]{margin-bottom:3rem}.footer-brand-text[data-v-aa541e19]{margin-bottom:1.25rem}.f-brand-name[data-v-aa541e19]{color:#fff;font-size:1.5rem;font-weight:950;letter-spacing:2px}.f-brand-ova[data-v-aa541e19]{background:rgba(128,161,36,.15);border-radius:6px;color:#80a124;font-size:.9rem;padding:2px 8px;vertical-align:middle}.f-tagline[data-v-aa541e19]{color:#9ca3af;font-size:.9rem;line-height:1.6;margin-bottom:1.5rem;max-width:300px}.uni-mini-card[data-v-aa541e19]{background:hsla(0,0%,100%,.03);border-radius:18px;gap:12px;padding:8px 20px 8px 8px;width:-moz-fit-content;width:fit-content}.uni-logo-bg[data-v-aa541e19],.uni-mini-card[data-v-aa541e19]{align-items:center;display:flex}.uni-logo-bg[data-v-aa541e19]{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.2);justify-content:center;padding:6px}.uni-info[data-v-aa541e19]{display:flex;flex-direction:column}.u-name[data-v-aa541e19]{color:#f3f4f6;font-size:.8rem;font-weight:800}.u-loc[data-v-aa541e19]{color:#80a124;font-size:.7rem;font-weight:700}.f-title[data-v-aa541e19]{color:#80a124;font-size:.85rem;font-weight:850;letter-spacing:1.5px;margin-bottom:1.5rem;text-transform:uppercase}.f-nav[data-v-aa541e19]{display:flex;flex-direction:column;gap:10px}.f-nav a[data-v-aa541e19]{color:#9ca3af;font-size:.9rem;font-weight:600;text-decoration:none;transition:all .3s ease}.f-nav a[data-v-aa541e19]:hover{color:#fff;transform:translateX(5px)}.f-email[data-v-aa541e19]{align-items:center;color:#fff;display:flex;font-size:.9rem;font-weight:600;margin-bottom:1.5rem;text-decoration:none}.f-social[data-v-aa541e19]{display:flex;flex-direction:column;gap:10px}.s-label[data-v-aa541e19]{color:#4b5563;font-size:.75rem;font-weight:800;text-transform:uppercase}.s-icons[data-v-aa541e19]{display:flex;gap:8px}.social-btn[data-v-aa541e19]{background:rgba(128,161,36,.1)!important;color:#80a124!important;transition:all .3s ease!important}.social-btn[data-v-aa541e19]:hover{background:#80a124!important;color:#fff!important;transform:translateY(-3px)}.f-tip-card[data-v-aa541e19]{background:linear-gradient(135deg,rgba(128,161,36,.1),hsla(0,0%,100%,.05));border:1px solid rgba(128,161,36,.1);border-radius:20px;padding:20px}.f-tip-card p[data-v-aa541e19]{color:#d1d5db;font-size:.85rem;line-height:1.5;margin:0}.f-divider[data-v-aa541e19]{border-color:hsla(0,0%,100%,.05)!important;margin-bottom:1.5rem!important}.f-bottom[data-v-aa541e19]{align-items:center;color:#4b5563;display:flex;font-size:.75rem;font-weight:600;justify-content:space-between}@media (max-width:960px){.footer-main-row[data-v-aa541e19]{text-align:center}.f-email[data-v-aa541e19],.footer-logo-wrap[data-v-aa541e19],.s-icons[data-v-aa541e19],.uni-mini-card[data-v-aa541e19]{justify-content:center;margin-left:auto;margin-right:auto}.f-bottom[data-v-aa541e19]{flex-direction:column;gap:15px;text-align:center}.footer-wave[data-v-aa541e19]{display:none}}</style><link rel="stylesheet" href="/ova-fotosintesis/_nuxt/entry.BQUZHQ21.css" crossorigin><link rel="stylesheet" href="/ova-fotosintesis/_nuxt/TheFooter.BnD0z6o-.css" crossorigin><link rel="stylesheet" href="/ova-fotosintesis/_nuxt/LoadingScreen.BQJevsxU.css" crossorigin><link rel="preload" as="fetch" crossorigin="anonymous" href="/ova-fotosintesis/recursos/_payload.json?d3c8fe5c-6ed0-4751-9d92-da77a75f12be"><link rel="modulepreload" as="script" crossorigin href="/ova-fotosintesis/_nuxt/Bn-d3ysa.js"><link rel="modulepreload" as="script" crossorigin href="/ova-fotosintesis/_nuxt/DBQS6Ptv.js"><link rel="modulepreload" as="script" crossorigin href="/ova-fotosintesis/_nuxt/DcSpz5KU.js"><link rel="modulepreload" as="script" crossorigin href="/ova-fotosintesis/_nuxt/DlAUqK2U.js"><link rel="modulepreload" as="script" crossorigin href="/ova-fotosintesis/_nuxt/BAVf0_xC.js"><link rel="modulepreload" as="script" crossorigin href="/ova-fotosintesis/_nuxt/BVbwtZTm.js"><link rel="modulepreload" as="script" crossorigin href="/ova-fotosintesis/_nuxt/DDlr531d.js"><link rel="modulepreload" as="script" crossorigin href="/ova-fotosintesis/_nuxt/B4t1hZtP.js"><link rel="modulepreload" as="script" crossorigin href="/ova-fotosintesis/_nuxt/DuD5ib58.js"><link rel="modulepreload" as="script" crossorigin href="/ova-fotosintesis/_nuxt/B_W5YrAW.js"><script type="module" src="/ova-fotosintesis/_nuxt/Bn-d3ysa.js" crossorigin></script></head><body><style id="vuetify-theme-stylesheet">@layer vuetify-utilities {
+  @layer theme-base {
+  :root {
+    --v-theme-background: 255,255,255;
+    --v-theme-background-overlay-multiplier: 1;
+    --v-theme-surface: 255,255,255;
+    --v-theme-surface-overlay-multiplier: 1;
+    --v-theme-surface-bright: 255,255,255;
+    --v-theme-surface-bright-overlay-multiplier: 1;
+    --v-theme-surface-light: 238,238,238;
+    --v-theme-surface-light-overlay-multiplier: 1;
+    --v-theme-surface-variant: 66,66,66;
+    --v-theme-surface-variant-overlay-multiplier: 2;
+    --v-theme-on-surface-variant: 238,238,238;
+    --v-theme-primary: 24,103,192;
+    --v-theme-primary-overlay-multiplier: 2;
+    --v-theme-primary-darken-1: 31,85,146;
+    --v-theme-primary-darken-1-overlay-multiplier: 2;
+    --v-theme-secondary: 72,169,166;
+    --v-theme-secondary-overlay-multiplier: 1;
+    --v-theme-secondary-darken-1: 1,135,134;
+    --v-theme-secondary-darken-1-overlay-multiplier: 1;
+    --v-theme-error: 176,0,32;
+    --v-theme-error-overlay-multiplier: 2;
+    --v-theme-info: 33,150,243;
+    --v-theme-info-overlay-multiplier: 1;
+    --v-theme-success: 76,175,80;
+    --v-theme-success-overlay-multiplier: 1;
+    --v-theme-warning: 251,140,0;
+    --v-theme-warning-overlay-multiplier: 1;
+    --v-theme-on-background: 0,0,0;
+    --v-theme-on-surface: 0,0,0;
+    --v-theme-on-surface-bright: 0,0,0;
+    --v-theme-on-surface-light: 0,0,0;
+    --v-theme-on-primary: 255,255,255;
+    --v-theme-on-primary-darken-1: 255,255,255;
+    --v-theme-on-secondary: 255,255,255;
+    --v-theme-on-secondary-darken-1: 255,255,255;
+    --v-theme-on-error: 255,255,255;
+    --v-theme-on-info: 255,255,255;
+    --v-theme-on-success: 255,255,255;
+    --v-theme-on-warning: 255,255,255;
+    --v-border-color: 0, 0, 0;
+    --v-border-opacity: 0.12;
+    --v-shadow-color: 0, 0, 0;
+    --v-high-emphasis-opacity: 0.87;
+    --v-medium-emphasis-opacity: 0.6;
+    --v-disabled-opacity: 0.38;
+    --v-idle-opacity: 0.04;
+    --v-hover-opacity: 0.04;
+    --v-focus-opacity: 0.12;
+    --v-selected-opacity: 0.08;
+    --v-activated-opacity: 0.12;
+    --v-pressed-opacity: 0.12;
+    --v-dragged-opacity: 0.08;
+    --v-theme-kbd: 238, 238, 238;
+    --v-theme-on-kbd: 0, 0, 0;
+    --v-theme-code: 245, 245, 245;
+    --v-theme-on-code: 0, 0, 0;
+    --v-theme-on-dark: 255, 255, 255;
+    --v-theme-on-light: 0, 0, 0;
+    --v-elevation-overlay-color: black;
+    --v-elevation-overlay-opacity-step: 2%;
+  }
+  .v-theme--light {
+    color-scheme: normal;
+    --v-theme-background: 255,255,255;
+    --v-theme-background-overlay-multiplier: 1;
+    --v-theme-surface: 255,255,255;
+    --v-theme-surface-overlay-multiplier: 1;
+    --v-theme-surface-bright: 255,255,255;
+    --v-theme-surface-bright-overlay-multiplier: 1;
+    --v-theme-surface-light: 238,238,238;
+    --v-theme-surface-light-overlay-multiplier: 1;
+    --v-theme-surface-variant: 66,66,66;
+    --v-theme-surface-variant-overlay-multiplier: 2;
+    --v-theme-on-surface-variant: 238,238,238;
+    --v-theme-primary: 24,103,192;
+    --v-theme-primary-overlay-multiplier: 2;
+    --v-theme-primary-darken-1: 31,85,146;
+    --v-theme-primary-darken-1-overlay-multiplier: 2;
+    --v-theme-secondary: 72,169,166;
+    --v-theme-secondary-overlay-multiplier: 1;
+    --v-theme-secondary-darken-1: 1,135,134;
+    --v-theme-secondary-darken-1-overlay-multiplier: 1;
+    --v-theme-error: 176,0,32;
+    --v-theme-error-overlay-multiplier: 2;
+    --v-theme-info: 33,150,243;
+    --v-theme-info-overlay-multiplier: 1;
+    --v-theme-success: 76,175,80;
+    --v-theme-success-overlay-multiplier: 1;
+    --v-theme-warning: 251,140,0;
+    --v-theme-warning-overlay-multiplier: 1;
+    --v-theme-on-background: 0,0,0;
+    --v-theme-on-surface: 0,0,0;
+    --v-theme-on-surface-bright: 0,0,0;
+    --v-theme-on-surface-light: 0,0,0;
+    --v-theme-on-primary: 255,255,255;
+    --v-theme-on-primary-darken-1: 255,255,255;
+    --v-theme-on-secondary: 255,255,255;
+    --v-theme-on-secondary-darken-1: 255,255,255;
+    --v-theme-on-error: 255,255,255;
+    --v-theme-on-info: 255,255,255;
+    --v-theme-on-success: 255,255,255;
+    --v-theme-on-warning: 255,255,255;
+    --v-border-color: 0, 0, 0;
+    --v-border-opacity: 0.12;
+    --v-shadow-color: 0, 0, 0;
+    --v-high-emphasis-opacity: 0.87;
+    --v-medium-emphasis-opacity: 0.6;
+    --v-disabled-opacity: 0.38;
+    --v-idle-opacity: 0.04;
+    --v-hover-opacity: 0.04;
+    --v-focus-opacity: 0.12;
+    --v-selected-opacity: 0.08;
+    --v-activated-opacity: 0.12;
+    --v-pressed-opacity: 0.12;
+    --v-dragged-opacity: 0.08;
+    --v-theme-kbd: 238, 238, 238;
+    --v-theme-on-kbd: 0, 0, 0;
+    --v-theme-code: 245, 245, 245;
+    --v-theme-on-code: 0, 0, 0;
+    --v-theme-on-dark: 255, 255, 255;
+    --v-theme-on-light: 0, 0, 0;
+    --v-elevation-overlay-color: black;
+    --v-elevation-overlay-opacity-step: 2%;
+  }
+  .v-theme--dark {
+    color-scheme: dark;
+    --v-theme-background: 18,18,18;
+    --v-theme-background-overlay-multiplier: 1;
+    --v-theme-surface: 33,33,33;
+    --v-theme-surface-overlay-multiplier: 1;
+    --v-theme-surface-bright: 204,191,214;
+    --v-theme-surface-bright-overlay-multiplier: 2;
+    --v-theme-surface-light: 66,66,66;
+    --v-theme-surface-light-overlay-multiplier: 1;
+    --v-theme-surface-variant: 200,200,200;
+    --v-theme-surface-variant-overlay-multiplier: 2;
+    --v-theme-on-surface-variant: 0,0,0;
+    --v-theme-primary: 33,150,243;
+    --v-theme-primary-overlay-multiplier: 2;
+    --v-theme-primary-darken-1: 39,124,193;
+    --v-theme-primary-darken-1-overlay-multiplier: 2;
+    --v-theme-secondary: 84,182,178;
+    --v-theme-secondary-overlay-multiplier: 2;
+    --v-theme-secondary-darken-1: 72,169,166;
+    --v-theme-secondary-darken-1-overlay-multiplier: 2;
+    --v-theme-error: 207,102,121;
+    --v-theme-error-overlay-multiplier: 2;
+    --v-theme-info: 33,150,243;
+    --v-theme-info-overlay-multiplier: 2;
+    --v-theme-success: 76,175,80;
+    --v-theme-success-overlay-multiplier: 2;
+    --v-theme-warning: 251,140,0;
+    --v-theme-warning-overlay-multiplier: 2;
+    --v-theme-on-background: 255,255,255;
+    --v-theme-on-surface: 255,255,255;
+    --v-theme-on-surface-bright: 0,0,0;
+    --v-theme-on-surface-light: 255,255,255;
+    --v-theme-on-primary: 255,255,255;
+    --v-theme-on-primary-darken-1: 255,255,255;
+    --v-theme-on-secondary: 255,255,255;
+    --v-theme-on-secondary-darken-1: 255,255,255;
+    --v-theme-on-error: 255,255,255;
+    --v-theme-on-info: 255,255,255;
+    --v-theme-on-success: 255,255,255;
+    --v-theme-on-warning: 255,255,255;
+    --v-border-color: 255, 255, 255;
+    --v-border-opacity: 0.12;
+    --v-shadow-color: 0, 0, 0;
+    --v-high-emphasis-opacity: 1;
+    --v-medium-emphasis-opacity: 0.7;
+    --v-disabled-opacity: 0.5;
+    --v-idle-opacity: 0.1;
+    --v-hover-opacity: 0.04;
+    --v-focus-opacity: 0.12;
+    --v-selected-opacity: 0.08;
+    --v-activated-opacity: 0.12;
+    --v-pressed-opacity: 0.16;
+    --v-dragged-opacity: 0.08;
+    --v-theme-kbd: 66, 66, 66;
+    --v-theme-on-kbd: 255, 255, 255;
+    --v-theme-code: 52, 52, 52;
+    --v-theme-on-code: 204, 204, 204;
+    --v-theme-on-dark: 255, 255, 255;
+    --v-theme-on-light: 0, 0, 0;
+    --v-elevation-overlay-color: white;
+    --v-elevation-overlay-opacity-step: 2%;
+  }
+  }
+  @layer theme-background {
+    .bg-background {
+      --v-theme-overlay-multiplier: var(--v-theme-background-overlay-multiplier);
+      background-color: rgb(var(--v-theme-background));
+      color: rgb(var(--v-theme-on-background));
+    }
+    .bg-surface {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface));
+      color: rgb(var(--v-theme-on-surface));
+    }
+    .bg-surface-bright {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-bright-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface-bright));
+      color: rgb(var(--v-theme-on-surface-bright));
+    }
+    .bg-surface-light {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-light-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface-light));
+      color: rgb(var(--v-theme-on-surface-light));
+    }
+    .bg-surface-variant {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-variant-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface-variant));
+      color: rgb(var(--v-theme-on-surface-variant));
+    }
+    .bg-primary {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary));
+      color: rgb(var(--v-theme-on-primary));
+    }
+    .bg-primary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary-darken-1));
+      color: rgb(var(--v-theme-on-primary-darken-1));
+    }
+    .bg-secondary {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary));
+      color: rgb(var(--v-theme-on-secondary));
+    }
+    .bg-secondary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary-darken-1));
+      color: rgb(var(--v-theme-on-secondary-darken-1));
+    }
+    .bg-error {
+      --v-theme-overlay-multiplier: var(--v-theme-error-overlay-multiplier);
+      background-color: rgb(var(--v-theme-error));
+      color: rgb(var(--v-theme-on-error));
+    }
+    .bg-info {
+      --v-theme-overlay-multiplier: var(--v-theme-info-overlay-multiplier);
+      background-color: rgb(var(--v-theme-info));
+      color: rgb(var(--v-theme-on-info));
+    }
+    .bg-success {
+      --v-theme-overlay-multiplier: var(--v-theme-success-overlay-multiplier);
+      background-color: rgb(var(--v-theme-success));
+      color: rgb(var(--v-theme-on-success));
+    }
+    .bg-warning {
+      --v-theme-overlay-multiplier: var(--v-theme-warning-overlay-multiplier);
+      background-color: rgb(var(--v-theme-warning));
+      color: rgb(var(--v-theme-on-warning));
+    }
+  }
+  @layer theme-foreground {
+    .text-background {
+      color: rgb(var(--v-theme-background));
+    }
+    .border-background {
+      --v-border-color: var(--v-theme-background);
+    }
+    .text-surface {
+      color: rgb(var(--v-theme-surface));
+    }
+    .border-surface {
+      --v-border-color: var(--v-theme-surface);
+    }
+    .text-surface-bright {
+      color: rgb(var(--v-theme-surface-bright));
+    }
+    .border-surface-bright {
+      --v-border-color: var(--v-theme-surface-bright);
+    }
+    .text-surface-light {
+      color: rgb(var(--v-theme-surface-light));
+    }
+    .border-surface-light {
+      --v-border-color: var(--v-theme-surface-light);
+    }
+    .text-surface-variant {
+      color: rgb(var(--v-theme-surface-variant));
+    }
+    .border-surface-variant {
+      --v-border-color: var(--v-theme-surface-variant);
+    }
+    .on-surface-variant {
+      color: rgb(var(--v-theme-on-surface-variant));
+    }
+    .text-primary {
+      color: rgb(var(--v-theme-primary));
+    }
+    .border-primary {
+      --v-border-color: var(--v-theme-primary);
+    }
+    .text-primary-darken-1 {
+      color: rgb(var(--v-theme-primary-darken-1));
+    }
+    .border-primary-darken-1 {
+      --v-border-color: var(--v-theme-primary-darken-1);
+    }
+    .text-secondary {
+      color: rgb(var(--v-theme-secondary));
+    }
+    .border-secondary {
+      --v-border-color: var(--v-theme-secondary);
+    }
+    .text-secondary-darken-1 {
+      color: rgb(var(--v-theme-secondary-darken-1));
+    }
+    .border-secondary-darken-1 {
+      --v-border-color: var(--v-theme-secondary-darken-1);
+    }
+    .text-error {
+      color: rgb(var(--v-theme-error));
+    }
+    .border-error {
+      --v-border-color: var(--v-theme-error);
+    }
+    .text-info {
+      color: rgb(var(--v-theme-info));
+    }
+    .border-info {
+      --v-border-color: var(--v-theme-info);
+    }
+    .text-success {
+      color: rgb(var(--v-theme-success));
+    }
+    .border-success {
+      --v-border-color: var(--v-theme-success);
+    }
+    .text-warning {
+      color: rgb(var(--v-theme-warning));
+    }
+    .border-warning {
+      --v-border-color: var(--v-theme-warning);
+    }
+    .on-background {
+      color: rgb(var(--v-theme-on-background));
+    }
+    .on-surface {
+      color: rgb(var(--v-theme-on-surface));
+    }
+    .on-surface-bright {
+      color: rgb(var(--v-theme-on-surface-bright));
+    }
+    .on-surface-light {
+      color: rgb(var(--v-theme-on-surface-light));
+    }
+    .on-primary {
+      color: rgb(var(--v-theme-on-primary));
+    }
+    .on-primary-darken-1 {
+      color: rgb(var(--v-theme-on-primary-darken-1));
+    }
+    .on-secondary {
+      color: rgb(var(--v-theme-on-secondary));
+    }
+    .on-secondary-darken-1 {
+      color: rgb(var(--v-theme-on-secondary-darken-1));
+    }
+    .on-error {
+      color: rgb(var(--v-theme-on-error));
+    }
+    .on-info {
+      color: rgb(var(--v-theme-on-info));
+    }
+    .on-success {
+      color: rgb(var(--v-theme-on-success));
+    }
+    .on-warning {
+      color: rgb(var(--v-theme-on-warning));
+    }
+  }
+
+}</style><div id="__nuxt"><div style="font-size:100%;--primary-color:#80a124;transition:all 0.3s ease;"><div class="v-application v-theme--light v-layout v-layout--full-height v-locale--is-ltr ova-app-root" style=""><div class="v-application__wrap"><!--[--><div class="app-bg-gradient"></div><div class="nav-system-container" data-v-aeeae000><div class="sidebar-panel" data-v-aeeae000><button class="sidebar-toggle" aria-label="Toggle menu" data-v-aeeae000><i class="bx bx-menu-alt-left" data-v-aeeae000></i></button><!----></div><!----><!----><!--[--><!----><!----><!--]--></div><!--[--><!----><!----><!--]--><main class="v-main main-viewport" style="--v-layout-left:0px;--v-layout-right:0px;--v-layout-top:0px;--v-layout-bottom:0px;transition:none !important;"><!--[--><div class="page-content-container"><div><!--[--><main class="v-main recursos-shell" style="--v-layout-left:0px;--v-layout-right:0px;--v-layout-top:0px;--v-layout-bottom:0px;transition:none !important;" data-v-c044dd3c><!--[--><div class="loading-overlay" data-v-c044dd3c data-v-e4d4e841><div class="wave-container" data-v-e4d4e841><svg class="wave-svg" viewBox="0 0 1440 320" preserveAspectRatio="none" data-v-e4d4e841><path fill="#ffffff" d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,144C672,139,768,181,864,202.7C960,224,1056,224,1152,213.3C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" data-v-e4d4e841></path></svg></div><div class="content-wrapper" data-v-e4d4e841><div class="logo-pulse" data-v-e4d4e841><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="" color="#80a124" data-v-e4d4e841><path d="m20.89,2.3c-.42-.08-10.47-1.75-15.82,3.6-.71.71-1.33,1.54-1.85,2.47-2.06,3.7-1.48,7.99,1.47,10.94,1.78,1.78,4.04,2.69,6.36,2.69,1.54,0,3.11-.4,4.58-1.22.93-.52,1.76-1.14,2.47-1.85,5.35-5.35,3.67-15.39,3.6-15.82-.07-.42-.4-.74-.81-.81Zm-4.2,15.22c-.58.58-1.26,1.09-2.03,1.51-2.65,1.47-5.17,1.07-7,.04.64-3.97,3.07-7.72,6.34-10.07-3.7,1.65-6.72,4.58-8.47,8.23-1.43-1.85-2.29-4.78-.56-7.89.43-.77.94-1.45,1.51-2.03,3.86-3.86,11.05-3.4,13.34-3.14.26,2.29.72,9.48-3.14,13.34Z"/></svg></div><div class="loading-text" data-v-e4d4e841><span class="name-display" data-v-e4d4e841>Preparando...</span><p class="status-msg" data-v-e4d4e841>Cargando biblioteca de recursos...</p></div></div><div class="wave-bg" data-v-e4d4e841></div></div><div class="grain-overlay" aria-hidden="true" data-v-c044dd3c></div><div class="parallax-bg" data-v-c044dd3c><div class="glass-blob blob-1" data-v-c044dd3c></div><div class="glass-blob blob-2" data-v-c044dd3c></div><div class="glass-blob blob-3" data-v-c044dd3c></div><div class="sun-ray r-1" data-v-c044dd3c></div><div class="sun-ray r-2" data-v-c044dd3c></div><!--[--><div class="bio-particle" style="top:56.31713014869161%;left:61.24292278299692%;width:8.678743186079247px;height:12.289550027359182px;animation-duration:13.507498834504883s;animation-delay:0.308556375650641s;opacity:0.06508837662261893;" data-v-c044dd3c></div><div class="bio-particle" style="top:93.28821864277174%;left:97.4614030945972%;width:10.509932708384092px;height:8.652568286998596px;animation-duration:24.676566069387395s;animation-delay:1.2138605043061794s;opacity:0.16968368944608003;" data-v-c044dd3c></div><div class="bio-particle" style="top:15.347788724283795%;left:81.34779014083779%;width:13.457189664856918px;height:15.212797946445752px;animation-duration:17.593236896521226s;animation-delay:2.7389143620365393s;opacity:0.19783073565052245;" data-v-c044dd3c></div><div class="bio-particle" style="top:2.7920778525502454%;left:44.08068115319684%;width:17.74273760706339px;height:13.274854757334245px;animation-duration:22.633965691929347s;animation-delay:2.584997287403849s;opacity:0.07101150342001489;" data-v-c044dd3c></div><div class="bio-particle" style="top:2.305288723547949%;left:76.44756909256034%;width:9.802833926570546px;height:10.918805091539891px;animation-duration:11.018317029921624s;animation-delay:2.744943473995624s;opacity:0.15973215969353852;" data-v-c044dd3c></div><div class="bio-particle" style="top:25.00969729343474%;left:36.13248650205517%;width:10.714265545386876px;height:12.115105717996185px;animation-duration:18.76427790702879s;animation-delay:3.5762152843855337s;opacity:0.14905667087488067;" data-v-c044dd3c></div><div class="bio-particle" style="top:27.368656919307288%;left:92.74920236471064%;width:9.910796327654234px;height:10.01873534476055px;animation-duration:22.41613477375904s;animation-delay:4.704078711840913s;opacity:0.13209593923346616;" data-v-c044dd3c></div><div class="bio-particle" style="top:52.54890892015426%;left:78.08264258747525%;width:6.955507753421523px;height:17.348880001912054px;animation-duration:17.22148945499663s;animation-delay:0.8313367601938881s;opacity:0.17813158410216628;" data-v-c044dd3c></div><div class="bio-particle" style="top:87.35542519076215%;left:13.614108033457983%;width:13.040055397673465px;height:11.20989540856466px;animation-duration:10.806735079829448s;animation-delay:1.0647453842438463s;opacity:0.07258472054710853;" data-v-c044dd3c></div><div class="bio-particle" style="top:50.22737461217%;left:53.17027783086588%;width:15.289211951046626px;height:12.171000198877502px;animation-duration:22.02487683425118s;animation-delay:4.049186412719584s;opacity:0.10553339175064701;" data-v-c044dd3c></div><div class="bio-particle" style="top:83.63374804865337%;left:27.203021081982083%;width:13.656785761282041px;height:17.378620260981208px;animation-duration:22.354992352715986s;animation-delay:3.5369530819492923s;opacity:0.12257964807149604;" data-v-c044dd3c></div><div class="bio-particle" style="top:52.81669245970375%;left:78.99767415673193%;width:12.173389159539212px;height:6.598393350661093px;animation-duration:15.913838005672872s;animation-delay:2.5149207769783466s;opacity:0.07228997513721933;" data-v-c044dd3c></div><div class="bio-particle" style="top:55.1702043021986%;left:0.6232579556774698%;width:9.274672203532937px;height:10.800539207698138px;animation-duration:12.334551841846572s;animation-delay:0.5665882600877881s;opacity:0.10926856472746711;" data-v-c044dd3c></div><div class="bio-particle" style="top:15.301720753024517%;left:67.77727527229787%;width:8.032847832559186px;height:9.03383985752593px;animation-duration:11.847374060063675s;animation-delay:3.440972527188788s;opacity:0.11727021094820897;" data-v-c044dd3c></div><div class="bio-particle" style="top:55.87700968183182%;left:62.25128632945395%;width:7.506441863959269px;height:6.310093011094896px;animation-duration:21.502578055549243s;animation-delay:2.4599562565095057s;opacity:0.11280973236199031;" data-v-c044dd3c></div><!--]--><!--[--><div class="oxygen-bubble" style="left:64.39098949005225%;bottom:-60px;width:30.296846190115346px;height:20.934722905615423px;animation-duration:14.159508889820554s;animation-delay:6.033049601945283s;opacity:0.06323780247421339;" data-v-c044dd3c></div><div class="oxygen-bubble" style="left:72.80299917437432%;bottom:-60px;width:18.093914761512657px;height:30.885497734169803px;animation-duration:19.74088729651694s;animation-delay:7.837796795357237s;opacity:0.10174075954122891;" data-v-c044dd3c></div><div class="oxygen-bubble" style="left:55.749906520966405%;bottom:-60px;width:30.081632422548356px;height:32.85559689892209px;animation-duration:13.733471389739227s;animation-delay:0.021402735833075948s;opacity:0.15447403786700797;" data-v-c044dd3c></div><div class="oxygen-bubble" style="left:7.648189427922992%;bottom:-60px;width:16.901279346070677px;height:12.878609514898837px;animation-duration:21.168330486885363s;animation-delay:1.5589173869615847s;opacity:0.08037558056110312;" data-v-c044dd3c></div><div class="oxygen-bubble" style="left:35.08475189717115%;bottom:-60px;width:26.278619473255382px;height:13.582799246295272px;animation-duration:21.263352624653784s;animation-delay:0.8430189092418383s;opacity:0.12758749254867502;" data-v-c044dd3c></div><div class="oxygen-bubble" style="left:83.19962346055082%;bottom:-60px;width:32.36123087371391px;height:25.812102212897972px;animation-duration:19.74477796820873s;animation-delay:7.090131617671519s;opacity:0.13396790024698135;" data-v-c044dd3c></div><div class="oxygen-bubble" style="left:49.559834788730626%;bottom:-60px;width:32.347641530086165px;height:12.97313203488488px;animation-duration:18.894758867433296s;animation-delay:7.269418031305374s;opacity:0.09434493619877848;" data-v-c044dd3c></div><div class="oxygen-bubble" style="left:2.1326417459246905%;bottom:-60px;width:23.248659080577944px;height:12.256242926751387px;animation-duration:13.325581111905215s;animation-delay:2.7483336184089477s;opacity:0.13032732961616528;" data-v-c044dd3c></div><div class="oxygen-bubble" style="left:24.048578127428367%;bottom:-60px;width:32.43184610275516px;height:30.06721069910085px;animation-duration:24.074308446077836s;animation-delay:9.260206914226425s;opacity:0.13062081591671237;" data-v-c044dd3c></div><div class="oxygen-bubble" style="left:47.90233514377241%;bottom:-60px;width:21.873658318104567px;height:32.13159339720088px;animation-duration:12.69361617914373s;animation-delay:6.353181904324405s;opacity:0.1055346899021471;" data-v-c044dd3c></div><!--]--></div><div class="v-container v-locale--is-ltr recursos-container" style="" data-v-c044dd3c><header class="recursos-header" data-v-c044dd3c><div class="header-badge" data-v-c044dd3c>Material Complementario</div><h1 class="recursos-title" data-v-c044dd3c>Recursos Externos <span class="accent-dot" data-v-c044dd3c>.</span></h1><p class="recursos-subtitle" data-v-c044dd3c> Amplía tu conocimiento con nuestra selección curada de documentos, videos y sitios web especializados. </p></header><div class="tabs-container mb-12" data-v-c044dd3c><div class="custom-tabs" data-v-c044dd3c><!--[--><button class="tab-btn active" data-v-c044dd3c><i class="mdi-file-document-outline mdi v-icon notranslate v-theme--light mr-2" style="font-size:20px;height:20px;width:20px;" aria-hidden="true" data-v-c044dd3c></i> Documentos PDF</button><button class="tab-btn" data-v-c044dd3c><i class="mdi-play-box-outline mdi v-icon notranslate v-theme--light mr-2" style="font-size:20px;height:20px;width:20px;" aria-hidden="true" data-v-c044dd3c></i> Videos Educativos</button><button class="tab-btn" data-v-c044dd3c><i class="mdi-earth mdi v-icon notranslate v-theme--light mr-2" style="font-size:20px;height:20px;width:20px;" aria-hidden="true" data-v-c044dd3c></i> Sitios de Interés</button><!--]--></div></div><div class="v-window v-theme--light resources-window" style="" data-v-c044dd3c><div class="v-window__container" style=""><!--[--><div class="v-window-item v-window-item--active" style="" data-v-c044dd3c><!--[--><div class="v-row v-row--density-default" style="" data-v-c044dd3c><!--[--><div class="v-col v-col--cols-md-6 v-col--cols-lg-4 v-col--cols-12" style="" data-v-c044dd3c><div class="v-card v-theme--light v-card--density-default rounded-xl v-card--variant-elevated elevation-0 resource-card glass-card" style="" data-v-c044dd3c><!----><div class="v-card__loader"><div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top:0;height:0;--v-progress-linear-height:2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100"><!----><div class="v-progress-linear__background" style="opacity:NaN;"></div><div class="v-progress-linear__buffer" style="opacity:NaN;width:0%;"></div><div class="v-progress-linear__indeterminate"><!--[--><div class="v-progress-linear__indeterminate long" style=""></div><div class="v-progress-linear__indeterminate short" style=""></div><!--]--></div><!----></div></div><!----><!----><!--[--><div class="card-icon-wrap pdf" data-v-c044dd3c><i class="mdi-file-pdf-box mdi v-icon notranslate v-theme--light text-red-darken-1" style="font-size:32px;height:32px;width:32px;" aria-hidden="true" data-v-c044dd3c></i></div><div class="card-body" data-v-c044dd3c><h3 class="res-title" data-v-c044dd3c>Guía Completa de Fotosíntesis</h3><p class="res-desc" data-v-c044dd3c>Un manual detallado sobre las fases lumínica y oscura.</p><a href="https://www.biologia.edu.ar/plantas/fotosint.htm" class="v-btn v-btn--block v-theme--light text-primary v-btn--density-default rounded-lg v-btn--size-default v-btn--variant-tonal mt-4 action-btn" style="" target="_blank" data-v-c044dd3c><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--> Ver Documento <i class="mdi-open-in-new mdi v-icon notranslate v-theme--light v-icon--end" style="font-size:16px;height:16px;width:16px;" aria-hidden="true" data-v-c044dd3c></i><!--]--><!--]--></span><!----><!----></a></div><!--]--><!----><!--[--><!----><span class="v-card__underlay"></span><!--]--></div></div><div class="v-col v-col--cols-md-6 v-col--cols-lg-4 v-col--cols-12" style="" data-v-c044dd3c><div class="v-card v-theme--light v-card--density-default rounded-xl v-card--variant-elevated elevation-0 resource-card glass-card" style="" data-v-c044dd3c><!----><div class="v-card__loader"><div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top:0;height:0;--v-progress-linear-height:2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100"><!----><div class="v-progress-linear__background" style="opacity:NaN;"></div><div class="v-progress-linear__buffer" style="opacity:NaN;width:0%;"></div><div class="v-progress-linear__indeterminate"><!--[--><div class="v-progress-linear__indeterminate long" style=""></div><div class="v-progress-linear__indeterminate short" style=""></div><!--]--></div><!----></div></div><!----><!----><!--[--><div class="card-icon-wrap pdf" data-v-c044dd3c><i class="mdi-file-pdf-box mdi v-icon notranslate v-theme--light text-red-darken-1" style="font-size:32px;height:32px;width:32px;" aria-hidden="true" data-v-c044dd3c></i></div><div class="card-body" data-v-c044dd3c><h3 class="res-title" data-v-c044dd3c>Importancia del CO2</h3><p class="res-desc" data-v-c044dd3c>Artículo científico sobre el papel del carbono en la vida vegetal.</p><a href="#" class="v-btn v-btn--block v-theme--light text-primary v-btn--density-default rounded-lg v-btn--size-default v-btn--variant-tonal mt-4 action-btn" style="" target="_blank" data-v-c044dd3c><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--> Ver Documento <i class="mdi-open-in-new mdi v-icon notranslate v-theme--light v-icon--end" style="font-size:16px;height:16px;width:16px;" aria-hidden="true" data-v-c044dd3c></i><!--]--><!--]--></span><!----><!----></a></div><!--]--><!----><!--[--><!----><span class="v-card__underlay"></span><!--]--></div></div><div class="v-col v-col--cols-md-6 v-col--cols-lg-4 v-col--cols-12" style="" data-v-c044dd3c><div class="v-card v-theme--light v-card--density-default rounded-xl v-card--variant-elevated elevation-0 resource-card glass-card" style="" data-v-c044dd3c><!----><div class="v-card__loader"><div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top:0;height:0;--v-progress-linear-height:2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100"><!----><div class="v-progress-linear__background" style="opacity:NaN;"></div><div class="v-progress-linear__buffer" style="opacity:NaN;width:0%;"></div><div class="v-progress-linear__indeterminate"><!--[--><div class="v-progress-linear__indeterminate long" style=""></div><div class="v-progress-linear__indeterminate short" style=""></div><!--]--></div><!----></div></div><!----><!----><!--[--><div class="card-icon-wrap pdf" data-v-c044dd3c><i class="mdi-file-pdf-box mdi v-icon notranslate v-theme--light text-red-darken-1" style="font-size:32px;height:32px;width:32px;" aria-hidden="true" data-v-c044dd3c></i></div><div class="card-body" data-v-c044dd3c><h3 class="res-title" data-v-c044dd3c>Glosario Biológico</h3><p class="res-desc" data-v-c044dd3c>Términos clave para entender los procesos celulares.</p><a href="#" class="v-btn v-btn--block v-theme--light text-primary v-btn--density-default rounded-lg v-btn--size-default v-btn--variant-tonal mt-4 action-btn" style="" target="_blank" data-v-c044dd3c><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--> Ver Documento <i class="mdi-open-in-new mdi v-icon notranslate v-theme--light v-icon--end" style="font-size:16px;height:16px;width:16px;" aria-hidden="true" data-v-c044dd3c></i><!--]--><!--]--></span><!----><!----></a></div><!--]--><!----><!--[--><!----><span class="v-card__underlay"></span><!--]--></div></div><!--]--></div><!--]--></div><div class="v-window-item" style="display:none;" data-v-c044dd3c><!----></div><div class="v-window-item" style="display:none;" data-v-c044dd3c><!----></div><!--]--><!----></div><!----></div><footer class="action-footer text-center mt-12" data-v-c044dd3c><a href="/ova-fotosintesis/dashboard" class="v-btn v-theme--light v-btn--density-default rounded-xl v-btn--size-default v-btn--variant-flat btn-back-premium" style="height:56px;" data-v-c044dd3c><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--><i class="mdi-arrow-left mdi v-icon notranslate v-theme--light v-icon--size-default v-icon--start" style="" aria-hidden="true" data-v-c044dd3c></i> Volver al Dashboard <!--]--><!--]--></span><!----><!----></a></footer></div><!--]--></main><!--]--></div></div><footer class="main-footer" data-v-aa541e19><div class="footer-wave" aria-hidden="true" data-v-aa541e19><svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" data-v-aa541e19><path d="M0 120H1440V40C1440 40 1260 0 1080 0C900 0 720 40 540 40C360 40 180 0 0 0V120Z" fill="currentColor" data-v-aa541e19></path></svg></div><div class="v-container v-locale--is-ltr footer-container" style="" data-v-aa541e19><div class="v-row v-row--density-default footer-main-row" style="" data-v-aa541e19><div class="v-col v-col--cols-lg-4 v-col--cols-12 brand-col" style="" data-v-aa541e19><div class="footer-brand-text" data-v-aa541e19><h3 class="f-brand-name" data-v-aa541e19> FOTOSÍNTESIS <span class="f-brand-ova" data-v-aa541e19>OVA</span></h3></div><p class="f-tagline" data-v-aa541e19> Transformando el aprendizaje biológico con tecnología de vanguardia y diseño emocional. </p><div class="uni-mini-card" data-v-aa541e19><div class="uni-logo-bg" data-v-aa541e19><div class="v-responsive v-img v-img--booting" style="width:42px;" data-v-aa541e19><div class="v-responsive__sizer" style=""></div><!--[--><!--[--><!----><!----><!----><!----><!----><!--]--><!--]--><!----></div></div><div class="uni-info" data-v-aa541e19><span class="u-name" data-v-aa541e19>Universidad de Córdoba</span><span class="u-loc" data-v-aa541e19>Montería, Colombia</span></div></div></div><div class="v-col v-col--cols-lg-2 v-col--cols-6 links-col" style="" data-v-aa541e19><h4 class="f-title" data-v-aa541e19>Navegación</h4><nav class="f-nav" data-v-aa541e19><a href="/ova-fotosintesis/" class="" data-v-aa541e19>Inicio</a><a href="/ova-fotosintesis/dashboard" class="" data-v-aa541e19>Dashboard</a><a href="/ova-fotosintesis/contenidos" class="" data-v-aa541e19>Contenidos</a><a href="/ova-fotosintesis/creditos" class="" data-v-aa541e19>Créditos</a></nav></div><div class="v-col v-col--cols-lg-3 v-col--cols-6 contact-col" style="" data-v-aa541e19><div class="f-social mt-4" data-v-aa541e19><span class="s-label" data-v-aa541e19>Síguenos</span><div class="s-icons" data-v-aa541e19><!--[--><a href="https://www.instagram.com/m4rcstro?igsh=aHB0Z2JwdnE5YWE1" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-x-small v-btn--variant-tonal social-btn" style="" target="_blank" data-v-aa541e19><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--><i class="mdi-instagram mdi v-icon notranslate v-theme--light" style="font-size:14px;height:14px;width:14px;" aria-hidden="true" data-v-aa541e19></i><!--]--><!--]--></span><!----><!----></a><a href="https://www.instagram.com/rosendo_de_castro_urango?igsh=NzYxNDBjMWRhZ205" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-x-small v-btn--variant-tonal social-btn" style="" target="_blank" data-v-aa541e19><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--><i class="mdi-instagram mdi v-icon notranslate v-theme--light" style="font-size:14px;height:14px;width:14px;" aria-hidden="true" data-v-aa541e19></i><!--]--><!--]--></span><!----><!----></a><a href="https://www.instagram.com/andre_hernandezo?igsh=M2F0enNuaWo2czlr" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-x-small v-btn--variant-tonal social-btn" style="" target="_blank" data-v-aa541e19><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--><i class="mdi-instagram mdi v-icon notranslate v-theme--light" style="font-size:14px;height:14px;width:14px;" aria-hidden="true" data-v-aa541e19></i><!--]--><!--]--></span><!----><!----></a><a href="https://www.instagram.com/fabio__cantero?igsh=NGJqa25icWdtM2Vj" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-x-small v-btn--variant-tonal social-btn" style="" target="_blank" data-v-aa541e19><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--><i class="mdi-instagram mdi v-icon notranslate v-theme--light" style="font-size:14px;height:14px;width:14px;" aria-hidden="true" data-v-aa541e19></i><!--]--><!--]--></span><!----><!----></a><!--]--></div></div><div class="f-social mt-4" data-v-aa541e19><span class="s-label" data-v-aa541e19>Síguenos</span><div class="s-icons" data-v-aa541e19><!--[--><a href="https://github.com/DLM4RI" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-x-small v-btn--variant-tonal social-btn" style="" target="_blank" data-v-aa541e19><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--><i class="mdi-github mdi v-icon notranslate v-theme--light" style="font-size:14px;height:14px;width:14px;" aria-hidden="true" data-v-aa541e19></i><!--]--><!--]--></span><!----><!----></a><a href="https://github.com/RosendoDC0" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-x-small v-btn--variant-tonal social-btn" style="" target="_blank" data-v-aa541e19><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--><i class="mdi-github mdi v-icon notranslate v-theme--light" style="font-size:14px;height:14px;width:14px;" aria-hidden="true" data-v-aa541e19></i><!--]--><!--]--></span><!----><!----></a><a href="https://github.com/DLM4RI" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-x-small v-btn--variant-tonal social-btn" style="" target="_blank" data-v-aa541e19><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--><i class="mdi-github mdi v-icon notranslate v-theme--light" style="font-size:14px;height:14px;width:14px;" aria-hidden="true" data-v-aa541e19></i><!--]--><!--]--></span><!----><!----></a><a href="https://github.com/RosendoDC0" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-x-small v-btn--variant-tonal social-btn" style="" target="_blank" data-v-aa541e19><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--><i class="mdi-github mdi v-icon notranslate v-theme--light" style="font-size:14px;height:14px;width:14px;" aria-hidden="true" data-v-aa541e19></i><!--]--><!--]--></span><!----><!----></a><!--]--></div></div></div><div class="v-col v-col--cols-lg-3 v-col--cols-12 tip-col" style="" data-v-aa541e19><div class="f-tip-card" data-v-aa541e19><i class="mdi-leaf mdi v-icon notranslate v-theme--light v-icon--size-default mb-2" style="color:#80a124;caret-color:#80a124;" aria-hidden="true" data-v-aa541e19></i><p data-v-aa541e19><strong data-v-aa541e19>Dato Curioso:</strong> La fotosíntesis artificial es una de las mayores promesas para la energía limpia del futuro. </p></div></div></div><hr class="v-divider v-theme--light f-divider" style="border-style:solid;" aria-orientation="horizontal" role="separator" data-v-aa541e19><div class="f-bottom" data-v-aa541e19><span class="f-copy" data-v-aa541e19>© 2026 OVA Fotosíntesis · Montería, Córdoba</span><span class="f-credits" data-v-aa541e19>Powered by <i data-v-aa541e19>DLM4RI</i></span></div></div></footer><!--]--></main><!--]--></div></div></div></div><div id="teleports"></div><script>window.__NUXT__={};window.__NUXT__.config={public:{},app:{baseURL:"/ova-fotosintesis/",buildId:"d3c8fe5c-6ed0-4751-9d92-da77a75f12be",buildAssetsDir:"/_nuxt/",cdnURL:""}}</script><script type="application/json" data-nuxt-data="nuxt-app" data-ssr="true" id="__NUXT_DATA__" data-src="/ova-fotosintesis/recursos/_payload.json?d3c8fe5c-6ed0-4751-9d92-da77a75f12be">[{"state":1,"once":3,"_errors":4,"serverRendered":6,"path":7,"prerenderedAt":8},["Reactive",2],{},["Set"],["ShallowReactive",5],{},true,"\u002Frecursos",1778133744407]</script></body></html>

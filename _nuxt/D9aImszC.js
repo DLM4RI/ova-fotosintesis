@@ -1,1 +1,0 @@
-import{_ as t,o as s,g as r,w as e,b as o,V as l,r as n,S as c}from"./DR-bHzi1.js";const _={};function f(a,d){return s(),r(c,null,{default:e(()=>[o(l,null,{default:e(()=>[n(a.$slots,"default")]),_:3})]),_:3})}const p=t(_,[["render",f]]);export{p as default};
