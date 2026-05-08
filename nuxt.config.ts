@@ -21,5 +21,10 @@ export default defineNuxtConfig({
 
   app: {
     baseURL: '/ova-fotosintesis/',
+    head: {
+      link: [
+         { rel: 'icon', type: 'image/png', href: '/icono.png' }
+      ]
+    }
   },
 })
