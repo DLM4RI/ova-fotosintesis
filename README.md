@@ -101,6 +101,7 @@ La OVA busca que los estudiantes comprendan el proceso de la fotosíntesis, iden
 | JavaScript | Lógica de interacción |
 | HTML5 | Estructura |
 | CSS3 | Estilos y diseño visual |
+| Nuxt 3 | FrameWork de desarrollo |
 
 ---
 
