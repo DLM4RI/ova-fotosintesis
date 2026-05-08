@@ -382,7 +382,7 @@ definePageMeta({
   background: #ffffff;
   position: relative;
   border-right: 1px solid rgba(0, 0, 0, 0.03);
-  z-index: 2;
+  z-index: 0;
 }
 
 .hero-sticky-content {
