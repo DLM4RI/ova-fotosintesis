@@ -3,23 +3,26 @@
     <div v-if="active" class="loading-overlay">
       <div class="wave-container">
         <svg class="wave-svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-          <path 
-            fill="#ffffff" 
+          <path
+            fill="#ffffff"
             d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,144C672,139,768,181,864,202.7C960,224,1056,224,1152,213.3C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           ></path>
         </svg>
       </div>
-      
-      <div class="content-wrapper">
+
+      <div
+        class="content-wrapper d-flex flex-column align-center justify-center text-center"
+      >
         <div class="logo-pulse">
           <LeafAlt size="60" color="#80a124" />
         </div>
+
         <div class="loading-text">
-          <span class="name-display">{{ studentName || 'Preparando...' }}</span>
+          <span class="name-display">{{ studentName || "Preparando..." }}</span>
           <p class="status-msg">{{ statusMessage }}</p>
         </div>
       </div>
-      
+
       <div class="wave-bg" />
     </div>
   </Transition>
@@ -33,8 +36,8 @@ const props = defineProps({
   studentName: String,
   statusMessage: {
     type: String,
-    default: "Personalizando tu experiencia"
-  }
+    default: "Personalizando tu experiencia",
+  },
 });
 </script>
 
@@ -90,8 +93,15 @@ const props = defineProps({
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.1); opacity: 1; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
 }
 
 /* --- ANIMACION DE OLA (TRANSITION) --- */
