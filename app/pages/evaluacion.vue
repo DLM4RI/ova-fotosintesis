@@ -18,13 +18,13 @@
             <v-card-text class="pa-10 text-center">
               <div class="badge mb-4">Módulo de Evaluación</div>
               <h1 class="display-title mb-4">¿Estás listo para el reto?</h1>
-              <p class="subtitle mb-8">Esta evaluación medirá tus conocimientos sobre el proceso de la fotosíntesis con el estilo de las pruebas Saber Pro.</p>
+              <p class="subtitle mb-8">Esta evaluación medirá tus conocimientos sobre la fotosíntesis con 30 preguntas. Recibirás una calificación de 0.0 a 5.0.</p>
               
               <v-row class="info-grid mb-8">
                 <v-col cols="12" md="4">
                   <div class="info-item">
                     <v-icon icon="mdi-help-circle-outline" color="primary" />
-                    <h4>10 Preguntas</h4>
+                    <h4>{{ totalQuestions }} Preguntas</h4>
                     <span>Selección múltiple</span>
                   </div>
                 </v-col>
@@ -38,8 +38,8 @@
                 <v-col cols="12" md="4">
                   <div class="info-item">
                     <v-icon icon="mdi-lightbulb-on-outline" color="primary" />
-                    <h4>Pistas</h4>
-                    <span>Ayuda si fallas</span>
+                    <h4>Escala 0.0-5.0</h4>
+                    <span>Calificación profesional</span>
                   </div>
                 </v-col>
               </v-row>
@@ -53,7 +53,7 @@
 
               <div class="d-flex justify-center gap-4">
                 <v-btn to="/dashboard" variant="text" color="grey-darken-1" height="56" rounded="xl">Ahora no</v-btn>
-                <v-btn color="primary" height="56" rounded="xl" width="220" @click="startQuiz">
+                <v-btn color="#ffc100" class="font-weight-bold" height="56" rounded="xl" width="220" @click="startQuiz">
                   ¡Empezar Evaluación!
                 </v-btn>
               </div>
@@ -65,7 +65,7 @@
         <v-window-item :value="1">
           <div class="quiz-header d-flex align-center justify-space-between mb-6">
             <div class="quiz-progress">
-              <span class="q-count">Pregunta {{ currentQuestionIndex + 1 }} de {{ questions.length }}</span>
+              <span class="q-count">Pregunta {{ currentQuestionIndex + 1 }} de {{ totalQuestions }}</span>
               <div class="progress-track">
                 <div class="progress-fill" :style="{ width: ((currentQuestionIndex + 1) / questions.length) * 100 + '%' }"></div>
               </div>
@@ -125,33 +125,55 @@
           <v-card class="results-card glass-card text-center" rounded="xl">
             <v-card-text class="pa-12">
               <div class="result-icon-wrap mb-6">
-                <v-icon :icon="score >= 7 ? 'mdi-trophy-outline' : 'mdi-star-face'" size="80" color="primary" />
+                <v-icon 
+                  :icon="finalScore >= 4 ? 'mdi-trophy-outline' : (finalScore >= 3 ? 'mdi-star' : 'mdi-target')" 
+                  size="80" 
+                  :color="scoreIconColor" 
+                />
               </div>
               <h2 class="display-title mb-2">¡Evaluación Completada!</h2>
-              <p class="subtitle mb-8">Has demostrado tu conocimiento sobre la energía de la vida.</p>
+              <p class="subtitle mb-8">Has demostrado tu conocimiento sobre el proceso de la fotosíntesis.</p>
 
               <div class="stats-row mb-10">
                 <div class="stat-card">
-                  <span class="stat-label">Puntaje</span>
-                  <span class="stat-value">{{ score }}/10</span>
+                  <span class="stat-label">Calificación</span>
+                  <span class="stat-value-large">{{ finalScore.toFixed(1) }}/5.0</span>
                 </div>
                 <div class="stat-card">
-                  <span class="stat-label">Tiempo</span>
+                  <span class="stat-label">Respuestas Correctas</span>
+                  <span class="stat-value">{{ score }}/{{ totalQuestions }}</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-label">Tiempo Total</span>
                   <span class="stat-value">{{ formattedTime }}</span>
                 </div>
                 <div class="stat-card">
-                  <span class="stat-label">Intentos extra</span>
+                  <span class="stat-label">Intentos Extra</span>
                   <span class="stat-value">{{ totalMistakes }}</span>
                 </div>
               </div>
 
-              <div class="feedback-msg mb-10" :class="scoreClass">
-                {{ feedbackMessage }}
+              <div class="feedback-container mb-10">
+                <div class="feedback-msg" :class="scoreClass">
+                  {{ feedbackMessage }}
+                </div>
+                <p class="feedback-detail">{{ feedbackDetail }}</p>
+              </div>
+
+              <div class="score-breakdown mb-10">
+                <h3 class="breakdown-title">Desglose de tu rendimiento:</h3>
+                <div class="breakdown-item">
+                  <span>Porcentaje de aciertos</span>
+                  <div class="bar-container">
+                    <div class="bar" :style="{ width: correctPercentage + '%', backgroundColor: getColorForScore(correctPercentage) }"></div>
+                  </div>
+                  <span class="percentage">{{ correctPercentage }}%</span>
+                </div>
               </div>
 
               <div class="d-flex justify-center gap-4">
                 <v-btn to="/dashboard" variant="tonal" height="56" rounded="xl">Volver al Dashboard</v-btn>
-                <v-btn color="primary" height="56" rounded="xl" @click="resetQuiz">Intentar de nuevo</v-btn>
+                <v-btn color="#ffc100" class="font-weight-bold" height="56" rounded="xl" @click="resetQuiz">Intentar de nuevo</v-btn>
               </div>
             </v-card-text>
           </v-card>
@@ -165,6 +187,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useStudentProfile } from '@/composables/useStudentProfile';
+import { evaluationQuestions, getQuestionCount } from '@/composables/useEvaluationQuestions';
 
 const { state, loadProfile } = useStudentProfile();
 const isLoading = ref(true);
@@ -186,6 +209,9 @@ const checkMobile = () => {
 const timer = ref(0);
 let timerInterval = null;
 
+const totalQuestions = computed(() => getQuestionCount());
+const questions = evaluationQuestions;
+
 const startQuiz = () => {
   currentStep.value = 1;
   timer.value = 0;
@@ -202,143 +228,30 @@ const formattedTime = computed(() => {
 
 const topics = [
   'Estructura de Cloroplastos',
-  'Fase Lumínica (Tilacoides)',
-  'Ciclo de Calvin (Fase Oscura)',
-  'Ecuación Química Fundamental',
-  'Rol del CO2 y el Oxígeno',
-  'Transformación de Energía'
-];
-
-const questions = [
-  {
-    text: '¿En qué orgánulo celular de las plantas ocurre principalmente la fotosíntesis?',
-    options: {
-      A: 'Mitocondria',
-      B: 'Cloroplasto',
-      C: 'Aparato de Golgi',
-      D: 'Ribosoma'
-    },
-    correct: 'B',
-    hint: 'Busca el orgánulo que contiene clorofila y le da el color verde a las plantas.'
-  },
-  {
-    text: 'Durante la fase lumínica, ¿cuál es la fuente de energía que activa el proceso?',
-    options: {
-      A: 'Calor del suelo',
-      B: 'Energía de la glucosa',
-      C: 'Luz solar',
-      D: 'Energía del agua'
-    },
-    correct: 'C',
-    hint: 'Sin la radiación electromagnética del astro rey, esta fase no podría comenzar.'
-  },
-  {
-    text: '¿Qué gas absorben las plantas de la atmósfera para realizar la fotosíntesis?',
-    options: {
-      A: 'Oxígeno (O2)',
-      B: 'Nitrógeno (N2)',
-      C: 'Dióxido de Carbono (CO2)',
-      D: 'Hidrógeno (H2)'
-    },
-    correct: 'C',
-    hint: 'Es el gas que los seres humanos exhalamos y que las plantas usan como fuente de carbono.'
-  },
-  {
-    text: '¿Cuál es el subproducto vital que las plantas liberan a la atmósfera?',
-    options: {
-      A: 'Dióxido de Carbono',
-      B: 'Oxígeno',
-      C: 'Vapor de agua únicamente',
-      D: 'Metano'
-    },
-    correct: 'B',
-    hint: 'Es el gas esencial que necesitamos los animales para respirar.'
-  },
-  {
-    text: '¿En qué parte específica del cloroplasto ocurre el Ciclo de Calvin?',
-    options: {
-      A: 'Membrana externa',
-      B: 'Tilacoides',
-      C: 'Estroma',
-      D: 'Citosol'
-    },
-    correct: 'C',
-    hint: 'No es en los sacos aplanados (tilacoides), sino en el espacio fluido que los rodea.'
-  },
-  {
-    text: '¿Cuál es la función principal de la clorofila?',
-    options: {
-      A: 'Almacenar agua',
-      B: 'Capturar la energía lumínica',
-      C: 'Producir CO2',
-      D: 'Dividir el núcleo celular'
-    },
-    correct: 'B',
-    hint: 'Actúa como una antena receptora de fotones de luz.'
-  },
-  {
-    text: 'En la ecuación química de la fotosíntesis, además de luz, ¿cuáles son los reactivos?',
-    options: {
-      A: 'Glucosa y Oxígeno',
-      B: 'Agua y Dióxido de Carbono',
-      C: 'Almidón y Agua',
-      D: 'Oxígeno y Nitrógeno'
-    },
-    correct: 'B',
-    hint: 'Piensa en lo que una planta necesita "beber" y "respirar" para crecer.'
-  },
-  {
-    text: '¿Qué molécula de azúcar es el producto principal de la fotosíntesis?',
-    options: {
-      A: 'Fructosa',
-      B: 'Lactosa',
-      C: 'Glucosa',
-      D: 'Sacarosa'
-    },
-    correct: 'C',
-    hint: 'Es un monosacárido de 6 carbonos que sirve como fuente de energía química.'
-  },
-  {
-    text: '¿Cómo se llaman las estructuras que parecen pilas de monedas dentro del cloroplasto?',
-    options: {
-      A: 'Granas',
-      B: 'Estomas',
-      C: 'Mitocondrias',
-      D: 'Vacuolas'
-    },
-    correct: 'A',
-    hint: 'Están formadas por conjuntos de tilacoides apilados.'
-  },
-  {
-    text: '¿Por qué la fotosíntesis es fundamental para la vida en la Tierra?',
-    options: {
-      A: 'Porque calienta la atmósfera',
-      B: 'Porque produce el agua del planeta',
-      C: 'Porque transforma energía inorgánica en orgánica y libera oxígeno',
-      D: 'Porque evita la lluvia'
-    },
-    correct: 'C',
-    hint: 'Considera el flujo de energía y la composición del aire que respiramos.'
-  }
+  'Fases Lumínica y Oscura',
+  'Ciclo de Calvin',
+  'Ecuación Fundamental',
+  'Pigmentos y Luz',
+  'Adaptaciones Vegetales',
+  'Plantas C3, C4 y CAM'
 ];
 
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
 const isLastQuestion = computed(() => currentQuestionIndex.value === questions.length - 1);
 
 const handleOptionClick = (key) => {
-  if (isCorrect.value) return; // Ya acertó
+  if (isCorrect.value) return;
   
   selectedOption.value = key;
   if (key === currentQuestion.value.correct) {
     isCorrect.value = true;
     hintMessage.value = null;
     wrongAttempt.value = null;
-    if (wrongAttempt.value === null) score.value++;
+    score.value++;
   } else {
     wrongAttempt.value = key;
     hintMessage.value = currentQuestion.value.hint;
     totalMistakes.value++;
-    // Efecto de sacudida
     setTimeout(() => { wrongAttempt.value = null; }, 500);
   }
 };
@@ -366,20 +279,60 @@ const resetQuiz = () => {
   isCorrect.value = false;
   score.value = 0;
   totalMistakes.value = 0;
+  timer.value = 0;
   currentStep.value = 0;
 };
 
-const feedbackMessage = computed(() => {
-  if (score.value >= 9) return '¡Excelente! Eres un experto en botánica celular.';
-  if (score.value >= 7) return '¡Muy bien! Tienes bases sólidas sobre la fotosíntesis.';
-  if (score.value >= 5) return 'Buen trabajo, pero te recomendamos repasar los contenidos.';
-  return 'Sigue practicando, la naturaleza tiene mucho que enseñarte.';
+// CÁLCULO DE CALIFICACIÓN (0.0 - 5.0)
+const finalScore = computed(() => {
+  const percentage = (score.value / totalQuestions.value) * 100;
+  // Escala lineal: 0-100% → 0.0-5.0
+  return (percentage / 100) * 5;
 });
 
+const correctPercentage = computed(() => {
+  return Math.round((score.value / totalQuestions.value) * 100);
+});
+
+const getColorForScore = (percentage) => {
+  if (percentage >= 80) return '#80a124';
+  if (percentage >= 60) return '#ffa500';
+  if (percentage >= 40) return '#ff7043';
+  return '#e74c3c';
+};
+
 const scoreClass = computed(() => {
-  if (score.value >= 7) return 'score-high';
-  if (score.value >= 5) return 'score-mid';
+  if (finalScore.value >= 4.5) return 'score-excellent';
+  if (finalScore.value >= 3.5) return 'score-good';
+  if (finalScore.value >= 2.5) return 'score-regular';
   return 'score-low';
+});
+
+const scoreIconColor = computed(() => {
+  if (finalScore.value >= 4.5) return '#80a124';
+  if (finalScore.value >= 3.5) return '#ffa500';
+  if (finalScore.value >= 2.5) return '#ff7043';
+  return '#e74c3c';
+});
+
+const feedbackMessage = computed(() => {
+  if (finalScore.value >= 4.5) 
+    return '¡Excelente! Demuestras dominio excepcional sobre la fotosíntesis.';
+  if (finalScore.value >= 3.5) 
+    return '¡Muy bien! Tienes bases sólidas y buen entendimiento del tema.';
+  if (finalScore.value >= 2.5) 
+    return 'Buen esfuerzo. Te recomendamos repasar algunos conceptos.';
+  return 'Sigue practicando, la botánica tiene mucho que enseñarte.';
+});
+
+const feedbackDetail = computed(() => {
+  if (finalScore.value >= 4.5) 
+    return `Obtuviste ${score.value} respuestas correctas de ${totalQuestions.value}. ¡Eres un experto en fotosíntesis celular!`;
+  if (finalScore.value >= 3.5) 
+    return `Obtuviste ${score.value} respuestas correctas. Considera profundizar en los procesos químicos.`;
+  if (finalScore.value >= 2.5) 
+    return `Obtuviste ${score.value} respuestas correctas. Revisa los conceptos clave y vuelve a intentar.`;
+  return `Obtuviste ${score.value} respuestas correctas. Accede a los contenidos educativos para mejorar.`;
 });
 
 onMounted(() => {
@@ -626,17 +579,96 @@ definePageMeta({
 
 .stat-label { display: block; font-size: 0.75rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 5px; }
 .stat-value { font-size: 1.8rem; font-weight: 950; color: #1e293b; }
+.stat-value-large { font-size: 2.5rem; font-weight: 950; color: #80a124; }
 
-.feedback-msg {
-  font-size: 1.25rem;
-  font-weight: 850;
-  padding: 24px;
+.feedback-container {
+  background: rgba(128, 161, 36, 0.08);
+  padding: 2rem;
   border-radius: 24px;
+  border: 1px solid rgba(128, 161, 36, 0.15);
 }
 
-.score-high { background: #f0fdf4; color: #15803d; }
-.score-mid { background: #fffbeb; color: #b45309; }
-.score-low { background: #fef2f2; color: #b91c1c; }
+.feedback-msg {
+  font-size: 1.1rem;
+  font-weight: 850;
+  margin-bottom: 0.75rem;
+  padding: 1rem;
+  border-radius: 16px;
+}
+
+.feedback-msg.score-excellent {
+  background: rgba(128, 161, 36, 0.15);
+  color: #2d6a4f;
+}
+
+.feedback-msg.score-good {
+  background: rgba(255, 165, 0, 0.15);
+  color: #b8860b;
+}
+
+.feedback-msg.score-regular {
+  background: rgba(255, 112, 67, 0.15);
+  color: #d84315;
+}
+
+.feedback-msg.score-low {
+  background: rgba(231, 76, 60, 0.15);
+  color: #c0392b;
+}
+
+.feedback-detail {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.score-breakdown {
+  background: rgba(45, 106, 79, 0.05);
+  padding: 1.5rem;
+  border-radius: 24px;
+  border: 1px solid rgba(45, 106, 79, 0.1);
+}
+
+.breakdown-title {
+  font-weight: 850;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.breakdown-item {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 0.5fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.breakdown-item > span:first-child {
+  font-weight: 700;
+  color: #475569;
+  text-align: left;
+}
+
+.bar-container {
+  height: 20px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.percentage {
+  font-weight: 850;
+  color: #1a1a1a;
+  text-align: right;
+  font-size: 1.1rem;
+}
 
 /* ANIMATIONS */
 @keyframes shake {

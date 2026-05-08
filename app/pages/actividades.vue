@@ -1,699 +1,684 @@
 <template>
-  <!-- Contenedor Principal con fondo optimizado -->
-  <v-app class="bg-slate-50">
-    <v-main>
-      <v-container class="ui-wrapper py-10 px-4" fluid>
-        <div class="max-width-container mx-auto">
-          <!-- TÍTULO DE SECCIÓN -->
-          <header class="text-center mb-12 animate-in">
-            <v-chip
+  <v-main class="activities-shell">
+    <!-- DECORACIONES CINÉTICAS (BIO-DYNAMICS) -->
+    <div class="grain-overlay" aria-hidden="true" />
+    <div class="floating-elements" aria-hidden="true">
+      <!-- Rayos de Luz Sutiles -->
+      <div class="sun-ray r-1"></div>
+      <div class="sun-ray r-2"></div>
+
+      <!-- Hojas y Partículas -->
+      <LeafAlt v-for="i in 8" :key="i" class="bg-leaf" :style="leafStyles(i)" />
+      <div
+        v-for="n in 6"
+        :key="'p' + n"
+        class="bio-dot"
+        :style="dotStyles(n)"
+      ></div>
+      <div
+        v-for="n in 4"
+        :key="'b' + n"
+        class="oxygen-bubble"
+        :style="bubbleStyles(n)"
+      ></div>
+
+      <!-- Orbes de Energía -->
+      <div class="nature-orb n-1"></div>
+      <div class="nature-orb n-2"></div>
+      <div class="nature-orb n-3"></div>
+    </div>
+
+    <v-container class="activities-container">
+      <div class="max-width-container mx-auto">
+        <!-- MOSTRAR ACTIVIDAD INDIVIDUAL -->
+        <div v-if="selectedActivity" class="activity-view animate-in">
+          <div class="activity-header d-flex flex-column align-start mb-10">
+            <!-- Botón con margen negativo para alineación perfecta -->
+            <v-btn
+              @click="selectedActivity = null"
+              icon="mdi-arrow-left"
+              variant="text"
               color="success"
-              variant="tonal"
-              class="mb-4 font-weight-bold"
-              >Módulo 04</v-chip
-            >
-            <h1 class="text-h3 font-weight-black mb-2 color-green-dark">
-              Fotosíntesis Dinámica
-            </h1>
-            <p class="text-body-1 text-secondary">
-              Completa los retos para desbloquear el siguiente nivel.
+              class="ml-n4 mb-4"
+            ></v-btn>
+
+            <!-- Contenedor de texto para asegurar alineación izquierda pura -->
+            <div class="text-left">
+              <h1 class="display-title mb-2">
+                {{ selectedActivity.title }}
+              </h1>
+
+              <p class="subtitle-text">
+                {{ selectedActivity.description }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Card con el componente de la actividad -->
+          <v-card class="glass-card-full pa-8 elevation-0">
+            <component :is="selectedActivity.component" />
+          </v-card>
+        </div>
+
+        <!-- MOSTRAR GRID DE ACTIVIDADES -->
+        <div v-else>
+          <!-- HEADER -->
+          <header class="text-center mb-16 animate-in">
+            <div class="header-badge-custom mb-4">ACTIVIDADES INTERACTIVAS</div>
+            <h1 class="display-title mb-2">Fotosíntesis Dinámica</h1>
+            <p class="subtitle-header mx-auto">
+              Supera estos retos para demostrar tu dominio sobre el ciclo de la vida vegetal.
             </p>
           </header>
 
-          <v-row>
-            <!-- 1. CRUCIGRAMA -->
-            <v-col cols="12" class="mb-8">
-              <v-card class="premium-card animate-in" elevation="0">
-                <div class="card-header-gradient pa-6 d-flex align-center">
-                  <v-icon
-                    icon="mdi-grid-large"
-                    color="white"
-                    size="32"
-                    class="me-4"
-                  ></v-icon>
-                  <div>
-                    <h2 class="text-h5 font-weight-bold text-white">
-                      1. Crucigrama Maestro
-                    </h2>
-                    <p class="text-caption text-white opacity-80">
-                      Encuentra los conceptos clave
-                    </p>
+          <!-- CARDS DE ACTIVIDADES -->
+          <v-row class="justify-center mb-12">
+            <v-col
+              v-for="activity in activities"
+              :key="activity.id"
+              cols="12"
+              sm="6"
+              md="6"
+              lg="5"
+              class="mb-8"
+            >
+              <v-card
+                class="activity-card animate-in"
+                elevation="0"
+                @click="selectedActivity = activity"
+              >
+                <div class="card-header-premium pa-8">
+                  <!-- Contenedor del Icono con efecto de profundidad -->
+                  <div class="icon-wrapper me-6">
+                    <v-icon
+                      :icon="activity.icon"
+                      color="#80a124"
+                      size="32"
+                    ></v-icon>
+                  </div>
+
+                  <div class="header-content">
+                    <h2 class="title-text">{{ activity.title }}</h2>
+                    <p class="description-text1">{{ activity.description }}</p>
                   </div>
                 </div>
-                <v-card-text class="pa-0">
-                  <div class="iframe-wrapper">
-                    <iframe
-                      src="https://es.educaplay.com/juego/29022626-crucigrama_de_la_fotosintesis.html"
-                      class="styled-iframe"
-                      allowfullscreen
-                    ></iframe>
-                  </div>
-                </v-card-text>
-              </v-card>
-            </v-col>
-
-            <!-- 2. COMPLETA LA FRASE -->
-            <v-col cols="12" md="7" class="mb-8">
-              <v-card class="premium-card h-100 animate-in" elevation="0">
-                <div
-                  class="pa-6 border-bottom d-flex align-center justify-space-between"
-                >
-                  <h2 class="text-h5 font-weight-bold color-green-dark">
-                    <v-icon
-                      icon="mdi-vector-combine"
-                      class="me-2"
-                      color="success"
-                    ></v-icon>
-                    2. Flujo de Energía
-                  </h2>
-                </div>
-
-                <v-card-text class="pa-6">
-                  <p class="text-overline mb-4 text-grey-darken-1">
-                    Palabras disponibles (Arrastra)
-                  </p>
-                  <div class="d-flex flex-wrap gap-3 mb-8">
-                    <TransitionGroup name="list">
-                      <v-btn
-                        v-for="w in palabras"
-                        :key="w.id"
-                        :disabled="w.usada"
-                        draggable="true"
-                        @dragstart="arrastrando = w"
-                        variant="flat"
-                        color="green-lighten-5"
-                        class="rounded-pill text-none font-weight-bold word-chip border"
-                        elevation="1"
-                      >
-                        {{ w.texto }}
-                      </v-btn>
-                    </TransitionGroup>
-                  </div>
-
-                  <div
-                    class="frase-container pa-8 rounded-xl bg-slate-50 border-dashed-green"
-                  >
-                    <div
-                      class="d-flex flex-wrap align-center gap-x-2 gap-y-4 text-h6 font-weight-regular line-height-xl"
-                    >
-                      <span>Las plantas absorben la</span>
-                      <div
-                        v-for="(hueco, i) in huecos"
-                        :key="i"
-                        class="d-inline-flex align-center"
-                      >
-                        <div
-                          class="drop-slot"
-                          :class="{
-                            'slot-empty': !hueco.lleno,
-                            'slot-correct':
-                              verificado && hueco.actual === hueco.respuesta,
-                            'slot-wrong':
-                              verificado &&
-                              hueco.lleno &&
-                              hueco.actual !== hueco.respuesta,
-                          }"
-                          @dragover.prevent
-                          @drop="soltar(i)"
-                          @click="limpiar(i)"
-                        >
-                          {{ hueco.actual || "..." }}
-                        </div>
-                        <span class="ms-2">{{ hueco.despues }}</span>
-                      </div>
-                    </div>
-                  </div>
-                </v-card-text>
-
-                <v-card-actions class="pa-6 border-top">
-                  <v-btn
-                    :disabled="!todoLleno"
-                    color="success"
-                    size="large"
-                    variant="elevated"
-                    class="rounded-lg px-8 text-none font-weight-bold"
-                    @click="verificar"
-                    >Verificar Frase</v-btn
-                  >
-                  <v-btn
-                    variant="text"
-                    color="grey-darken-2"
-                    @click="reiniciar"
-                    class="text-none"
-                    >Reiniciar</v-btn
-                  >
-
-                  <v-spacer></v-spacer>
-
-                  <Transition name="fade">
-                    <div
-                      v-if="verificado"
-                      :class="todoOk ? 'text-success' : 'text-error'"
-                      class="d-flex align-center font-weight-bold"
-                    >
-                      <v-icon
-                        :icon="
-                          todoOk ? 'mdi-check-decagram' : 'mdi-alert-circle'
-                        "
-                        class="me-2"
-                      ></v-icon>
-                      {{
-                        todoOk
-                          ? frasesExito[
-                              Math.floor(Math.random() * frasesExito.length)
-                            ]
-                          : "Revisa el orden"
-                      }}
-                    </div>
-                  </Transition>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-
-            <!-- 3. ENTRADAS Y SALIDAS (NUEVA ACTIVIDAD) -->
-            <v-col cols="12" md="5" class="mb-8">
-              <v-card class="premium-card h-100 animate-in" elevation="0">
-                <div class="pa-6 border-bottom">
-                  <h2 class="text-h5 font-weight-bold color-green-dark">
-                    <v-icon
-                      icon="mdi-swap-horizontal-bold"
-                      class="me-2"
-                      color="blue"
-                    ></v-icon>
-                    3. Clasificación
-                  </h2>
-                </div>
-                <v-card-text class="pa-6">
-                  <div
-                    class="zone-box bg-blue-lighten-5 mb-6"
-                    @dragover.prevent
-                    @drop="clasificar('entrada')"
-                  >
-                    <div
-                      class="text-caption font-weight-black text-blue-darken-4 mb-3 d-flex align-center"
-                    >
-                      <v-icon size="small" class="me-1">mdi-login</v-icon> ENTRA
-                    </div>
-                    <div class="d-flex flex-wrap gap-2 min-h-50">
-                      <v-chip
-                        v-for="item in clasificados.entradas"
-                        :key="item"
-                        color="blue"
-                        variant="flat"
-                        size="small"
-                        >{{ item }}</v-chip
-                      >
-                    </div>
-                  </div>
-
-                  <div
-                    class="text-center py-4 bg-white rounded-lg border mb-6 shadow-sm"
-                  >
-                    <p class="text-caption text-grey mb-2">
-                      Arrastra al contenedor correcto
-                    </p>
-                    <div class="d-flex flex-wrap justify-center gap-2">
-                      <v-chip
-                        v-for="item in itemsAClasificar"
-                        :key="item"
-                        draggable="true"
-                        @dragstart="itemArrastrado = item"
-                        color="green-darken-4"
-                        variant="elevated"
-                        class="cursor-grab font-weight-bold"
-                        >{{ item }}</v-chip
-                      >
-                    </div>
-                  </div>
-
-                  <div
-                    class="zone-box bg-orange-lighten-5"
-                    @dragover.prevent
-                    @drop="clasificar('salida')"
-                  >
-                    <div
-                      class="text-caption font-weight-black text-orange-darken-4 mb-3 d-flex align-center"
-                    >
-                      <v-icon size="small" class="me-1">mdi-logout</v-icon> SALE
-                    </div>
-                    <div class="d-flex flex-wrap gap-2 min-h-50">
-                      <v-chip
-                        v-for="item in clasificados.salidas"
-                        :key="item"
-                        color="orange"
-                        variant="flat"
-                        size="small"
-                        >{{ item }}</v-chip
-                      >
-                    </div>
-                  </div>
-                </v-card-text>
-              </v-card>
-            </v-col>
-
-            <v-col cols="12" class="mt-6">
-              <v-card class="bento-card border-success-light" flat border>
-                <div class="pa-6 border-bottom d-flex align-center">
-                  <v-icon
-                    icon="mdi-molecule"
-                    color="success"
-                    class="me-3"
-                  ></v-icon>
-                  <div>
-                    <h2 class="text-h6 font-weight-bold">
-                      5. Laboratorio de Fórmulas
-                    </h2>
-                    <p class="text-caption text-grey">
-                      Ordena la ecuación química: Reactivos → Energía →
-                      Productos
-                    </p>
-                  </div>
-                </div>
-
-                <v-card-text class="pa-8">
-                  <div class="d-flex flex-wrap justify-center gap-3 mb-10">
-                    <TransitionGroup name="pop">
-                      <div
-                        v-for="formula in formulasBanco"
-                        :key="formula.id"
-                        draggable="true"
-                        @dragstart="dragFormula = formula"
-                        class="formula-chip pa-4 rounded-lg cursor-grab d-flex flex-column align-center"
-                      >
-                        <span class="text-h5 font-weight-black">{{
-                          formula.simbolo
-                        }}</span>
-                        <span
-                          class="text-caption font-weight-bold opacity-70"
-                          >{{ formula.nombre }}</span
-                        >
-                      </div>
-                    </TransitionGroup>
-                  </div>
-
-                  <div
-                    class="ecuacion-wrapper pa-6 rounded-xl bg-green-lighten-5 d-flex align-center justify-space-between flex-wrap gap-4"
-                  >
-                    <div class="d-flex align-center gap-2">
-                      <div
-                        class="formula-slot"
-                        @dragover.prevent
-                        @drop="dropFormula(0)"
-                      >
-                        {{ slotsEcuacion[0] ? slotsEcuacion[0].simbolo : "?" }}
-                      </div>
-                      <v-icon icon="mdi-plus" size="small"></v-icon>
-                      <div
-                        class="formula-slot"
-                        @dragover.prevent
-                        @drop="dropFormula(1)"
-                      >
-                        {{ slotsEcuacion[1] ? slotsEcuacion[1].simbolo : "?" }}
-                      </div>
-                    </div>
-
-                    <v-icon
-                      icon="mdi-arrow-right-bold"
-                      color="success"
-                      size="large"
-                    ></v-icon>
-
-                    <div
-                      class="formula-slot energy-slot"
-                      @dragover.prevent
-                      @drop="dropFormula(2)"
-                    >
-                      <v-icon
-                        v-if="!slotsEcuacion[2]"
-                        icon="mdi-white-balance-sunny"
-                        opacity="0.3"
-                      ></v-icon>
-                      <span v-else>{{ slotsEcuacion[2].simbolo }}</span>
-                    </div>
-
-                    <v-icon
-                      icon="mdi-arrow-right-bold"
-                      color="success"
-                      size="large"
-                    ></v-icon>
-
-                    <div class="d-flex align-center gap-2">
-                      <div
-                        class="formula-slot"
-                        @dragover.prevent
-                        @drop="dropFormula(3)"
-                      >
-                        {{ slotsEcuacion[3] ? slotsEcuacion[3].simbolo : "?" }}
-                      </div>
-                      <v-icon icon="mdi-plus" size="small"></v-icon>
-                      <div
-                        class="formula-slot"
-                        @dragover.prevent
-                        @drop="dropFormula(4)"
-                      >
-                        {{ slotsEcuacion[4] ? slotsEcuacion[4].simbolo : "?" }}
-                      </div>
-                    </div>
-                  </div>
-                </v-card-text>
-
-                <v-card-actions class="pa-6 border-top">
-                  <v-btn
-                    color="success"
-                    variant="flat"
-                    class="rounded-lg text-none px-6"
-                    @click="validarEcuacion"
-                  >
-                    Comprobar Mezcla
-                  </v-btn>
-                  <v-btn variant="text" color="grey" @click="resetEcuacion"
-                    >Limpiar Tubos</v-btn
-                  >
-                  <v-spacer></v-spacer>
-                  <v-chip
-                    v-if="ecuacionValidada"
-                    :color="ecuacionCorrecta ? 'success' : 'error'"
-                    variant="tonal"
-                    class="font-weight-bold"
-                  >
-                    {{
-                      ecuacionCorrecta
-                        ? "🧪 ¡Fórmula Maestra! Reacción completa."
-                        : "La ecuación no está balanceada."
-                    }}
-                  </v-chip>
-                </v-card-actions>
               </v-card>
             </v-col>
           </v-row>
+
+          <!-- BOTÓN VOLVER -->
+          <div class="text-center mt-8">
+            <v-btn
+              to="/dashboard"
+              prepend-icon="mdi-arrow-left"
+              variant="flat"
+              class="rounded-pill px-10 text-none font-weight-bold back-btn"
+              size="large"
+            >
+              Volver al Dashboard
+            </v-btn>
+          </div>
         </div>
-      </v-container>
-    </v-main>
-  </v-app>
+      </div>
+    </v-container>
+  </v-main>
 </template>
 
 <script setup>
-import { ref, computed, reactive } from "vue";
+import { ref } from "vue";
+import { LeafAlt } from "@boxicons/vue";
+import ActClasificacion from "@/components/actividades/ActClasificacion.vue";
+import ActCrucigrama from "@/components/actividades/ActCrucigrama.vue";
+import ActFlujoEnergia from "@/components/actividades/ActFlujoEnergia.vue";
+import ActLaboratorio from "@/components/actividades/ActLaboratorio.vue";
 
 definePageMeta({ layout: "dashboard" });
 
-// 5 FRASES DE COMPLETADO
-const frasesExito = [
-  "¡Increíble! Eres un experto en botánica. 🌱",
-  "¡Fantástico! Proceso de energía completado. ✨",
-  "¡Perfecto! Las plantas están felices. 🌳",
-  "¡Excelente trabajo! Has dominado el ciclo. 🧪",
-  "¡Fabuloso! El oxígeno fluye ahora. 💨",
+const selectedActivity = ref(null);
+
+const activities = [
+  {
+    id: 1,
+    title: "Crucigrama Maestro",
+    description: "Encuentra los conceptos clave de la fotosíntesis",
+    icon: "mdi-grid-large",
+    component: ActCrucigrama,
+  },
+  {
+    id: 2,
+    title: "Flujo de Energía",
+    description: "Comprende el flujo de energía en el ecosistema",
+    icon: "mdi-vector-combine",
+    component: ActFlujoEnergia,
+  },
+  {
+    id: 3,
+    title: "Clasificación",
+    description: "Clasifica organismos según su rol en el ecosistema",
+    icon: "mdi-swap-horizontal-bold",
+    component: ActClasificacion,
+  },
+  {
+    id: 4,
+    title: "Laboratorio de Fórmulas",
+    description: "Experimenta con las ecuaciones de la fotosíntesis",
+    icon: "mdi-molecule",
+    component: ActLaboratorio,
+  },
 ];
 
-// LÓGICA DE ACTIVIDAD 2
-const palabras = reactive([
-  { id: 1, texto: "Luz Solar", usada: false },
-  { id: 2, texto: "CO₂", usada: false },
-  { id: 3, texto: "Agua", usada: false },
-  { id: 4, texto: "Glucosa", usada: false },
-  { id: 5, texto: "Oxígeno", usada: false },
-]);
+const leafStyles = (i) => ({
+  top: `${Math.random() * 100}%`,
+  left: `${Math.random() * 100}%`,
+  opacity: 0.05 + Math.random() * 0.1,
+  transform: `rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random()})`,
+  animation: `float-slow ${10 + Math.random() * 20}s infinite ease-in-out alternate`,
+});
 
-const huecos = reactive([
-  {
-    respuesta: "Luz Solar",
-    lleno: false,
-    actual: null,
-    despues: " para transformar el",
-  },
-  { respuesta: "CO₂", lleno: false, actual: null, despues: " y el" },
-  {
-    respuesta: "Agua",
-    lleno: false,
-    actual: null,
-    despues: " en energía como",
-  },
-  { respuesta: "Glucosa", lleno: false, actual: null, despues: " y liberar" },
-  { respuesta: "Oxígeno", lleno: false, actual: null, despues: "." },
-]);
+const dotStyles = (n) => ({
+  top: `${Math.random() * 100}%`,
+  left: `${Math.random() * 100}%`,
+  width: `${6 + Math.random() * 10}px`,
+  height: `${6 + Math.random() * 10}px`,
+  animationDuration: `${8 + Math.random() * 12}s`,
+  animationDelay: `${Math.random() * 5}s`,
+  opacity: 0.05 + Math.random() * 0.1,
+});
 
-// LÓGICA DE ACTIVIDAD 3
-const itemsAClasificar = ref([
-  "Minerales",
-  "Luz UV",
-  "Almidón",
-  "H₂O",
-  "Dióxido",
-]);
-const clasificados = reactive({ entradas: [], salidas: [] });
-const itemArrastrado = ref(null);
-
-const clasificar = (destino) => {
-  if (!itemArrastrado.value) return;
-  if (destino === "entrada") clasificados.entradas.push(itemArrastrado.value);
-  else clasificados.salidas.push(itemArrastrado.value);
-  itemsAClasificar.value = itemsAClasificar.value.filter(
-    (i) => i !== itemArrastrado.value,
-  );
-  itemArrastrado.value = null;
-};
-
-// CORE LOGIC
-const arrastrando = ref(null);
-const verificado = ref(false);
-
-const soltar = (i) => {
-  if (!arrastrando.value || arrastrando.value.usada) return;
-  const h = huecos[i];
-  if (h.lleno) {
-    const ant = palabras.find((p) => p.texto === h.actual);
-    if (ant) ant.usada = false;
-  }
-  h.actual = arrastrando.value.texto;
-  h.lleno = true;
-  arrastrando.value.usada = true;
-  arrastrando.value = null;
-  verificado.value = false;
-};
-
-const limpiar = (i) => {
-  const h = huecos[i];
-  if (!h.lleno) return;
-  const p = palabras.find((p) => p.texto === h.actual);
-  if (p) p.usada = false;
-  h.lleno = false;
-  h.actual = null;
-  verificado.value = false;
-};
-
-const todoLleno = computed(() => huecos.every((h) => h.lleno));
-const todoOk = computed(() => huecos.every((h) => h.actual === h.respuesta));
-const verificar = () => (verificado.value = true);
-const reiniciar = () => {
-  palabras.forEach((p) => (p.usada = false));
-  huecos.forEach((h) => {
-    h.lleno = false;
-    h.actual = null;
-  });
-  verificado.value = false;
-  clasificados.entradas = [];
-  clasificados.salidas = [];
-  itemsAClasificar.value = ["Minerales", "Luz UV", "Almidón", "H₂O", "Dióxido"];
-};
-
-// --- LOGICA ACTIVIDAD 5: ECUACIÓN QUÍMICA ---
-const formulasBanco = ref([
-  { id: "f1", simbolo: "6H₂O", nombre: "Agua", tipo: "reactivo" },
-  { id: "f2", simbolo: "6CO₂", nombre: "Dióxido", tipo: "reactivo" },
-  { id: "f3", simbolo: "Luz", nombre: "Fotones", tipo: "energia" },
-  { id: "f4", simbolo: "C₆H₁₂O₆", nombre: "Glucosa", tipo: "producto" },
-  { id: "f5", simbolo: "6O₂", nombre: "Oxígeno", tipo: "producto" },
-]);
-
-const slotsEcuacion = reactive([null, null, null, null, null]);
-const dragFormula = ref(null);
-const ecuacionValidada = ref(false);
-const ecuacionCorrecta = ref(false);
-
-const dropFormula = (index) => {
-  if (!dragFormula.value) return;
-  slotsEcuacion[index] = dragFormula.value;
-  dragFormula.value = null;
-  ecuacionValidada.value = false;
-};
-
-const validarEcuacion = () => {
-  ecuacionValidada.value = true;
-  // Validación lógica (Reactivos en slots 0,1 | Energía en slot 2 | Productos en slots 3,4)
-  const r1 = slotsEcuacion[0]?.tipo === "reactivo";
-  const r2 = slotsEcuacion[1]?.tipo === "reactivo";
-  const en = slotsEcuacion[2]?.tipo === "energia";
-  const p1 = slotsEcuacion[3]?.tipo === "producto";
-  const p2 = slotsEcuacion[4]?.tipo === "producto";
-
-  ecuacionCorrecta.value = r1 && r2 && en && p1 && p2;
-};
-
-const resetEcuacion = () => {
-  for (let i = 0; i < slotsEcuacion.length; i++) slotsEcuacion[i] = null;
-  ecuacionValidada.value = false;
-};
+const bubbleStyles = (n) => ({
+  left: `${Math.random() * 100}%`,
+  bottom: `-60px`,
+  width: `${10 + Math.random() * 20}px`,
+  height: `${10 + Math.random() * 20}px`,
+  animationDuration: `${14 + Math.random() * 15}s`,
+  animationDelay: `${Math.random() * 10}s`,
+  opacity: 0.05 + Math.random() * 0.15,
+});
 </script>
 
 <style scoped>
-.bg-slate-50 {
-  background-color: #f8fafc;
-}
-.max-width-container {
-  max-width: 1100px;
-}
-
-/* NAVBAR BORDER */
-.border-bottom {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-}
-
-/* CARD PREMIUM */
-.premium-card {
-  border-radius: 24px !important;
-  border: 1px solid rgba(0, 0, 0, 0.05) !important;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05) !important;
-  background: white;
+/* FONDO BASE */
+.activities-shell {
+  min-height: 100vh;
+  background: #fbfbfd;
+  position: relative;
+  overflow-x: hidden;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    sans-serif;
 }
 
-.card-header-gradient {
-  background: linear-gradient(135deg, #1b5e20 0%, #43a047 100%);
+.activities-container {
+  padding: clamp(2rem, 5vw, 6rem) !important;
+  max-width: 1440px !important;
+  position: relative;
+  z-index: 25;
 }
 
-/* DROP SLOT STYLE */
-.drop-slot {
-  min-width: 100px;
-  height: 40px;
-  border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 0.85rem;
-  transition: all 0.2s ease;
-  cursor: pointer;
+/* DECORACIONES VIVAS (BIO-DYNAMICS) */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 10;
 }
 
-.slot-empty {
-  background: #f1f5f9;
-  border: 2px dashed #cbd5e1;
-  color: #94a3b8;
+.activities-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(128, 161, 36, 0.15) 0%,
+    rgba(221, 174, 56, 0.15) 50%,
+    rgba(45, 106, 79, 0.15) 100%
+  );
+  background-size: 400% 400%;
+  animation: color-shift 15s ease infinite;
+  z-index: 0;
 }
 
-.slot-correct {
-  background: #dcfd8b;
-  border: 2px solid #a3cf2e;
-  color: #3f6212;
+@keyframes color-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-.slot-wrong {
-  background: #fee2e2;
-  border: 2px solid #ef4444;
-  color: #991b1b;
+/* Rayos de Luz */
+.sun-ray {
+  position: absolute;
+  top: -10%;
+  width: 40vw;
+  height: 120vh;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+  transform: rotate(-30deg);
+  filter: blur(60px);
+  animation: ray-sweep 12s infinite alternate ease-in-out;
+}
+.r-1 {
+  left: 10%;
+}
+.r-2 {
+  left: 50%;
+  animation-delay: -6s;
 }
 
-.border-dashed-green {
-  border: 2px dashed #e8f5e9;
-}
-
-.zone-box {
-  border-radius: 16px;
-  padding: 16px;
-  min-height: 120px;
-}
-
-/* ANIMATIONS */
-.animate-in {
-  animation: slideUp 0.6s ease forwards;
-}
-
-@keyframes slideUp {
+@keyframes ray-sweep {
   from {
-    transform: translateY(20px);
-    opacity: 0;
+    transform: translateX(-15%) rotate(-30deg);
   }
   to {
-    transform: translateY(0);
-    opacity: 1;
+    transform: translateX(15%) rotate(-30deg);
   }
 }
 
-.gap-2 {
-  gap: 8px;
-}
-.gap-3 {
-  gap: 12px;
-}
-.gap-4 {
-  gap: 16px;
-}
-.cursor-grab {
-  cursor: grab;
-}
-.line-height-xl {
-  line-height: 2.8;
+.floating-elements {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
 }
 
-.iframe-wrapper {
-  aspect-ratio: 16/9;
-  width: 100%;
+.bg-leaf {
+  position: absolute;
+  color: #80a124;
+  pointer-events: none;
+  filter: blur(1px);
 }
-.styled-iframe {
-  width: 100%;
+
+/* Partículas Bio */
+.bio-dot {
+  position: absolute;
+  background: #ddae38;
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: dot-float 10s infinite ease-in-out;
+}
+
+@keyframes dot-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate(60px, -40px) scale(1.4);
+    opacity: 0.5;
+  }
+}
+
+/* Burbujas */
+.oxygen-bubble {
+  position: absolute;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  backdrop-filter: blur(1px);
+  animation: bubble-upward 18s infinite linear;
+}
+
+@keyframes bubble-upward {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.4;
+  }
+  85% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-120vh) translateX(40px);
+    opacity: 0;
+  }
+}
+
+/* Orbes de Energía */
+.nature-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.25;
+  animation: orb-dance 20s infinite ease-in-out alternate;
+}
+
+.n-1 {
+  width: 900px;
+  height: 900px;
+  background: #80a124;
+  top: -15%;
+  left: -10%;
+}
+.n-2 {
+  width: 800px;
+  height: 800px;
+  background: #ddae38;
+  bottom: -15%;
+  right: -10%;
+  animation-delay: -4s;
+}
+.n-3 {
+  width: 600px;
+  height: 600px;
+  background: #2d6a4f;
+  top: 30%;
+  right: 5%;
+  animation-delay: -8s;
+}
+
+@keyframes orb-dance {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate(100px, 80px) scale(1.15) rotate(5deg);
+  }
+  100% {
+    transform: translate(-80px, 120px) scale(0.9) rotate(-5deg);
+  }
+}
+
+@keyframes float-slow {
+  from {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate(30px, 20px) rotate(15deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CONTENEDOR MÁXIMO */
+.max-width-container {
+  max-width: 1100px;
+  position: relative;
+  z-index: 2;
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.display-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 950;
+  color: #1a1a1a;
+  letter-spacing: -3px;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+.green-gradient {
+  background: linear-gradient(135deg, #80a124, #2d6a4f);
+}
+
+.subtitle-text {
+  font-size: 1.15rem;
+  color: #475569;
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: left;
+  letter-spacing: 0.3px;
+}
+
+.subtitle-header {
+  font-size: 1.15rem;
+  color: #475569;
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 500;
+  line-height: 1.8;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+/* HEADER BADGE CUSTOM */
+.header-badge-custom {
+  display: inline-block;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, rgba(128, 161, 36, 0.2) 0%, rgba(45, 106, 79, 0.15) 100%);
+  color: #80a124;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-size: 0.7rem;
+  border-radius: 99px;
+  border: 1.5px solid rgba(128, 161, 36, 0.4);
+  margin-bottom: 24px;
+  animation: fadeInUp 0.8s ease both;
+  box-shadow: 0 8px 20px rgba(128, 161, 36, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+/* ACTIVITY CARDS */
+.activity-card {
+  background: transparent !important;
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: visible;
   height: 100%;
-  border: none;
+  cursor: pointer;
+  border-radius: 24px 24px 0 0 !important;
+  position: relative;
 }
 
-/* ESTILOS ACTIVIDAD 5 */
-.formula-chip {
-  background: white;
-  border: 1px solid #e2e8f0;
-  min-width: 90px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
+.activity-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #ddae38 0%,
+    #80a124 25%,
+    #2d6a4f 50%,
+    #80a124 75%,
+    #ddae38 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 0 0 24px 24px;
+  animation: gradientShift 3s ease infinite;
 }
 
-.formula-chip:hover {
-  border-color: #43a047;
-  transform: translateY(-2px);
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
 }
 
-.formula-slot {
-  width: 90px;
-  height: 90px;
-  border: 3px dashed #cbd5e1;
-  border-radius: 20px;
+.activity-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 40px 80px rgba(128, 161, 36, 0.12) !important;
+}
+
+.card-header-premium {
+  background: rgba(255, 255, 255, 0.7); /* Efecto cristalino */
+  backdrop-filter: blur(10px);
+  border-radius: 24px 24px 0 0 !important;
+  display: flex;
+  align-items: center;
+  padding: 2.5rem !important; /* Más aire para un look premium */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Contenedor del icono estilo moneda/botón */
+.icon-wrapper {
+  background: #f1f8e9; /* Verde muy sutil de fondo */
+  padding: 12px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 900;
-  font-size: 1.1rem;
-  background: rgba(255, 255, 255, 0.5);
-  transition: all 0.3s ease;
-  cursor: pointer;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  flex-shrink: 0;
 }
 
-.formula-slot:not(:empty) {
-  border-style: solid;
-  border-color: #43a047;
-  background: white;
-  color: #1b5e20;
+.title-text {
+  color: #1a1a1a !important;
+  font-weight: 700 !important;
+  font-size: 1.35rem !important;
+  margin: 0 !important;
+  letter-spacing: -0.3px;
+  line-height: 1.25;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif !important;
 }
 
-.energy-slot {
-  border-color: #fbbf24;
-  color: #b45309;
+.description-text {
+  color: #64748b !important;
+  font-size: 0.9rem !important;
+  margin-top: 6px !important;
+  margin-bottom: 0 !important;
+  font-weight: 400;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif !important;
 }
 
-.border-success-light {
-  border-color: #e8f5e9 !important;
+
+
+
+
+/* VISTA DE ACTIVIDAD INDIVIDUAL */
+.activity-header {
+  animation: slideDown 0.5s ease;
+  margin-bottom: 2rem;
+  text-align: left;
 }
 
-.gap-3 {
-  gap: 12px;
+.activity-header .v-btn {
+  margin-bottom: 1rem !important;
+  color: #80a124 !important;
 }
-.gap-4 {
-  gap: 16px;
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.glass-card-full {
+  background: white !important;
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08) !important;
+  padding: 3rem !important;
+  min-height: 600px;
+}
+
+/* ANIMACIONES */
+.animate-in {
+  animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* BOTÓN VOLVER */
+.back-btn {
+  font-weight: 900 !important;
+  text-transform: none !important;
+  letter-spacing: 0.5px !important;
+  background: linear-gradient(135deg, #80a124 0%, #2d6a4f 100%) !important;
+  color: white !important;
+  box-shadow: 0 10px 30px rgba(128, 161, 36, 0.2) !important;
+  transition: all 0.3s ease !important;
+  height: 60px !important;
+  border-radius: 24px !important;
+}
+
+.back-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(128, 161, 36, 0.3) !important;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .activities-container {
+    padding: clamp(1rem, 4vw, 2rem) !important;
+  }
+
+  .display-title {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+  }
+
+  /* RESPONSIVE OPTIMIZADO */
+  .card-header-premium {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem !important;
+  }
+
+  .icon-wrapper {
+    margin-right: 0 !important;
+    margin-bottom: 1rem;
+  }
+  
+  .title-text {
+    font-size: 1.3rem !important;
+  }
+
+  .glass-card-full {
+    padding: 1.5rem !important;
+  }
 }
 </style>

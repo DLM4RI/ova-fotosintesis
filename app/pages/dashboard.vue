@@ -9,16 +9,10 @@
           <div class="hero-sticky-content">
             <div class="floating-leaves" aria-hidden="true">
               <LeafAlt
-                v-for="leaf in isMobile ? 5 : 15"
+                v-for="leaf in visibleLeaves"
                 :key="leaf.id"
                 class="leaf"
-                :style="{
-                  left: leaf.left,
-                  animationDuration: leaf.duration,
-                  animationDelay: leaf.delay,
-                  opacity: leaf.opacity,
-                  fontSize: leaf.size,
-                }"
+                :style="leaf.style"
               />
             </div>
 
@@ -61,6 +55,12 @@
 
         <!-- PANEL DERECHO (CONTENIDO) -->
         <v-col cols="12" lg="7" class="content-panel">
+          <div class="content-ambient" aria-hidden="true">
+            <div class="ambient-blob blob-a"></div>
+            <div class="ambient-blob blob-b"></div>
+            <div class="ambient-blob blob-c"></div>
+          </div>
+
           <div class="content-scroll-area">
             <header class="user-welcome">
               <v-row align="center">
@@ -218,33 +218,38 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
 import { LeafAlt } from "@boxicons/vue";
 import { useStudentProfile } from "@/composables/useStudentProfile";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 
 const { state, loadProfile } = useStudentProfile();
 const isLoading = ref(true);
 const showUpdateModal = ref(false);
 const isMobile = ref(false);
-
 const updates = [
   {
-    title: "Nuevas Actividades",
-    desc: "Se agregaron 3 nuevas actividades y se actualizaron las existentes.",
-    icon: "mdi-book-plus",
-    color: "#10b981",
+    title: "Lanzamiento V2 Oficial",
+    desc: "Rediseño integral de la OVA con una interfaz más moderna, fluida y optimizada para el aprendizaje.",
+    icon: "mdi-rocket-launch",
+    color: "#10b981", // Verde éxito
   },
   {
-    title: "Optimización",
-    desc: "Mejoras de rendimiento en contenidos, recursos y experiencia general.",
-    icon: "mdi-lightning-bolt",
-    color: "#3b82f6",
+    title: "Evaluación Maestra",
+    desc: "Nueva evaluación de 32 preguntas diseñada para medir el dominio total del proceso fotosintético.",
+    icon: "mdi-clipboard-check",
+    color: "#8b5cf6", // Morado premium para destacar
   },
   {
-    title: "Próximamente",
-    desc: "El contenido se adaptará automáticamente según el grado del estudiante.",
+    title: "Actividades Premium",
+    desc: "Mejora visual y técnica en todos los módulos interactivos para una experiencia de usuario superior.",
+    icon: "mdi-auto-fix",
+    color: "#3b82f6", // Azul tecnología
+  },
+  {
+    title: "Contenido Adaptativo",
+    desc: "Próximamente: El contenido se ajustará automáticamente según el grado y nivel del estudiante.",
     icon: "mdi-school",
-    color: "#f59e0b",
+    color: "#f59e0b", // Ámbar informativo
   },
 ];
 
@@ -267,14 +272,20 @@ onUnmounted(() => {
 
 const logoSrc = useAsset("logo.png");
 
-const leafData = Array.from({ length: 15 }, (_, i) => ({
+const leafData = Array.from({ length: 6 }, (_, i) => ({
   id: i,
-  left: `${5 + ((i * 7) % 90)}%`,
-  duration: `${10 + ((i * 2) % 15)}s`,
-  delay: `${i * 0.5}s`,
-  opacity: 0.1 + (i % 3) * 0.1,
-  size: `${20 + (i % 5) * 5}px`,
+  style: {
+    left: `${Math.random() * 92}%`,
+    animationDuration: `${14 + Math.random() * 10}s`,
+    animationDelay: `${Math.random() * 8}s`,
+    opacity: 0.02 + Math.random() * 0.04,
+    fontSize: `${32 + Math.random() * 12}px`,
+  },
 }));
+
+const visibleLeaves = computed(() =>
+  isMobile.value ? leafData.slice(0, 6) : leafData,
+);
 
 const welcomeMessage = computed(() => {
   if (state.grade === 6)
@@ -395,6 +406,16 @@ definePageMeta({
     background: white;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
+
+  .ambient-blob {
+    filter: blur(80px);
+    opacity: 0.1;
+    animation-duration: 28s;
+  }
+
+  .content-ambient::before {
+    animation-duration: 32s;
+  }
 }
 
 .hero-main {
@@ -497,10 +518,96 @@ definePageMeta({
 
 /* PANEL DERECHO */
 .content-panel {
-  background: transparent;
+  position: relative;
+  background: #fbfcf8;
   padding: clamp(30px, 6vw, 80px);
   height: 100vh;
   overflow-y: auto;
+  isolation: isolate;
+}
+
+/* FONDO AMBIENTAL */
+.content-scroll-area {
+  position: relative;
+  z-index: 2;
+}
+
+.content-ambient {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  height: 200%;
+}
+
+.content-ambient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(128, 161, 36, 0.04) 0%,
+    rgba(221, 174, 56, 0.035) 50%,
+    rgba(45, 106, 79, 0.03) 100%
+  );
+  background-size: 400% 400%;
+  animation: mesh-flow 22s ease infinite;
+}
+
+.ambient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.23;
+  animation: float-blob 22s infinite ease-in-out alternate;
+}
+
+.blob-a {
+  width: 820px;
+  height: 520px;
+  background: #80a124;
+  top: -12%;
+  left: -10%;
+}
+
+.blob-b {
+  width: 820px;
+  height: 420px;
+  background: #2d6a4f;
+  bottom: -8%;
+  right: -6%;
+  animation-delay: -5s;
+}
+
+.blob-c {
+  width: 800px;
+  height: 800px;
+  background: #ddae38;
+  top: 38%;
+  right: 18%;
+  animation-delay: -10s;
+}
+
+@keyframes mesh-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float-blob {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(40px, -25px, 0);
+  }
 }
 
 .user-welcome {
@@ -833,11 +940,7 @@ definePageMeta({
     height: auto;
     overflow: visible;
   }
-  .content-panel {
-    height: auto;
-    overflow: visible;
-    padding: 40px 20px;
-  }
+
   .hero-panel {
     border-right: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.03);
@@ -855,6 +958,16 @@ definePageMeta({
   }
   .welcome-name {
     font-size: 2rem;
+  }
+
+  .ambient-blob {
+    filter: blur(80px);
+    opacity: 0.05;
+    animation-duration: 28s;
+  }
+
+  .content-ambient::before {
+    animation-duration: 32s;
   }
 }
 </style>

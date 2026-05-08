@@ -125,7 +125,7 @@
             <div class="uni-logo-wrap mb-6">
               <v-img
                 :src="useAsset('Imagotipo-universidad.png')"
-                width="280"
+                width="480"
                 class="mx-auto"
                 alt="Imagotipo Universidad de Córdoba"
               />

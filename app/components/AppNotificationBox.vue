@@ -39,6 +39,17 @@
 // TEMPLATE PARA PONER NOTAS DE ACTUALIZACIÓN
 const notes = [
   {
+    date: "08 Mayo, 2026",
+    title: "LANZAMIENTO OFICIAL V2",
+    status: "Oficial",
+    items: [
+      "Rediseño total de la OVA: Interfaz más fluida, moderna y minimalista.",
+      "Nueva Evaluación Maestra: Se integró un banco renovado de 32 preguntas interactivas.",
+      "Optimización de Actividades: Diseño premium con efectos Glassmorphism y fondos dinámicos.",
+      "Lanzamiento al Público: La plataforma ya está disponible oficialmente para todos los usuarios.",
+    ],
+  },
+  {
     date: "07 Mayo, 2026",
     title: "Actualización de Actividades",
     items: [

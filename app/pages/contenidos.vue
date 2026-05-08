@@ -370,9 +370,9 @@ definePageMeta({
 .parallax-bg::before {
   background: linear-gradient(
     135deg,
-    rgba(128, 161, 36, 0.22) 0%,
-    rgba(221, 174, 56, 0.18) 50%,
-    rgba(45, 106, 79, 0.18) 100%
+    rgba(128, 161, 36, 0.882) 0%,
+    rgb(221, 174, 56) 50%,
+    rgb(45, 106, 79) 100%
   );
   background-size: 400% 400%;
   animation: mesh-flow 18s ease infinite;
@@ -400,7 +400,7 @@ definePageMeta({
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.732),
     transparent
   );
   filter: blur(28px);
@@ -433,11 +433,7 @@ definePageMeta({
 .blob-1 {
   width: 900px;
   height: 900px;
-  background: radial-gradient(
-    circle,
-    rgba(128, 161, 36, 0.58),
-    transparent 65%
-  );
+  background: radial-gradient(circle, rgb(175, 231, 21), transparent 65%);
   top: -25%;
   left: -20%;
 }
@@ -445,7 +441,7 @@ definePageMeta({
 .blob-2 {
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(221, 174, 56, 0.4), transparent);
+  background: radial-gradient(circle, rgb(221, 174, 56), transparent);
   bottom: -20%;
   right: -20%;
   animation-delay: -4s;
@@ -454,7 +450,11 @@ definePageMeta({
 .blob-3 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(45, 106, 79, 0.44), transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(45, 106, 79, 0.721),
+    transparent 70%
+  );
   top: 35%;
   right: 5%;
   animation-delay: -9s;
@@ -466,13 +466,13 @@ definePageMeta({
   background: #80a124;
   border-radius: 50%;
   filter: blur(2px);
-  opacity: 0.16;
+  opacity: 0.5;
   animation: particle-wander 12s infinite ease-in-out;
 }
 
 @keyframes particle-wander {
   0% {
-    transform: translate(0, 0) scale(1);
+    transform: translate(0, 0) scale(2);
   }
   33% {
     transform: translate(100px, 150px) scale(1.5);
@@ -481,7 +481,7 @@ definePageMeta({
     transform: translate(-80px, 80px) scale(0.8);
   }
   100% {
-    transform: translate(0, 0) scale(1);
+    transform: translate(0, 0) scale(2);
   }
 }
 
