@@ -23,7 +23,12 @@ export default defineNuxtConfig({
     baseURL: '/ova-fotosintesis/',
     head: {
       link: [
-         { rel: 'icon', type: 'image/png', href: '/icono.png' }
+        { 
+          rel: 'icon', 
+          type: 'image/png', 
+          // Usa la ruta completa incluyendo el baseURL para evitar errores en GH Pages
+          href: '/ova-fotosintesis/icono.png' 
+        }
       ]
     }
   },
