@@ -85,7 +85,7 @@
               <v-card
                 class="activity-card animate-in"
                 elevation="0"
-                @click="selectedActivity = activity"
+                @click="selectActivity(activity)"
               >
                 <div class="card-header-premium pa-8">
                   <!-- Contenedor del Icono con efecto de profundidad -->
@@ -127,6 +127,7 @@
 <script setup>
 import { ref } from "vue";
 import { LeafAlt } from "@boxicons/vue";
+import { useProgress } from "@/composables/useProgress";
 import ActClasificacion from "@/components/actividades/ActClasificacion.vue";
 import ActCrucigrama from "@/components/actividades/ActCrucigrama.vue";
 import ActFlujoEnergia from "@/components/actividades/ActFlujoEnergia.vue";
@@ -166,6 +167,13 @@ const activities = [
     component: ActLaboratorio,
   },
 ];
+
+const { markAsCompleted } = useProgress();
+
+const selectActivity = (activity) => {
+  selectedActivity.value = activity;
+  markAsCompleted('act-' + activity.id);
+};
 
 const leafStyles = (i) => ({
   top: `${Math.random() * 100}%`,

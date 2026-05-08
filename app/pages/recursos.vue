@@ -93,6 +93,7 @@
                     color="primary"
                     rounded="lg"
                     class="mt-4 action-btn"
+                    @click="markAsCompleted('res-pdf-' + (index + 1))"
                   >
                     Ver Documento
                     <v-icon icon="mdi-open-in-new" end size="16" />
@@ -131,6 +132,7 @@
                     color="primary"
                     rounded="lg"
                     class="mt-4 action-btn"
+                    @click="markAsCompleted('res-vid-' + (index + 1))"
                   >
                     Ver en YouTube
                   </v-btn>
@@ -165,6 +167,7 @@
                     color="primary"
                     rounded="lg"
                     class="mt-4 action-btn"
+                    @click="markAsCompleted('res-web-' + (index + 1))"
                   >
                     Visitar Sitio
                     <v-icon icon="mdi-launch" end size="16" />
@@ -196,8 +199,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useStudentProfile } from "@/composables/useStudentProfile";
+import { useProgress } from "@/composables/useProgress";
 
 const { state, loadProfile } = useStudentProfile();
+const { markAsCompleted } = useProgress();
 const isLoading = ref(true);
 const activeTab = ref("pdf");
 const isMobile = ref(false);

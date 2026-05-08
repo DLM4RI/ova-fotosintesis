@@ -10,7 +10,7 @@
           variant="flat"
           color="white"
           class="zoom-btn"
-          @click="modal = true"
+          @click="openModal"
         ></v-btn>
       </div>
     </div>
@@ -28,7 +28,7 @@
         variant="flat"
         class="ver-mas-btn"
         block
-        @click="modal = true"
+        @click="openModal"
       >
         <span>Explorar Módulo</span>
         <v-icon end icon="mdi-chevron-right" size="18" />
@@ -87,13 +87,23 @@
 <script setup>
 import { ref } from "vue";
 import { LeafAlt } from "@boxicons/vue";
+import { useProgress } from "@/composables/useProgress";
 
-defineProps({
+const props = defineProps({
+  id: String,
   titulo: String,
   texto: String,
 });
 
 const modal = ref(false);
+const { markAsCompleted } = useProgress();
+
+const openModal = () => {
+  modal.value = true;
+  if (props.id) {
+    markAsCompleted(props.id);
+  }
+};
 </script>
 
 <style scoped>

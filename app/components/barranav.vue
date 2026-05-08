@@ -49,8 +49,15 @@
           <nuxt-link to="/actividades" class="s-link" @click="close">
             <i class="bx bxs-extension"></i> <span>Actividades</span>
           </nuxt-link>
-          <nuxt-link to="/evaluacion" class="s-link" @click="close">
-            <i class="bx bxs-edit"></i> <span>Evaluación</span>
+          <nuxt-link 
+            :to="isComplete ? '/evaluacion' : ''" 
+            class="s-link" 
+            :class="{ 'locked-link': !isComplete }"
+            @click="isComplete ? close : null"
+          >
+            <i class="bx" :class="isComplete ? 'bxs-edit' : 'bx-lock-alt'"></i> 
+            <span>Evaluación</span>
+            <v-chip v-if="!isComplete" size="x-small" color="orange" class="ml-auto">Bloqueado</v-chip>
           </nuxt-link>
           <nuxt-link to="/creditos" class="s-link" @click="close">
             <i class="bx bxs-group"></i> <span>Créditos</span>
@@ -83,12 +90,12 @@
               <div class="progress-bar-container">
                 <div
                   class="progress-fill"
-                  :style="{ width: '45%', background: 'var(--primary-color)' }"
+                  :style="{ width: progressPercentage + '%', background: 'var(--primary-color)' }"
                 ></div>
               </div>
               <div class="stats-row">
-                <span class="progress-percent">45% OVA Completado</span>
-                <span class="xp-count">1250 XP</span>
+                <span class="progress-percent">{{ progressPercentage }}% OVA Completado</span>
+                <span class="xp-count">{{ progressPercentage * 50 }} XP</span>
               </div>
             </div>
           </div>
@@ -263,6 +270,7 @@ import { ref, onMounted } from "vue";
 import { LeafAlt } from "@boxicons/vue";
 import { useStudentProfile } from "@/composables/useStudentProfile";
 import { useAppSettings } from "@/composables/useAppSettings";
+import { useProgress } from "@/composables/useProgress";
 
 const props = defineProps({
   modelValue: Boolean,
@@ -271,6 +279,7 @@ const emit = defineEmits(["update:modelValue", "open-updates"]);
 
 const { state, loadProfile, logout } = useStudentProfile();
 const { state: settings, setFontSize, setTheme } = useAppSettings();
+const { progressPercentage, isComplete } = useProgress();
 const showLogoutModal = ref(false);
 
 onMounted(() => {
@@ -496,6 +505,17 @@ const confirmLogout = () => {
   background: var(--primary-color);
   color: white;
   box-shadow: 0 10px 20px rgba(128, 161, 36, 0.2);
+}
+
+.locked-link {
+  opacity: 0.7;
+  cursor: not-allowed !important;
+}
+
+.locked-link:hover {
+  background: rgba(255, 165, 0, 0.05) !important;
+  color: #ff9800 !important;
+  transform: none !important;
 }
 
 .s-link i {

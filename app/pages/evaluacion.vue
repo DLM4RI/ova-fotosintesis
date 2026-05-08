@@ -18,7 +18,7 @@
             <v-card-text class="pa-10 text-center">
               <div class="badge mb-4">Módulo de Evaluación</div>
               <h1 class="display-title mb-4">¿Estás listo para el reto?</h1>
-              <p class="subtitle mb-8">Esta evaluación medirá tus conocimientos sobre la fotosíntesis con 30 preguntas. Recibirás una calificación de 0.0 a 5.0.</p>
+              <p class="subtitle mb-8">Esta evaluación medirá tus conocimientos sobre la fotosíntesis con {{ totalQuestions }} preguntas. Recibirás una calificación de 0.0 a 5.0.</p>
               
               <v-row class="info-grid mb-8">
                 <v-col cols="12" md="4">
@@ -85,8 +85,7 @@
                   v-for="(opt, key) in currentQuestion.options" 
                   :key="key"
                   :class="['option-btn', { 
-                    'selected': selectedOption === key,
-                    'wrong-shake': wrongAttempt === key 
+                    'selected': selectedOption === key
                   }]"
                   @click="handleOptionClick(key)"
                 >
@@ -94,27 +93,21 @@
                   <span class="opt-text">{{ opt }}</span>
                 </button>
               </div>
-
-              <transition name="fade">
-                <div v-if="hintMessage" class="hint-box mt-6">
-                  <v-icon icon="mdi-lightbulb-on" color="amber-darken-2" start />
-                  <span><strong>Pista:</strong> {{ hintMessage }}</span>
-                </div>
-              </transition>
             </v-card-text>
             <v-divider />
             <v-card-actions class="pa-6">
               <v-spacer />
               <v-btn 
                 color="primary" 
-                height="50" 
-                rounded="lg" 
-                min-width="150" 
-                :disabled="!isCorrect"
-                @click="nextQuestion"
+                height="54" 
+                rounded="xl" 
+                min-width="180" 
+                :disabled="selectedOption === null"
+                class="confirm-btn"
+                @click="confirmResponse"
               >
-                {{ isLastQuestion ? 'Finalizar' : 'Siguiente' }}
-                <v-icon icon="mdi-chevron-right" end />
+                Confirmar Respuesta
+                <v-icon icon="mdi-check-circle" end />
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -146,10 +139,6 @@
                 <div class="stat-card">
                   <span class="stat-label">Tiempo Total</span>
                   <span class="stat-value">{{ formattedTime }}</span>
-                </div>
-                <div class="stat-card">
-                  <span class="stat-label">Intentos Extra</span>
-                  <span class="stat-value">{{ totalMistakes }}</span>
                 </div>
               </div>
 
@@ -188,17 +177,16 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useStudentProfile } from '@/composables/useStudentProfile';
 import { evaluationQuestions, getQuestionCount } from '@/composables/useEvaluationQuestions';
+import { useProgress } from '@/composables/useProgress';
 
 const { state, loadProfile } = useStudentProfile();
+const { isComplete } = useProgress();
+
 const isLoading = ref(true);
 const currentStep = ref(0);
 const currentQuestionIndex = ref(0);
 const selectedOption = ref(null);
-const hintMessage = ref(null);
-const wrongAttempt = ref(null);
-const isCorrect = ref(false);
 const score = ref(0);
-const totalMistakes = ref(0);
 const isMobile = ref(false);
 
 const checkMobile = () => {
@@ -240,30 +228,23 @@ const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
 const isLastQuestion = computed(() => currentQuestionIndex.value === questions.length - 1);
 
 const handleOptionClick = (key) => {
-  if (isCorrect.value) return;
-  
   selectedOption.value = key;
-  if (key === currentQuestion.value.correct) {
-    isCorrect.value = true;
-    hintMessage.value = null;
-    wrongAttempt.value = null;
-    score.value++;
-  } else {
-    wrongAttempt.value = key;
-    hintMessage.value = currentQuestion.value.hint;
-    totalMistakes.value++;
-    setTimeout(() => { wrongAttempt.value = null; }, 500);
-  }
 };
 
-const nextQuestion = () => {
+const confirmResponse = () => {
+  if (selectedOption.value === null) return;
+
+  // Registrar si fue correcta
+  if (selectedOption.value === currentQuestion.value.correct) {
+    score.value++;
+  }
+
+  // Pasar a la siguiente o finalizar
   if (isLastQuestion.value) {
     finishQuiz();
   } else {
     currentQuestionIndex.value++;
     selectedOption.value = null;
-    hintMessage.value = null;
-    isCorrect.value = false;
   }
 };
 
@@ -275,10 +256,7 @@ const finishQuiz = () => {
 const resetQuiz = () => {
   currentQuestionIndex.value = 0;
   selectedOption.value = null;
-  hintMessage.value = null;
-  isCorrect.value = false;
   score.value = 0;
-  totalMistakes.value = 0;
   timer.value = 0;
   currentStep.value = 0;
 };
@@ -337,6 +315,13 @@ const feedbackDetail = computed(() => {
 
 onMounted(() => {
   loadProfile();
+  
+  // Guard de progreso (Si no ha completado el 100%, redirigir al dashboard)
+  if (!isComplete.value) {
+    navigateTo('/dashboard');
+    return;
+  }
+
   checkMobile();
   window.addEventListener('resize', checkMobile);
   setTimeout(() => {
@@ -558,14 +543,11 @@ definePageMeta({
 
 .opt-text { font-weight: 700; color: #1e293b; font-size: 1.05rem; }
 
-.hint-box {
-  background: #fffbeb;
-  border: 1px solid #fef3c7;
-  padding: 16px 20px;
-  border-radius: 16px;
-  color: #92400e;
-  font-size: 0.95rem;
-  line-height: 1.5;
+.confirm-btn {
+  font-weight: 900 !important;
+  text-transform: none !important;
+  letter-spacing: 0.5px !important;
+  box-shadow: 0 10px 25px rgba(128, 161, 36, 0.2) !important;
 }
 
 /* RESULTS */
@@ -669,22 +651,6 @@ definePageMeta({
   text-align: right;
   font-size: 1.1rem;
 }
-
-/* ANIMATIONS */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  75% { transform: translateX(10px); }
-}
-
-.wrong-shake {
-  animation: shake 0.4s ease;
-  border-color: #ef4444 !important;
-  background: #fef2f2 !important;
-}
-
-.fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
 
 .gap-4 { gap: 1rem; }
 </style>

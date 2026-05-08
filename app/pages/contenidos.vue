@@ -60,6 +60,7 @@
           style="animation-delay: 0.4s"
         >
           <ContCardcontenidos
+            id="cont-1"
             titulo="¿Qué es la fotosíntesis?"
             texto="Conoce el proceso químico que alimenta al planeta."
             class="h-100"
@@ -126,6 +127,7 @@
           style="animation-delay: 0.5s"
         >
           <ContCardcontenidos
+            id="cont-2"
             titulo="Los cloroplastos"
             texto="La fábrica de energía de la célula vegetal."
             class="h-100"
@@ -205,6 +207,7 @@
           style="animation-delay: 0.6s"
         >
           <ContCardcontenidos
+            id="cont-3"
             titulo="Etapas del Proceso"
             texto="Fase lumínica y Fase oscura explicadas."
             class="h-100"
